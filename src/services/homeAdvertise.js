@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const homeAdvertiseServices = {
   fetchList,
@@ -9,26 +9,45 @@ export const homeAdvertiseServices = {
   updateHomeAdvertise
 }
 
-function fetchList(params) {
-  return apiServices.get('/home/advertise/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/home/advertise/list',
+    method:'get',
+    params:params
+  })
+}
+ function updateStatus(id,params) {
+  return request({
+    url:'/home/advertise/update/status/'+id,
+    method:'post',
+    params:params
+  })
+}
+ function deleteHomeAdvertise(data) {
+  return request({
+    url:'/home/advertise/delete',
+    method:'post',
+    data:data
+  })
+}
+ function createHomeAdvertise(data) {
+  return request({
+    url:'/home/advertise/create',
+    method:'post',
+    data:data
+  })
+}
+ function getHomeAdvertise(id) {
+  return request({
+    url:'/home/advertise/'+id,
+    method:'get',
+  })
 }
 
-function updateStatus(id,params) {
-  return apiServices.post('/home/advertise/update/status/'+id,params);
-}
-
-function deleteHomeAdvertise(data) {
-  return apiServices.post('/home/advertise/delete',data);
-}
-
-function createHomeAdvertise(data) {
-  return apiServices.post('/home/advertise/create',data);
-}
-
-function getHomeAdvertise(id) {
-  return apiServices.get('/home/advertise/'+id,null);
-}
-
-function updateHomeAdvertise(id,data) {
-  return apiServices.post('/home/advertise/update/'+id,data);
+ function updateHomeAdvertise(id,data) {
+  return request({
+    url:'/home/advertise/update/'+id,
+    method:'post',
+    data:data
+  })
 }

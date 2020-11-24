@@ -1,49 +1,25 @@
-import { AppBar, IconButton, Menu, MenuItem, MenuList, Toolbar } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
 import React, {useState, useEffect, useRef} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import CBreadcrumb  from '../../../components/Breadcrumb';
-import CHamburger from '../../../components/Hamburger';
-import { userActions } from '../../../redux/actions/user-actions';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+
+import { Link, withRouter } from 'react-router-dom';
+import CBreadcrumb  from 'components/Breadcrumb';
+import CHamburger from 'components/Hamburger';
+import { userActions } from 'actions/user-actions';
 import './Navbar.scss';
-import { appActions } from '../../../redux/actions/app-actions';
+import { appActions } from 'actions/app-actions';
+import { Dropdown, Image, Menu } from 'antd';
+import { CaretDownOutlined } from '@ant-design/icons';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import {store} from '../../../redux/store';
 
 function CNavbar(props){
-    const dispatch = useDispatch();
-
-    const sidebar = useSelector(state => state.appReducer);
-    const avatar = useSelector(state => state.userReducer.avatar);
-
-    const [open, setOpen] = useState(false);
-    const anchorRef = useRef(null);
-
-    const handleMenuToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-      };
-    
-    const handleMenuClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-          return;
-        }
-    
-        setOpen(false);
-      };
-
-    const prevOpen = React.useRef(open);
-    useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-    prevOpen.current = open;
-    }, [open]);
-    
-
-    const HandleLogout=()=>{
+    const dispatch= useDispatch();
+    const avatar = useSelector(state => state.userReducer.avatar); 
+    const [sideBarState, setSideBarState] = useState(null);
+    store.subscribe(()=>{
+        setSideBarState({...store.getState().appReducer.sidebar});
+    })
+    const logout=()=>{
         dispatch(userActions.LogOut()).then(()=>{
             location.reload();
         })
@@ -53,46 +29,25 @@ function CNavbar(props){
         dispatch(appActions.ToggleSidebar());
     }
     return(
-        <AppBar className="navbar" position="static" color='default'>
-            <Toolbar>
-                <CHamburger className="hamburger-container"toggleClick={toggleSideBar} isActive={sidebar.sidebar.opened}></CHamburger>
-                <CBreadcrumb></CBreadcrumb>
-                <div className="avatar-container">
-                    <img className="user-avatar" />
-                    <i className="el-icon-caret-bottom"></i>
-                    <IconButton aria-label="account of current user"
-                                aria-controls={open ? 'menu-list-grow' : undefined}
-                                aria-haspopup="true"
-                                onClick={handleMenuToggle}
-                                color="inherit" ref={anchorRef}>
-                        <AccountCircle/>
-                    </IconButton>
-                    <Popper open ={open} anchorEl= {anchorRef.current} role={undefined} transition disablePortal>
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                            >
-                            <Paper>
-                                <ClickAwayListener onClickAway={handleMenuClose}>
-                                    <MenuList autoFocusItem={open} id="menu-list-grow">
-                                        <Link to="" onClick={() => location.reload()}>
-                                            <MenuItem>Home</MenuItem>
-                                        </Link>
-                                        <MenuItem>
-                                            <span onClick={HandleLogout} style={{display:"block"}}>Logout</span>
-                                        </MenuItem>
-                                    </MenuList>
-                                </ClickAwayListener>
-                            </Paper>
-                            </Grow>
-                        )}
-                        
-                        
-                    </Popper>
-                </div>
-            </Toolbar>
-        </AppBar>
+        <Menu className="navbar" mode="horizontal">
+            <Menu.Item key="hamburger">
+                <CHamburger className="hamburger-container"toggleClick={toggleSideBar} isActive={sideBarState?sideBarState.opened:false}></CHamburger>
+            </Menu.Item>
+            <SubMenu key="icon" className="avatar-container" 
+            icon={<div className="avatar-wrapper">
+            <img className="user-avatar" src={avatar} style={{verticalAlign:'top'}}/>
+            <CaretDownOutlined />
+            </div>} popupClassName="user-dropdown">
+                <Menu.Item key="home">
+                    <Link className="inlineBlock" to="/">
+                        Home
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="logout">
+                    <span onClick={logout} style={{display:'block'}}>Logout</span>
+                </Menu.Item>
+            </SubMenu>
+        </Menu>        
     )
 }
-export default CNavbar ;
+export default withRouter(CNavbar);

@@ -25,18 +25,23 @@ commonConfig = {
         },
         {
             test: /\.(png|svg|jpg|gif)$/,
-            use: [
-                // ...
-                {
-                    loader: 'url-loader',
-                    options: {
-                        limit:500, 
-                        name: 'images/[name]_[hash:7].[ext]',
-                        esModule: false
-                    }
-                }
-            ]
-        }]
+            loader: 'url-loader',
+            exclude:path.resolve(__dirname, '../src/icons'),
+            options: {
+                limit:500, 
+                name: 'images/[name]_[hash:7].[ext]',
+                esModule: false
+            }
+        },
+        {
+            test: /\.svg$/,
+            loader: "svg-sprite-loader",
+            include: path.resolve(__dirname, "../src/icons"),
+            options: {
+              symbolId: "icon-[name]" 
+            }
+        }
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -55,7 +60,7 @@ commonConfig = {
     resolve: {
         alias: {
             views: path.join(__dirname, 'src/views'),
-            // components: path.join(__dirname, 'src/components'),
+            components: path.join(__dirname, 'src/components'),
             router: path.join(__dirname, 'src/router'),
             actions: path.join(__dirname, 'src/redux/actions'),
             reducers: path.join(__dirname, 'src/redux/reducers'),
@@ -63,7 +68,8 @@ commonConfig = {
             services: path.join(__dirname, 'src/services'),
             assets: path.join(__dirname, 'src/assets'),
             views: path.join(__dirname, 'src/views'),
-            styles: path.join(__dirname, 'src/styles')
+            styles: path.join(__dirname, 'src/styles'),
+            icons: path.join(__dirname, 'src/icons')
         }
     },
     externals: {

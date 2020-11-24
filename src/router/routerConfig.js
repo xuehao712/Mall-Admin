@@ -1,157 +1,495 @@
-import React from 'react';
+import React, { lazy } from "react";
+const history = lazy(() => import('../redux/shared/history-redux'));
+const Login = lazy(() => import('views/login/index'));
+const NotFound = lazy(() => import('views/404'));
+const Home = lazy(() => import('views/home/index'));
+const Product = lazy(() => import('views/pms/product/index'));
+const AddProduct = lazy(() => import('views/pms/product/add'));
+const UpdateProduct = lazy(() => import('views/pms/product/update'));
+const ProductCate = lazy(() => import('views/pms/productCate/index'));
+const AddProductCate = lazy(() => import('views/pms/productCate/add'));
+const UpdateProductCate = lazy(() => import('views/pms/productCate/update'));
+const ProductAttr = lazy(() => import('views/pms/productAttr/index'));
+const ProductAttrList = lazy(() => import('views/pms/productAttr/productAttrList'));
+const AddProductAttr = lazy(() => import('views/pms/productAttr/addProductAttr'));
+const UpdateProductAttr = lazy(() => import('views/pms/productAttr/updateProductAttr'));
+const Brand = lazy(() => import('views/pms/brand/index'));
+const AddBrand = lazy(() => import('views/pms/brand/add'));
+const UpdateBrand = lazy(() => import('views/pms/brand/update'));
+const Order = lazy(() => import('views/oms/order/index'));
+const OrderDetail = lazy(() => import('views/oms/order/orderDetail'));
+const DeliverOrderList = lazy(() => import('views/oms/order/deliverOrderList'));
+const OrderSetting = lazy(() => import('views/oms/order/setting'));
+const ReturnApply = lazy(() => import('views/oms/apply/index'));
+const ReturnReason = lazy(() => import('views/oms/apply/reason'));
+const ReturnApplyDetail = lazy(() => import('views/oms/apply/applyDetail'));
+const Flash = lazy(() => import('views/sms/flash/index'));
+const FlashSession = lazy(() => import('views/sms/flash/sessionList'));
+const SelectSession = lazy(() => import('views/sms/flash/selectSessionList'));
+const FlashProductRelation = lazy(() => import('views/sms/flash/productRelationList'));
+const Coupon = lazy(() => import('views/sms/coupon/index'));
+const AddCoupon = lazy(() => import('views/sms/coupon/add'));
+const UpdateCoupon = lazy(() => import('views/sms/coupon/update'));
+const CouponHistory = lazy(() => import('views/sms/coupon/history'));
+const HomeBrand = lazy(() => import('views/sms/brand/index'));
+const HomeNew = lazy(() => import('views/sms/new/index'));
+const HomeHot = lazy(() => import('views/sms/hot/index'));
+const HomeSubject = lazy(() => import('views/sms/subject/index'));
+const HomeAdvertise = lazy(() => import('views/sms/advertise/index'));
+const AddHomeAdvertise = lazy(() => import('views/sms/advertise/add'));
+const UpdateHomeAdvertise = lazy(() => import('views/sms/advertise/update'));
+const Admin = lazy(() => import('views/ums/admin/index'));
+const Role = lazy(() => import('views/ums/role/index'));
+const AllocMenu = lazy(() => import('views/ums/role/allocMenu'));
+const AllocResource = lazy(() => import('views/ums/role/allocResource'));
+const Menu = lazy(() => import('views/ums/menu/index'));
+const AddMenu = lazy(() => import('views/ums/menu/add'));
+const UpdateMenu = lazy(() => import('views/ums/menu/update'));
+const Resource = lazy(() => import('views/ums/resource/index'));
+const ResourceCategory = lazy(() => import('views/ums/resource/categoryList'));
+const Layout = lazy(() => import('views/layout/MainLayout'));
 
-import { history } from '../redux/shared/history-redux';
-import { Login } from 'views/login/index';
-import { NotFound } from 'views/404';
-import { Home } from 'views/home/index';
-import { Product } from 'views/pms/product/index';
-import { AddProduct } from 'views/pms/product/add';
-import { UpdateProduct } from 'views/pms/product/update';
-import { ProductCate } from 'views/pms/productCate/index';
-import { AddProductCate } from 'views/pms/productCate/add';
-import { UpdateProductCate } from 'views/pms/productCate/update';
-import { ProductAttr } from 'views/pms/productAttr/index';
-import { ProductAttrList } from 'views/pms/productAttr/productAttrList';
-import { AddProductAttr } from 'views/pms/productAttr/addProductAttr';
-import { UpdateProductAttr } from 'views/pms/productAttr/updateProductAttr';
-import { Brand } from 'views/pms/brand/index';
-import { AddBrand } from 'views/pms/brand/add';
-import { UpdateBrand } from 'views/pms/brand/update';
-import { Order } from 'views/oms/order/index';
-import { OrderDetail } from 'views/oms/order/orderDetail';
-import { DeliverOrderList } from 'views/oms/order/deliverOrderList';
-import { OrderSetting } from 'views/oms/order/setting';
-import { ReturnApply } from 'views/oms/apply/index';
-import { ReturnReason } from 'views/oms/apply/reason';
-import { ReturnApplyDetail } from 'views/oms/apply/applyDetail';
-import { Flash } from 'views/sms/flash/index';
-import { FlashSession } from 'views/sms/flash/sessionList';
-import { SelectSession } from 'views/sms/flash/selectSessionList';
-import { FlashProductRelation } from 'views/sms/flash/productRelationList';
-import { Coupon } from 'views/sms/coupon/index';
-import { AddCoupon } from 'views/sms/coupon/add';
-import { UpdateCoupon } from 'views/sms/coupon/update';
-import { CouponHistory } from 'views/sms/coupon/history';
-import { HomeBrand } from 'views/sms/brand/index';
-import { HomeNew } from 'views/sms/new/index';
-import { HomeHot } from 'views/sms/hot/index';
-import { HomeSubject } from 'views/sms/subject/index';
-import { HomeAdvertise } from 'views/sms/advertise/index';
-import { AddHomeAdvertise } from 'views/sms/advertise/add';
-import { UpdateHomeAdvertise } from 'views/sms/advertise/update';
-import { Admin } from 'views/ums/admin/index';
-import { Role } from 'views/ums/role/index';
-import { AllocMenu } from 'views/ums/role/allocMenu';
-import { AllocResource } from 'views/ums/role/allocResource';
-import { Menu } from 'views/ums/menu/index';
-import { AddMenu } from 'views/ums/menu/add';
-import { UpdateMenu } from 'views/ums/menu/add';
-import { Resource } from 'views/ums/resource/index';
-import { ResourceCategory } from 'views/ums/resource/categoryList';
+// const routes = [
+//   {
+//     path: '/',
+//     component: Layout,
+//     redirect: '/home',
+//     children: [{
+//       path: '/home',
+//       name: 'home',
+//       component: Home,
+//       meta: {title: 'Home', icon: 'home'}
+//     }]
+//   },
+//   {
+//     path: '/pms',
+//     redirect: '/pms/product',
+//     component: Layout,
+//     name: 'pms',
+//     meta: {title: 'Product', icon: 'product'},
+//     children: [{
+//       path: '/pms/product',
+//       name: 'product',
+//       component:Product,
+//       meta: {title: 'Product List', icon: 'product-list'}
+//     },
+//       {
+//         path: '/pms/addProduct',
+//         name: 'addProduct',
+//         component:AddProduct,
+//         meta: {title: 'Add Product', icon: 'product-add'}
+//       },
+//       {
+//         path: '/pms/updateProduct',
+//         name: 'updateProduct',
+//         component:UpdateProduct,
+//         meta: {title: 'Modify Product', icon: 'product-add'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/productCate',
+//         name: 'productCate',
+//         component:ProductCate,
+//         meta: {title: 'Product Cate', icon: 'product-cate'}
+//       },
+//       {
+//         path: '/pms/addProductCate',
+//         name: 'addProductCate',
+//         component:AddProductCate,
+//         meta: {title: 'Add Product Cate'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/updateProductCate',
+//         name: 'updateProductCate',
+//         component:UpdateProductCate,
+//         meta: {title: 'Modify Product Cate'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/productAttr',
+//         name: 'productAttr',
+//         component:ProductAttr,
+//         meta: {title: 'Product Attr', icon: 'product-attr'}
+//       },
+//       {
+//         path: '/pms/productAttrList',
+//         name: 'productAttrList',
+//         component:ProductAttrList,
+//         meta: {title: 'Product Attr List'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/addProductAttr',
+//         name: 'addProductAttr',
+//         component:AddProductAttr,
+//         meta: {title: 'Add Product Attr'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/updateProductAttr',
+//         name: 'updateProductAttr',
+//         component:UpdateProductAttr,
+//         meta: {title: 'Modify Product Attr'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/brand',
+//         name: 'brand',
+//         component:Brand,
+//         meta: {title: 'Brand', icon: 'product-brand'}
+//       },
+//       {
+//         path: '/pms/addBrand',
+//         name: 'addBrand',
+//         component:AddBrand,
+//         meta: {title: 'Add Brand'},
+//         hidden: true
+//       },
+//       {
+//         path: '/pms/updateBrand',
+//         name: 'updateBrand',
+//         component:UpdateBrand,
+//         meta: {title: 'Modify Brand'},
+//         hidden: true
+//       }
+//     ]
+//   },
+//   {
+//     path: '/oms',
+//     component: Layout,
+//     redirect: '/oms/order',
+//     name: 'oms',
+//     meta: {title: 'Order', icon: 'order'},
+//     children: [
+//       {
+//         path: '/oms/order',
+//         name: 'order',
+//         component:Order,
+//         meta: {title: 'Order List', icon: 'product-list'}
+//       },
+//       {
+//         path: '/oms/orderDetail',
+//         name: 'orderDetail',
+//         component:OrderDetail,
+//         meta: {title: 'Order Detail'},
+//         hidden:true
+//       },
+//       {
+//         path: '/oms/deliverOrderList',
+//         name: 'deliverOrderList',
+//         component:DeliverOrderList,
+//         meta: {title: 'Delivery Order List'},
+//         hidden:true
+//       },
+//       {
+//         path: '/oms/orderSetting',
+//         name: 'orderSetting',
+//         component:OrderSetting,
+//         meta: {title: 'Order Setting', icon: 'order-setting'}
+//       },
+//       {
+//         path: '/oms/returnApply',
+//         name: 'returnApply',
+//         component:ReturnApply,
+//         meta: {title: 'Return Apply', icon: 'order-return'}
+//       },
+//       {
+//         path: '/oms/returnReason',
+//         name: 'returnReason',
+//         component:ReturnReason,
+//         meta: {title: 'Return Reason', icon: 'order-return-reason'}
+//       },
+//       {
+//         path: '/oms/returnApplyDetail',
+//         name: 'returnApplyDetail',
+//         component:ReturnApplyDetail,
+//         meta: {title: 'Return Detail'},
+//         hidden:true
+//       }
+//     ]
+//   },
+//   {
+//     path:'/sms',
+//     component: Layout,
+//     redirect: '/sms/coupon',
+//     name: 'sms',
+//     meta: {title: 'Promotion', icon: 'sms'},
+//     children: [
+//       {
+//         path: '/sms/flash',
+//         name: 'flash',
+//         component:Flash,
+//         meta: {title: 'Flash List', icon: 'sms-flash'}
+//       },
+//       {
+//         path: '/sms/flashSession',
+//         name: 'flashSession',
+//         component:FlashSession,
+//         meta: {title: 'Flash Session'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/selectSession',
+//         name: 'selectSession',
+//         component:SelectSession,
+//         meta: {title: 'Flash Select Session'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/flashProductRelation',
+//         name: 'flashProductRelation',
+//         component:FlashProductRelation,
+//         meta: {title: 'Flash Product'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/coupon',
+//         name: 'coupon',
+//         component:Coupon,
+//         meta: {title: 'Coupon', icon: 'sms-coupon'}
+//       },
+//       {
+//         path: '/sms/addCoupon',
+//         name: 'addCoupon',
+//         component:AddCoupon,
+//         meta: {title: 'Add Coupon'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/updateCoupon',
+//         name: 'updateCoupon',
+//         component:UpdateCoupon,
+//         meta: {title: 'Modify Coupon'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/couponHistory',
+//         name: 'couponHistory',
+//         component:CouponHistory,
+//         meta: {title: 'Coupon History'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/brand',
+//         name: 'homeBrand',
+//         component:HomeBrand,
+//         meta: {title: 'Home Brand', icon: 'product-brand'}
+//       },
+//       {
+//         path: '/sms/new',
+//         name: 'homeNew',
+//         component:HomeNew,
+//         meta: {title: 'Home New', icon: 'sms-new'}
+//       },
+//       {
+//         path: '/sms/hot',
+//         name: 'homeHot',
+//         component:HomeHot,
+//         meta: {title: 'Home Hot', icon: 'sms-hot'}
+//       },
+//       {
+//         path: '/sms/subject',
+//         name: 'homeSubject',
+//         component:HomeSubject,
+//         meta: {title: 'Home Subject', icon: 'sms-subject'}
+//       },
+//       {
+//         path: '/sms/advertise',
+//         name: 'homeAdvertise',
+//         component:HomeAdvertise,
+//         meta: {title: 'Home Advertise', icon: 'sms-ad'}
+//       },
+//       {
+//         path: '/sms/addAdvertise',
+//         name: 'addHomeAdvertise',
+//         component:AddHomeAdvertise,
+//         meta: {title: 'Add Advertise'},
+//         hidden:true
+//       },
+//       {
+//         path: '/sms/updateAdvertise',
+//         name: 'updateHomeAdvertise',
+//         component:UpdateHomeAdvertise,
+//         meta: {title: 'Modify Advertise'},
+//         hidden:true
+//       }
+//     ]
+//   },
+//   {
+//     path:'/ums',
+//     component: Layout,
+//     redirect: '/ums/admin',
+//     name: 'ums',
+//     meta: {title: 'Permission', icon: 'ums'},
+//     children: [
+//       {
+//         path: '/ums/admin',
+//         name: 'admin',
+//         component:Admin,
+//         meta: {title: 'Admin', icon: 'ums-admin'}
+//       },
+//       {
+//         path: '/ums/role',
+//         name: 'role',
+//         component:Role,
+//         meta: {title: 'Role', icon: 'ums-role'}
+//       },
+//       {
+//         path: '/ums/allocMenu',
+//         name: 'allocMenu',
+//         component:AllocMenu,
+//         meta: {title: 'Alloc Menu'},
+//         hidden: true
+//       },
+//       {
+//         path: '/ums/allocResource',
+//         name: 'allocResource',
+//         component:AllocResource,
+//         meta: {title: 'Alloc Resource'},
+//         hidden: true
+//       },
+//       {
+//         path: '/ums/menu',
+//         name: 'menu',
+//         component:Menu,
+//         meta: {title: 'Menu', icon: 'ums-menu'}
+//       },
+//       {
+//         path: '/ums/addMenu',
+//         name: 'addMenu',
+//         component:AddMenu,
+//         meta: {title: 'Add Menu'},
+//         hidden: true
+//       },
+//       {
+//         path: '/ums/updateMenu',
+//         name: 'updateMenu',
+//         component:UpdateMenu,
+//         meta: {title: 'Modify Menu'},
+//         hidden: true
+//       },
+//       {
+//         path: '/ums/resource',
+//         name: 'resource',
+//         component:Resource,
+//         meta: {title: 'Resource', icon: 'ums-resource'}
+//       },
+//       {
+//         path: '/ums/resourceCategory',
+//         name: 'resourceCategory',
+//         component:ResourceCategory,
+//         meta: {title: 'Resource Cate'},
+//         hidden: true
+//       }
+//     ]
+//   },
+// ]
+const constantRouterMap=[
+  {path: '/login', component:Login,hidden: true},
+  {path: '/404', component: NotFound,hidden: true},
+]
 
-const routes = [
+
+const asyncRouterMap = [
   {
-      path: '/',
-      component:'views/home/index',
-      redirect:'/home',
-      children:[{
-          path:'/home',
-          name:'home',
-          exact:true,
-          component:'views/home/index',
-          meta: {title: 'Home', icon: 'home'}
-      }]
+    path: '/',
+    redirect: '/home',
+    children: [{
+      path: '/home',
+      name: 'home',
+      component: Home,
+      meta: {title: 'Home', icon: 'home'}
+    }]
   },
   {
     path: '/pms',
     redirect: '/pms/product',
-    component:'views/pms/product/index',
     name: 'pms',
-    exact:true,
     meta: {title: 'Product', icon: 'product'},
     children: [{
       path: '/pms/product',
       name: 'product',
-      component:'views/pms/product/index',
+      component:Product,
       meta: {title: 'Product List', icon: 'product-list'}
     },
       {
         path: '/pms/addProduct',
         name: 'addProduct',
-        component:'views/pms/product/add',
+        component:AddProduct,
         meta: {title: 'Add Product', icon: 'product-add'}
       },
       {
         path: '/pms/updateProduct',
         name: 'updateProduct',
-        component:'views/pms/product/update',
+        component:UpdateProduct,
         meta: {title: 'Modify Product', icon: 'product-add'},
         hidden: true
       },
       {
         path: '/pms/productCate',
         name: 'productCate',
-        component:'views/pms/productCate/index',
+        component:ProductCate,
         meta: {title: 'Product Cate', icon: 'product-cate'}
       },
       {
         path: '/pms/addProductCate',
         name: 'addProductCate',
-        component:'views/pms/productCate/add',
+        component:AddProductCate,
         meta: {title: 'Add Product Cate'},
         hidden: true
       },
       {
         path: '/pms/updateProductCate',
         name: 'updateProductCate',
-        component:'views/pms/productCate/update',
+        component:UpdateProductCate,
         meta: {title: 'Modify Product Cate'},
         hidden: true
       },
       {
         path: '/pms/productAttr',
         name: 'productAttr',
-        component:'views/pms/productAttr/index',
+        component:ProductAttr,
         meta: {title: 'Product Attr', icon: 'product-attr'}
       },
       {
         path: '/pms/productAttrList',
         name: 'productAttrList',
-        component:'views/pms/productAttr/productAttrList',
+        component:ProductAttrList,
         meta: {title: 'Product Attr List'},
         hidden: true
       },
       {
         path: '/pms/addProductAttr',
         name: 'addProductAttr',
-        component:'views/pms/productAttr/addProductAttr',
+        component:AddProductAttr,
         meta: {title: 'Add Product Attr'},
         hidden: true
       },
       {
         path: '/pms/updateProductAttr',
         name: 'updateProductAttr',
-        component:'views/pms/productAttr/updateProductAttr',
+        component:UpdateProductAttr,
         meta: {title: 'Modify Product Attr'},
         hidden: true
       },
       {
         path: '/pms/brand',
         name: 'brand',
-        component:'views/pms/brand/index',
+        component:Brand,
         meta: {title: 'Brand', icon: 'product-brand'}
       },
       {
         path: '/pms/addBrand',
         name: 'addBrand',
-        component:'views/pms/brand/add',
+        component:AddBrand,
         meta: {title: 'Add Brand'},
         hidden: true
       },
       {
         path: '/pms/updateBrand',
         name: 'updateBrand',
-        component:'views/pms/brand/update',
+        component:UpdateBrand,
         meta: {title: 'Modify Brand'},
         hidden: true
       }
@@ -166,45 +504,45 @@ const routes = [
       {
         path: '/oms/order',
         name: 'order',
-        component:'views/oms/order/index',
+        component:Order,
         meta: {title: 'Order List', icon: 'product-list'}
       },
       {
         path: '/oms/orderDetail',
         name: 'orderDetail',
-        component:'views/oms/order/orderDetail',
+        component:OrderDetail,
         meta: {title: 'Order Detail'},
         hidden:true
       },
       {
         path: '/oms/deliverOrderList',
         name: 'deliverOrderList',
-        component:'views/oms/order/deliverOrderList',
+        component:DeliverOrderList,
         meta: {title: 'Delivery Order List'},
         hidden:true
       },
       {
         path: '/oms/orderSetting',
         name: 'orderSetting',
-        component:'views/oms/order/setting',
+        component:OrderSetting,
         meta: {title: 'Order Setting', icon: 'order-setting'}
       },
       {
         path: '/oms/returnApply',
         name: 'returnApply',
-        component:'views/oms/apply/index',
+        component:ReturnApply,
         meta: {title: 'Return Apply', icon: 'order-return'}
       },
       {
         path: '/oms/returnReason',
         name: 'returnReason',
-        component:'views/oms/apply/reason',
+        component:ReturnReason,
         meta: {title: 'Return Reason', icon: 'order-return-reason'}
       },
       {
         path: '/oms/returnApplyDetail',
         name: 'returnApplyDetail',
-        component:'views/oms/apply/applyDetail',
+        component:ReturnApplyDetail,
         meta: {title: 'Return Detail'},
         hidden:true
       }
@@ -219,98 +557,98 @@ const routes = [
       {
         path: '/sms/flash',
         name: 'flash',
-        component:'views/sms/flash/index',
+        component:Flash,
         meta: {title: 'Flash List', icon: 'sms-flash'}
       },
       {
         path: '/sms/flashSession',
         name: 'flashSession',
-        component:'views/sms/flash/sessionList',
+        component:FlashSession,
         meta: {title: 'Flash Session'},
         hidden:true
       },
       {
         path: '/sms/selectSession',
         name: 'selectSession',
-        component:'views/sms/flash/selectSessionList',
+        component:SelectSession,
         meta: {title: 'Flash Select Session'},
         hidden:true
       },
       {
         path: '/sms/flashProductRelation',
         name: 'flashProductRelation',
-        component:'views/sms/flash/productRelationList',
+        component:FlashProductRelation,
         meta: {title: 'Flash Product'},
         hidden:true
       },
       {
         path: '/sms/coupon',
         name: 'coupon',
-        component:'views/sms/coupon/index',
+        component:Coupon,
         meta: {title: 'Coupon', icon: 'sms-coupon'}
       },
       {
         path: '/sms/addCoupon',
         name: 'addCoupon',
-        component:'views/sms/coupon/add',
+        component:AddCoupon,
         meta: {title: 'Add Coupon'},
         hidden:true
       },
       {
         path: '/sms/updateCoupon',
         name: 'updateCoupon',
-        component:'views/sms/coupon/update',
+        component:UpdateCoupon,
         meta: {title: 'Modify Coupon'},
         hidden:true
       },
       {
         path: '/sms/couponHistory',
         name: 'couponHistory',
-        component:'views/sms/coupon/history',
+        component:CouponHistory,
         meta: {title: 'Coupon History'},
         hidden:true
       },
       {
         path: '/sms/brand',
         name: 'homeBrand',
-        component:'views/sms/brand/index',
+        component:HomeBrand,
         meta: {title: 'Home Brand', icon: 'product-brand'}
       },
       {
         path: '/sms/new',
         name: 'homeNew',
-        component:'views/sms/new/index',
+        component:HomeNew,
         meta: {title: 'Home New', icon: 'sms-new'}
       },
       {
         path: '/sms/hot',
         name: 'homeHot',
-        component:'views/sms/hot/index',
+        component:HomeHot,
         meta: {title: 'Home Hot', icon: 'sms-hot'}
       },
       {
         path: '/sms/subject',
         name: 'homeSubject',
-        component:'views/sms/subject/index',
+        component:HomeSubject,
         meta: {title: 'Home Subject', icon: 'sms-subject'}
       },
       {
         path: '/sms/advertise',
         name: 'homeAdvertise',
-        component:'views/sms/advertise/index',
+        component:HomeAdvertise,
         meta: {title: 'Home Advertise', icon: 'sms-ad'}
       },
       {
         path: '/sms/addAdvertise',
         name: 'addHomeAdvertise',
-        component:'views/sms/advertise/add',
+        component:AddHomeAdvertise,
         meta: {title: 'Add Advertise'},
         hidden:true
       },
       {
         path: '/sms/updateAdvertise',
         name: 'updateHomeAdvertise',
-        component:'views/sms/advertise/update',
+        component:UpdateHomeAdvertise,
         meta: {title: 'Modify Advertise'},
         hidden:true
       }
@@ -325,59 +663,59 @@ const routes = [
       {
         path: '/ums/admin',
         name: 'admin',
-        component:'views/ums/admin/index',
+        component:Admin,
         meta: {title: 'Admin', icon: 'ums-admin'}
       },
       {
         path: '/ums/role',
         name: 'role',
-        component:'views/ums/role/index',
+        component:Role,
         meta: {title: 'Role', icon: 'ums-role'}
       },
       {
         path: '/ums/allocMenu',
         name: 'allocMenu',
-        component:'views/ums/role/allocMenu',
+        component:AllocMenu,
         meta: {title: 'Alloc Menu'},
         hidden: true
       },
       {
         path: '/ums/allocResource',
         name: 'allocResource',
-        component:'views/ums/role/allocResource',
+        component:AllocResource,
         meta: {title: 'Alloc Resource'},
         hidden: true
       },
       {
         path: '/ums/menu',
         name: 'menu',
-        component:'views/ums/menu/index',
+        component:Menu,
         meta: {title: 'Menu', icon: 'ums-menu'}
       },
       {
         path: '/ums/addMenu',
         name: 'addMenu',
-        component:'views/ums/menu/add',
+        component:AddMenu,
         meta: {title: 'Add Menu'},
         hidden: true
       },
       {
         path: '/ums/updateMenu',
         name: 'updateMenu',
-        component:'views/ums/menu/update',
+        component:UpdateMenu,
         meta: {title: 'Modify Menu'},
         hidden: true
       },
       {
         path: '/ums/resource',
         name: 'resource',
-        component:'views/ums/resource/index',
+        component:Resource,
         meta: {title: 'Resource', icon: 'ums-resource'}
       },
       {
         path: '/ums/resourceCategory',
         name: 'resourceCategory',
-        component:'views/ums/resource/categoryList',
+        component:ResourceCategory,
         meta: {title: 'Resource Cate'},
         hidden: true
       }
@@ -386,335 +724,7 @@ const routes = [
   {path: '*', redirect: '/404', hidden: true}
 ]
 
-const asyncRouterMap = [
-    {
-      path: '/pms',
-      component:'views/pms/product/index',
-      redirect: '/pms/product',
-      name: 'pms',
-      exact:true,
-      meta: {title: 'Product', icon: 'product'},
-      children: [{
-        path: '/pms/product',
-        name: 'product',
-        component:'views/pms/product/index',
-        meta: {title: 'Product List', icon: 'product-list'}
-      },
-        {
-          path: '/pms/addProduct',
-          name: 'addProduct',
-          component:'views/pms/product/add',
-          meta: {title: 'Add Product', icon: 'product-add'}
-        },
-        {
-          path: '/pms/updateProduct',
-          name: 'updateProduct',
-          component:'views/pms/product/update',
-          meta: {title: 'Modify Product', icon: 'product-add'},
-          hidden: true
-        },
-        {
-          path: '/pms/productCate',
-          name: 'productCate',
-          component:'views/pms/productCate/index',
-          meta: {title: 'Product Cate', icon: 'product-cate'}
-        },
-        {
-          path: '/pms/addProductCate',
-          name: 'addProductCate',
-          component:'views/pms/productCate/add',
-          meta: {title: 'Add Product Cate'},
-          hidden: true
-        },
-        {
-          path: '/pms/updateProductCate',
-          name: 'updateProductCate',
-          component:'views/pms/productCate/update',
-          meta: {title: 'Modify Product Cate'},
-          hidden: true
-        },
-        {
-          path: '/pms/productAttr',
-          name: 'productAttr',
-          component:'views/pms/productAttr/index',
-          meta: {title: 'Product Attr', icon: 'product-attr'}
-        },
-        {
-          path: '/pms/productAttrList',
-          name: 'productAttrList',
-          component:'views/pms/productAttr/productAttrList',
-          meta: {title: 'Product Attr List'},
-          hidden: true
-        },
-        {
-          path: '/pms/addProductAttr',
-          name: 'addProductAttr',
-          component:'views/pms/productAttr/addProductAttr',
-          meta: {title: 'Add Product Attr'},
-          hidden: true
-        },
-        {
-          path: '/pms/updateProductAttr',
-          name: 'updateProductAttr',
-          component:'views/pms/productAttr/updateProductAttr',
-          meta: {title: 'Modify Product Attr'},
-          hidden: true
-        },
-        {
-          path: '/pms/brand',
-          name: 'brand',
-          component:'views/pms/brand/index',
-          meta: {title: 'Brand', icon: 'product-brand'}
-        },
-        {
-          path: '/pms/addBrand',
-          name: 'addBrand',
-          component:'views/pms/brand/add',
-          meta: {title: 'Add Brand'},
-          hidden: true
-        },
-        {
-          path: '/pms/updateBrand',
-          name: 'updateBrand',
-          component:'views/pms/brand/update',
-          meta: {title: 'Modify Brand'},
-          hidden: true
-        }
-      ]
-    },
-    {
-      path: '/oms',
-      component:'views/oms/order/index',
-      redirect: '/oms/order',
-      name: 'oms',
-      meta: {title: 'Order', icon: 'order'},
-      children: [
-        {
-          path: '/oms/order',
-          name: 'order',
-          component:'views/oms/order/index',
-          meta: {title: 'Order List', icon: 'product-list'}
-        },
-        {
-          path: '/oms/orderDetail',
-          name: 'orderDetail',
-          component:'views/oms/order/orderDetail',
-          meta: {title: 'Order Detail'},
-          hidden:true
-        },
-        {
-          path: '/oms/deliverOrderList',
-          name: 'deliverOrderList',
-          component:'views/oms/order/deliverOrderList',
-          meta: {title: 'Delivery Order List'},
-          hidden:true
-        },
-        {
-          path: '/oms/orderSetting',
-          name: 'orderSetting',
-          component:'views/oms/order/setting',
-          meta: {title: 'Order Setting', icon: 'order-setting'}
-        },
-        {
-          path: '/oms/returnApply',
-          name: 'returnApply',
-          component:'views/oms/apply/index',
-          meta: {title: 'Return Apply', icon: 'order-return'}
-        },
-        {
-          path: '/oms/returnReason',
-          name: 'returnReason',
-          component:'views/oms/apply/reason',
-          meta: {title: 'Return Reason', icon: 'order-return-reason'}
-        },
-        {
-          path: '/oms/returnApplyDetail',
-          name: 'returnApplyDetail',
-          component:'views/oms/apply/applyDetail',
-          meta: {title: 'Return Detail'},
-          hidden:true
-        }
-      ]
-    },
-    {
-      path:'/sms',
-      component:'views/sms/flash/index',
-      redirect: '/sms/coupon',
-      name: 'sms',
-      meta: {title: 'Promotion', icon: 'sms'},
-      children: [
-        {
-          path: '/sms/flash',
-          name: 'flash',
-          component:'views/sms/flash/index',
-          meta: {title: 'Flash List', icon: 'sms-flash'}
-        },
-        {
-          path: '/sms/flashSession',
-          name: 'flashSession',
-          component:'views/sms/flash/sessionList',
-          meta: {title: 'Flash Session'},
-          hidden:true
-        },
-        {
-          path: '/sms/selectSession',
-          name: 'selectSession',
-          component:'views/sms/flash/selectSessionList',
-          meta: {title: 'Flash Select Session'},
-          hidden:true
-        },
-        {
-          path: '/sms/flashProductRelation',
-          name: 'flashProductRelation',
-          component:'views/sms/flash/productRelationList',
-          meta: {title: 'Flash Product'},
-          hidden:true
-        },
-        {
-          path: '/sms/coupon',
-          name: 'coupon',
-          component:'views/sms/coupon/index',
-          meta: {title: 'Coupon', icon: 'sms-coupon'}
-        },
-        {
-          path: '/sms/addCoupon',
-          name: 'addCoupon',
-          component:'views/sms/coupon/add',
-          meta: {title: 'Add Coupon'},
-          hidden:true
-        },
-        {
-          path: '/sms/updateCoupon',
-          name: 'updateCoupon',
-          component:'views/sms/coupon/update',
-          meta: {title: 'Modify Coupon'},
-          hidden:true
-        },
-        {
-          path: '/sms/couponHistory',
-          name: 'couponHistory',
-          component:'views/sms/coupon/history',
-          meta: {title: 'Coupon History'},
-          hidden:true
-        },
-        {
-          path: '/sms/brand',
-          name: 'homeBrand',
-          component:'views/sms/brand/index',
-          meta: {title: 'Home Brand', icon: 'product-brand'}
-        },
-        {
-          path: '/sms/new',
-          name: 'homeNew',
-          component:'views/sms/new/index',
-          meta: {title: 'Home New', icon: 'sms-new'}
-        },
-        {
-          path: '/sms/hot',
-          name: 'homeHot',
-          component:'views/sms/hot/index',
-          meta: {title: 'Home Hot', icon: 'sms-hot'}
-        },
-        {
-          path: '/sms/subject',
-          name: 'homeSubject',
-          component:'views/sms/subject/index',
-          meta: {title: 'Home Subject', icon: 'sms-subject'}
-        },
-        {
-          path: '/sms/advertise',
-          name: 'homeAdvertise',
-          component:'views/sms/advertise/index',
-          meta: {title: 'Home Advertise', icon: 'sms-ad'}
-        },
-        {
-          path: '/sms/addAdvertise',
-          name: 'addHomeAdvertise',
-          component:'views/sms/advertise/add',
-          meta: {title: 'Add Advertise'},
-          hidden:true
-        },
-        {
-          path: '/sms/updateAdvertise',
-          name: 'updateHomeAdvertise',
-          component:'views/sms/advertise/update',
-          meta: {title: 'Modify Advertise'},
-          hidden:true
-        }
-      ]
-    },
-    {
-      path:'/ums',
-      component:'views/ums/admin/index',
-      redirect: '/ums/admin',
-      name: 'ums',
-      meta: {title: 'Permission', icon: 'ums'},
-      children: [
-        {
-          path: '/ums/admin',
-          name: 'admin',
-          component:'views/ums/admin/index',
-          meta: {title: 'Admin', icon: 'ums-admin'}
-        },
-        {
-          path: '/ums/role',
-          name: 'role',
-          component:'views/ums/role/index',
-          meta: {title: 'Role', icon: 'ums-role'}
-        },
-        {
-          path: '/ums/allocMenu',
-          name: 'allocMenu',
-          component:'views/ums/role/allocMenu',
-          meta: {title: 'Alloc Menu'},
-          hidden: true
-        },
-        {
-          path: '/ums/allocResource',
-          name: 'allocResource',
-          component:'views/ums/role/allocResource',
-          meta: {title: 'Alloc Resource'},
-          hidden: true
-        },
-        {
-          path: '/ums/menu',
-          name: 'menu',
-          component:'views/ums/menu/index',
-          meta: {title: 'Menu', icon: 'ums-menu'}
-        },
-        {
-          path: '/ums/addMenu',
-          name: 'addMenu',
-          component:'views/ums/menu/add',
-          meta: {title: 'Add Menu'},
-          hidden: true
-        },
-        {
-          path: '/ums/updateMenu',
-          name: 'updateMenu',
-          component:'views/ums/menu/update',
-          meta: {title: 'Modify Menu'},
-          hidden: true
-        },
-        {
-          path: '/ums/resource',
-          name: 'resource',
-          component:'views/ums/resource/index',
-          meta: {title: 'Resource', icon: 'ums-resource'}
-        },
-        {
-          path: '/ums/resourceCategory',
-          name: 'resourceCategory',
-          component:'views/ums/resource/categoryList',
-          meta: {title: 'Resource Cate'},
-          hidden: true
-        }
-      ]
-    },
-  ]
-
-export {asyncRouterMap};
-export default routes;
+export {constantRouterMap,asyncRouterMap};
 
 
 

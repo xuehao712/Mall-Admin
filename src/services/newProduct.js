@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const newProductServices = {
   fetchList,
@@ -8,22 +8,42 @@ export const newProductServices = {
   updateNewProductSort
 }
 
-function fetchList(params) {
-  return apiServices.get('/home/newProduct/list',params)
+ function fetchList(params) {
+  return request({
+    url:'/home/newProduct/list',
+    method:'get',
+    params:params
+  })
 }
 
-function updateRecommendStatus(data) {
-  return apiServices.post('/home/newProduct/update/recommendStatus',data);
+ function updateRecommendStatus(data) {
+  return request({
+    url:'/home/newProduct/update/recommendStatus',
+    method:'post',
+    data:data
+  })
 }
 
-function deleteNewProduct(data) {
-  return apiServices.post('/home/newProduct/delete',data);
+ function deleteNewProduct(data) {
+  return request({
+    url:'/home/newProduct/delete',
+    method:'post',
+    data:data
+  })
 }
 
-function createNewProduct(data) {
-  return apiServices.post('/home/newProduct/create',data);
+ function createNewProduct(data) {
+  return request({
+    url:'/home/newProduct/create',
+    method:'post',
+    data:data
+  })
 }
 
-function updateNewProductSort(params) {
-  return apiServices.post('/home/newProduct/update/sort/'+params.id,params);
+ function updateNewProductSort(params) {
+  return request({
+    url:'/home/newProduct/update/sort/'+params.id,
+    method:'post',
+    params:params
+  })
 }

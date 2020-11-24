@@ -9,8 +9,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import {isvalidUsername} from 'utils/validate';
 import {setSupport,getSupport,setCookie,getCookie} from 'utils/support';
+import {getToken as TokenAuth} from 'utils/auth';
 import {userActions} from 'actions/user-actions';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -23,26 +24,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function Login(){
     //declare variable
+    const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    // const loginStatus = useSelector(state => ({...state.userReducer.user}));
+    const user = TokenAuth();
+    if(user) {
+        if(location.pathname==="/login") {
+            return <Redirect to="/"/>
+        }
+    }
 
-    // useEffect(() =>{
-    //     if(loginStatus.code=='200'){
-    //         setCookie("username",values.username,15);
-    //         setCookie("password",values.password,15);
-    //         history.push('/');
-    //     }else if(loginStatus.code=='404'){
-    //         handleErrorPanelOpen();
-    //     }
-    // },[loginStatus]);
-    //Input control
     const [values, setValues] = React.useState({
         username: '',
         password: '',
         showPassword: false,
     });
 
+    useEffect(() => {
+        if(!user){
+            setValues({...values,username:'admin',password:'123456'});
+        }
+    }, [])
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };

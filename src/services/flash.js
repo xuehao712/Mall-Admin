@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const flashServices = {
     fetchList,
@@ -8,22 +8,38 @@ export const flashServices = {
     updateFlash
 }
 
-function fetchList(params) {
-    return apiServices.get('/flash/list',params);
-}
-
-function updateStatus(id,params) {
-    return apiServices.post('/flash/update/status/'+id,params);
-}
-
-function deleteFlash(id) {
-    return apiServices.post('/flash/delete/'+id,null);
-}
-
-function createFlash(data) {
-    return apiServices.post('/flash/create',data);
-}
-
-function updateFlash(id,data) {
-    return apiServices.post('/flash/update/'+id,data);
-}
+ function fetchList(params) {
+    return request({
+      url:'/flash/list',
+      method:'get',
+      params:params
+    })
+  }
+   function updateStatus(id,params) {
+    return request({
+      url:'/flash/update/status/'+id,
+      method:'post',
+      params:params
+    })
+  }
+   function deleteFlash(id) {
+    return request({
+      url:'/flash/delete/'+id,
+      method:'post'
+    })
+  }
+   function createFlash(data) {
+    return request({
+      url:'/flash/create',
+      method:'post',
+      data:data
+    })
+  }
+   function updateFlash(id,data) {
+    return request({
+      url:'/flash/update/'+id,
+      method:'post',
+      data:data
+    })
+  }
+  

@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const roleServices = {
   fetchList,
@@ -13,42 +13,80 @@ export const roleServices = {
   allocResource
 }
 
-function fetchList(params) {
-  return apiServices.get('/role/list',params);
+ function fetchList(params) {
+  return request({
+    url: '/role/list',
+    method: 'get',
+    params: params
+  })
 }
 
-function createRole(data) {
-  return apiServices.post('/role/create',data);
+ function createRole(data) {
+  return request({
+    url: '/role/create',
+    method: 'post',
+    data: data
+  })
 }
 
-function updateRole(id, data) {
-  return apiServices.post('/role/update/' + id,data);
+ function updateRole(id, data) {
+  return request({
+    url: '/role/update/' + id,
+    method: 'post',
+    data: data
+  })
 }
 
-function updateStatus(id, params) {
- return apiServices.post('/role/updateStatus/' + id,params);
+ function updateStatus(id, params) {
+  return request({
+    url: '/role/updateStatus/' + id,
+    method: 'post',
+    params: params
+  })
 }
 
-function deleteRole(data) {
-  return apiServices.post('/role/delete',data);
+ function deleteRole(data) {
+  return request({
+    url:'/role/delete',
+    method:'post',
+    data:data
+  })
 }
 
-function fetchAllRoleList() {
-  return apiServices.get('/role/listAll',null);
+ function fetchAllRoleList() {
+  return request({
+    url: '/role/listAll',
+    method: 'get'
+  })
 }
 
-function listMenuByRole(roleId) {
-  return apiServices.get('/role/listMenu/'+roleId,null);
+ function listMenuByRole(roleId) {
+  return request({
+    url: '/role/listMenu/'+roleId,
+    method: 'get'
+  })
 }
 
-function listResourceByRole(roleId) {
-  return apiServices.get('/role/listResource/'+roleId,null);
+ function listResourceByRole(roleId) {
+  return request({
+    url: '/role/listResource/'+roleId,
+    method: 'get'
+  })
 }
 
-function allocMenu(data) {
-  return apiServices.post('/role/allocMenu',data);
+ function allocMenu(data) {
+  return request({
+    url: '/role/allocMenu',
+    method: 'post',
+    data:data
+  })
 }
 
-function allocResource(data) {
-  return apiServices.post('/role/allocResource',data);
+ function allocResource(data) {
+  return request({
+    url: '/role/allocResource',
+    method: 'post',
+    data:data
+  })
 }
+

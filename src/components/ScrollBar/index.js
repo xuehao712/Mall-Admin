@@ -2,23 +2,24 @@ import React, { useRef, useState } from 'react';
 
 import './index.scss';
 
-function CScrollbar({ children }){
-    
+function CScrollbar(props){
+    const {className} = props;
+    const delta = 15;
     const [top,setTop] = useState(0);
 
     const scrollContainer = useRef();
     const scrollWrapper = useRef();
     let handleScroll = (e) =>{
         const eventDelta = e.wheelDelta || -e.deltaY * 3;
-        const $container = scrollContainer.current;
+        const $container = scrollContainer;
         const $containerHeight = $container.offsetHeight;
-        const $wrapper = scrollWrapper.current;
+        const $wrapper = scrollWrapper;
         const $wrapperHeight = $wrapper.offsetHeight;
         if (eventDelta > 0) {
             setTop(Math.min(0, top + eventDelta));
         } else {
             if ($containerHeight - delta < $wrapperHeight) {
-              if (this.top < -($wrapperHeight - $containerHeight + delta)) {
+              if (top < -($wrapperHeight - $containerHeight + delta)) {
                 setTop(top);
               } else {
                 setTop(Math.max(top + eventDelta, $containerHeight - $wrapperHeight - delta));
@@ -29,9 +30,9 @@ function CScrollbar({ children }){
         }
     }
     return(
-        <div className="scroll-container" ref={scrollContainer} onWheel={handleScroll}>
-            <div className="scroll-wrapper" ref={scrollWrapper} style={{top:top}}>
-                { children }
+        <div className={`scroll-container ${className}`} ref={scrollContainer} onWheel={handleScroll}>
+            <div className="scroll-wrapper" ref={scrollWrapper} style={{top:top+'px'}}>
+                {props.children}
             </div>
         </div>
     )

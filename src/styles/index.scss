@@ -47,11 +47,18 @@ a:hover {
     height: 0;
   }
 }
+#app{
 
-//main-container
-.app-main{
-  min-height: 100%
 }
+//Spin
+.spin-container{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+//main-container
 
 .app-container {
   padding: 20px;
@@ -153,4 +160,8 @@ a:hover {
 //form
 .form-item {
   margin-bottom: 22px;
+}
+
+.ant-layout-sider-trigger {
+  background-color: #304156;
 }

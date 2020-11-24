@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const resourceCategoryServices = {
   listAllCate,
@@ -7,18 +7,32 @@ export const resourceCategoryServices = {
   deleteResourceCategory
 }
 
-function listAllCate() {
-  return apiServices.get('/resourceCategory/listAll',null);
+ function listAllCate() {
+  return request({
+    url: '/resourceCategory/listAll',
+    method: 'get'
+  })
 }
 
-function createResourceCategory(data) {
-  return apiServices.post('/resourceCategory/create',data);
+ function createResourceCategory(data) {
+  return request({
+    url: '/resourceCategory/create',
+    method: 'post',
+    data: data
+  })
 }
 
-function updateResourceCategory(id, data) {
-  return apiServices.post('/resourceCategory/update/' + id,data);
+ function updateResourceCategory(id, data) {
+  return request({
+    url: '/resourceCategory/update/' + id,
+    method: 'post',
+    data: data
+  })
 }
 
-function deleteResourceCategory(id) {
-  return apiServices.post('/resourceCategory/delete/' + id,null);
+ function deleteResourceCategory(id) {
+  return request({
+    url: '/resourceCategory/delete/' + id,
+    method: 'post'
+  })
 }

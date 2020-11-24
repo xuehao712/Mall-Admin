@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const orderServices = {
   fetchList,
@@ -11,34 +11,65 @@ export const orderServices = {
   updateOrderNote
 }
 
-function fetchList(params) {
-  return apiServices.get('/order/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/order/list',
+    method:'get',
+    params:params
+  })
 }
 
-function closeOrder(params) {
-  return apiServices.post('/order/update/close',params);
+ function closeOrder(params) {
+  return request({
+    url:'/order/update/close',
+    method:'post',
+    params:params
+  })
 }
 
-function deleteOrder(params) {
-  return apiServices.post('/order/delete',params);
+ function deleteOrder(params) {
+  return request({
+    url:'/order/delete',
+    method:'post',
+    params:params
+  })
 }
 
-function deliveryOrder(data) {
-  return apiServices.post('/order/update/delivery',data);
+ function deliveryOrder(data) {
+  return request({
+    url:'/order/update/delivery',
+    method:'post',
+    data:data
+  });
 }
 
-function getOrderDetail(id) {
-  return apiServices.get('/order/'+id,null);
+ function getOrderDetail(id) {
+  return request({
+    url:'/order/'+id,
+    method:'get'
+  });
 }
 
-function updateReceiverInfo(data) {
-  return apiServices.post('/order/update/receiverInfo',data);
+ function updateReceiverInfo(data) {
+  return request({
+    url:'/order/update/receiverInfo',
+    method:'post',
+    data:data
+  });
 }
 
-function updateMoneyInfo(data) {
-  return apiServices.post('/order/update/moneyInfo',data);
+ function updateMoneyInfo(data) {
+  return request({
+    url:'/order/update/moneyInfo',
+    method:'post',
+    data:data
+  });
 }
 
-function updateOrderNote(params) {
-  return apiServices.post('/order/update/note',params);
+ function updateOrderNote(params) {
+  return request({
+    url:'/order/update/note',
+    method:'post',
+    params:params
+  })
 }

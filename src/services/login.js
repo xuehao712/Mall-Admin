@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 
 export const loginServices = {
@@ -14,42 +14,83 @@ export const loginServices = {
   allocRole
 }
 
-function login(username, password) {
-  return apiServices.post('/admin/login',{username,password});
+
+ function login(username, password) {
+  return request({
+    url: '/admin/login',
+    method: 'post',
+    data: {
+      username,
+      password
+    }
+  })
 }
 
-function getInfo() {
-  return apiServices.get('/admin/info',null);
+ function getInfo() {
+  return request({
+    url: '/admin/info',
+    method: 'get',
+  })
 }
 
-function logout() {
-  return apiServices.post('/admin/logout',null);
+ function logout() {
+  return request({
+    url: '/admin/logout',
+    method: 'post'
+  })
 }
 
-function fetchList(params) {
-  return apiServices.get('/admin/list',params);
+ function fetchList(params) {
+  return request({
+    url: '/admin/list',
+    method: 'get',
+    params: params
+  })
 }
 
-function createAdmin(data) {
-  return apiServices.post('/admin/register',data);
+ function createAdmin(data) {
+  return request({
+    url: '/admin/register',
+    method: 'post',
+    data: data
+  })
 }
 
-function updateAdmin(id, data) {
-  return apiServices.post('/admin/update/' + id,data);
+ function updateAdmin(id, data) {
+  return request({
+    url: '/admin/update/' + id,
+    method: 'post',
+    data: data
+  })
 }
 
-function updateStatus(id, params) {
-  return apiServices.post('/admin/updateStatus/' + id,params);
+ function updateStatus(id, params) {
+  return request({
+    url: '/admin/updateStatus/' + id,
+    method: 'post',
+    params: params
+  })
 }
 
-function deleteAdmin(id) {
-  return apiServices.post('/admin/delete/' + id,null);
+ function deleteAdmin(id) {
+  return request({
+    url: '/admin/delete/' + id,
+    method: 'post'
+  })
 }
 
-function getRoleByAdmin(id) {
-  return apiServices.get('/admin/role/' + id,null)
+ function getRoleByAdmin(id) {
+  return request({
+    url: '/admin/role/' + id,
+    method: 'get'
+  })
 }
 
-function allocRole(data) {
-  return apiServices.post('/admin/role/update',data);
+ function allocRole(data) {
+  return request({
+    url: '/admin/role/update',
+    method: 'post',
+    data: data
+  })
 }
+

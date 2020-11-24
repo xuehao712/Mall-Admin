@@ -1,9 +1,12 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const companyAddressServices = {
     fetchList
 }
 
 function fetchList() {
-    return apiServices.get('/companyAddress/list',null);
-}
+    return request({
+      url:'/companyAddress/list',
+      method:'get'
+    })
+  }

@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import { Button, Card, Col, message, Row, Table,Form, Input, Dropdown, Select, Menu, Switch, Modal, Popconfirm } from 'antd';
+import React, {useState, useEffect, useRef} from 'react';
+import { Card, Col, message, Row, Table,Form, Input, Dropdown, Select, Menu, Switch, Modal, Popconfirm, Button, Space, Cascader } from 'antd';
 import { CloseCircleFilled, DatabaseOutlined, DownOutlined, EditOutlined, EditTwoTone, SearchOutlined } from '@ant-design/icons';
 import {productServices} from 'services/product';
 import {skuStockServices} from 'services/skuStock'
@@ -10,19 +8,12 @@ import {brandServices} from 'services/brand'
 import {productCateServices} from 'services/productCate'
 import Search from 'antd/lib/input/Search';
 import Column from 'antd/lib/table/Column';
-import Item from 'antd/lib/list/Item';
-import {history} from '../../../redux/shared/history-redux'
+import {history} from '../../../redux/shared/history-redux';
+import './index.scss'
 
-// const InputTag = React.memo((props)=>{
-//   let {style,onchange,name,value,placeholder,size} = props;
-//   return(
-//     <Input size={size} placeholder={placeholder} onChange={onchange}name={name} value={value} style={style}/>
-//   )
-// });
 const confirm = Modal.confirm;
 const { Option } = Select;
 function Product(){
-    const [form] = Form.useForm();
     const defaultListQuery = {
       keyword: '',
       pageNum: 1,
@@ -42,7 +33,7 @@ function Product(){
       productAttr:[],
       keyword:null
     }
-    const [listQuery, setlistQuery] = useState(defaultListQuery);
+    const [listQuery, setListQuery] = useState(defaultListQuery);
     const [editSkuInfo, seteditSkuInfo] = useState(defaultEditSkuInfo);
 
     const [operates,setoperates]=useState([{
@@ -107,9 +98,9 @@ function Product(){
   },[])
   useEffect(() => {
       if (selectProductCateValue != null && selectProductCateValue.length == 2) {
-          setlistQuery({...listQuery,productCategoryId:selectProductCateValue[1]});
+          setListQuery({...listQuery,productCategoryId:selectProductCateValue[1]});
       } else {
-        setlistQuery({...listQuery,productCategoryId:''});
+        setListQuery({...listQuery,productCategoryId:''});
       }
   }, [selectProductCateValue])
 
@@ -193,49 +184,42 @@ function Product(){
       
       
     }
-    const handleHideSkuEditDialog=()=>{
-      seteditSkuInfo({...editSkuInfo,dialogVisible:false});
-    }
     const handleSearchEditSku=()=>{
       skuStockServices.fetchList(editSkuInfo.productId,{keyword:editSkuInfo.keyword}).then(response=>{
         seteditSkuInfo({...editSkuInfo,stockList:response.data});
       });
     }
 
-    const skuConfirm =()=>{
-      confirm({
-        title:"Are you sure to edit this info?",
-        okText:'OK',
-        okType:'primary',
-        onOk(){handleEditSkuConfirmPopup},
-        onCancel(){}
-      })
-    }
-    const handleSkuEditChange=(current,record)=>{
-      let name = current.target.name;
-      let currentData = current.target.defaultValue.concat(current.nativeEvent.data);
-
-      let index = editSkuInfo.stockList.findIndex(index=>index.id==record.id);
-      const sku = [...editSkuInfo.stockList];
-      sku[index]={...sku[index],name:currentData};
-      seteditSkuInfo({...editSkuInfo,stockList:sku});
-      console.log(editSkuInfo);
+    const handleSkuEditChange=(current,record,index)=>{
+      const { name,value} = current.target;
+      let tempList = editSkuInfo;
+      tempList.stockList[index][name] = value;
+      seteditSkuInfo({...tempList});
     }
     const handleEditSkuConfirm=()=>{
       if(editSkuInfo.stockList==null||editSkuInfo.stockList.length<=0){
         message.warning("No Sku Info!",10);
         return;
+      }else {
+        confirm({
+          title:"Are you sure to edit this info?",
+          okText:'OK',
+          okType:'primary',
+          onOk(){
+            skuStockServices.update(editSkuInfo.productId,editSkuInfo.stockList).then(response=>{
+              message.success("Modify Success!",10);
+              seteditSkuInfo({...editSkuInfo,dialogVisible:false});
+            });
+          },
+          onCancel(){
+            
+          }
+        })
       }
-    }
-    const handleEditSkuConfirmPopup=()=>{
-      skuStockServices.update(editSkuInfo.productId,editSkuInfo.stockList).then(response=>{
-        message.success("Modify Success!",10);
-        seteditSkuInfo({...editSkuInfo,dialogVisible:false});
-      });
     }
 
     const handleSearchList=()=>{
-      setlistQuery({...listQuery,pageNum:1});
+      setListQuery({...listQuery,pageNum:1});
       getList();
     }
     const handleAddProduct=()=>{
@@ -250,49 +234,60 @@ function Product(){
         message.warning("Please select the product you want to perform opeartion!",10);
         return;
       }
-    }
-    const handleBatchOperateConfirmPopup=()=>{
-      let ids=[];
-      for(let i=0;i<multipleSelection.length;i++){
-        ids.push(multipleSelection[i].id);
-      }
-      switch (operateType) {
-        case operates[0].value:
-          updatePublishStatus(1,ids);
-          break;
-        case operates[1].value:
-          updatePublishStatus(0,ids);
-          break;
-        case operates[2].value:
-          updateRecommendStatus(1,ids);
-          break;
-        case operates[3].value:
-          updateRecommendStatus(0,ids);
-          break;
-        case operates[4].value:
-          updateNewStatus(1,ids);
-          break;
-        case operates[5].value:
-          updateNewStatus(0,ids);
-          break;
-        case operates[6].value:
-          break;
-        case operates[7].value:
-          updateDeleteStatus(1,ids);
-          break;
-        default:
-          break;
-      }
-      getList();
+      confirm({
+        title:"Are you sure to do multiple operation?",
+        okText:'Yes',
+        cancelText:'No',
+        type:'warning',
+        onOk(){
+          let ids=[];
+          for(let i=0;i<multipleSelection.length;i++){
+            ids.push(multipleSelection[i]);
+          }
+          switch (operateType) {
+            case operates[0].value:
+              updatePublishStatus(1,ids);
+              break;
+            case operates[1].value:
+              updatePublishStatus(0,ids);
+              break;
+            case operates[2].value:
+              updateRecommendStatus(1,ids);
+              break;
+            case operates[3].value:
+              updateRecommendStatus(0,ids);
+              break;
+            case operates[4].value:
+              updateNewStatus(1,ids);
+              break;
+            case operates[5].value:
+              updateNewStatus(0,ids);
+              break;
+            case operates[6].value:
+              break;
+            case operates[7].value:
+              updateDeleteStatus(1,ids);
+              break;
+            default:
+              break;
+          }
+          getList();
+        },
+        onCancel(){}
+      })
     }
     const handleSizeChange=(val)=>{
-      setlistQuery({...listQuery,pageNum:1,pageSize:val});
+      let query = listQuery;
+      query.pageNum = 1;
+      query.pageSize = val;
+      setListQuery(query);
       getList();
     }
-
     const handleCurrentChange=(val)=>{
-      setlistQuery({...listQuery,pageNum:val});
-      getList();
+        let query = listQuery;
+        query.pageNum = val;
+        setListQuery(query);
+        getList();
     }
     const handleSelectionChange=(val)=>{
       setmultipleSelection(val);
@@ -300,35 +295,42 @@ function Product(){
     const handlePublishStatusChange=(check,row)=>{
       let ids=[];
       ids.push(row.id);
-      updatePublishStatus(check?'1':'0',ids);
+      updatePublishStatus(check?1:0,ids);
     }
     const handleNewStatusChange=(check, row)=>{
       let ids = [];
       ids.push(row.id);
-      updateNewStatus(check?'1':'0', ids);
+      updateNewStatus(check?1:0, ids);
     }
     const handleRecommendStatusChange=(check, row)=> {
       let ids = [];
       ids.push(row.id);
-      updateRecommendStatus(check?'1':'0', ids);
+      updateRecommendStatus(check?1:0, ids);
     }
 
     const handleResetSearch=()=>{
       setselectProductCateValue([]);
-      setlistQuery(defaultListQuery);
+      setListQuery(defaultListQuery);
     }
 
     const handleDelete=(index, row)=>{
-        let ids = [];
-        ids.push(row.id);
-        updateDeleteStatus(1,ids);
-    }
-
-    const handleUpdateProduct=(index,row)=>{
-      history.push({
-        pathname: '/pms/updateProduct',
-        state:{id:row.id}
+      confirm({
+        title:"Are you sure to delete this record?",
+        okText:'OK',
+        okType:'primary',
+        onOk(){
+          let ids = [];
+          ids.push(row.id);
+          updateDeleteStatus(1,ids);
+        },
+        onCancel(){}
       })
+    }
+    const handleUpdateProduct=(index,row)=>{
+      history.push(
+        '/pms/updateProduct',
+        {id:row.id}
+      )
     }
     const handleShowProduct=(index,row)=>{
       console.log("handleShowProduct",row);
@@ -342,31 +344,35 @@ function Product(){
 
     const updatePublishStatus=(publishStatus,ids)=>{
       let params = new URLSearchParams();
+      publishStatus=publishStatus?1:0;
       params.append('ids', ids);
       params.append('publishStatus', publishStatus);
       productServices.updatePublishStatus(params).then(response=>{
         message.success("Modify Success!",10);
+        getList();
       });
-      getList();
     }
 
     const updateNewStatus=(newStatus, ids)=>{
       let params = new URLSearchParams();
+      newStatus=newStatus?1:0;
       params.append('ids', ids);
       params.append('newStatus', newStatus);
       productServices.updateNewStatus(params).then(response => {
         message.success("Modify Success!",10);
+        getList();
       });
-      getList();
+      
     }
     const updateRecommendStatus=(recommendStatus, ids)=>{
       let params = new URLSearchParams();
+      recommendStatus=recommendStatus?1:0;
       params.append('ids', ids);
       params.append('recommendStatus', recommendStatus);
       productServices.updateRecommendStatus(params).then(response => {
         message.success("Modify Success!",10);
+        getList();
       });
-      getList();
     }
     const updateDeleteStatus=(deleteStatus, ids)=>{
       let params = new URLSearchParams();
@@ -374,50 +380,40 @@ function Product(){
       params.append('deleteStatus', deleteStatus);
       productServices.updateDeleteStatus(params).then(response => {
         message.success("Modify Success!",10);
-
+        getList();
       });
-      getList();
     }
 
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setlistQuery({...listQuery,[name]:value});
+    const handleListQueryChange = (e,cname) => {
+      if(!cname){
+        const { name, value } = e.target;
+        setListQuery({...listQuery,[name]:value});
+      } else {
+        setListQuery({...listQuery,[cname]:e});
+      }   
     };
-    const handleBrandSelection =(e)=>{
-      setlistQuery({...listQuery,brandId:e});
-    }
-    const handlePublishSelection=(e)=>{
-      setlistQuery({...listQuery,publishStatus:e});
-    }
-    const handleVerifySelection=(e)=>{
-      setlistQuery({...listQuery,verifyStatus:e});
-    }
-    const handleSelectProductionCate =(e)=>{
-      setselectProductCateValue(e.target.value);
-    }
 
-    //Sku stock table details
-    const [skuTableStatus, setskuTableStatus] = useState({
-      loading:false,
-      bordered:true,
-      pagination:{ position: 'bottomRight',defaultPageSize:'5'},
-      size:'default',
-      showHeader:true,
-      scroll:undefined,
-    })
-    
     //Table details
-    const [tableStatus, settableStatus] = useState({
-      loading:false,
+    const tableStatus = {
+      pagination:{ 
+      position: 'bottomRight',pageSize:listQuery.pageSize,
+      showQuickJumper:true,showSizeChanger:true,
+      pageSizeOptions:[5,10,15],total:total, current:listQuery.pageNum,
+      onShowSizeChange:(current, size)=>handleSizeChange(size), onChange:(page, pageSize)=>handleCurrentChange(page)},
       bordered:true,
-      pagination:{ position: 'bottomRight',defaultPageSize:'5',
-      showQuickJumper:true,showSizeChanger:true},
-      size:'default',
-      showHeader:true,
-      rowSelection:{},
-      scroll:undefined,
-      hasData:true,
-    })
+      size:'default'
+    };
+    const rowSelection={
+        onChange:(e,a)=>{
+            handleSelectionChange(e);
+        }
+    }
+    const skuTableStatus = {
+      pagination:false,
+      bordered:true,
+      size:'default'
+    };
+    
     const columns = [
       {
         title: 'ID',
@@ -461,17 +457,17 @@ function Product(){
         width:'170px',
         render:(text,record,index)=>(
           <div>
-            <p>Publish:
+            <div>Publish:
               <Switch checked={record.publishStatus} onChange={(value)=>handlePublishStatusChange(value,record)}
               />
-            </p>
-            <p>New:
+            </div>
+            <div>New:
               <Switch checked={record.newStatus} onChange={(value)=>handleNewStatusChange(value,record)}
               />
-            </p>
-            <p>Recommend:
+            </div>
+            <div>Recommend:
               <Switch checked={record.recommendStatus} onChange={(value)=>handleRecommendStatusChange(value,record)}/>
-            </p>
+            </div>
           </div>
         )
       },
@@ -513,70 +509,65 @@ function Product(){
         dataIndex: 'operations',
         align:'center',
         render:(text,record,index)=>(
-          <div>
-            <p>
-              <Button size="small" onClick={()=>handleShowProduct(index,record)}>
-                View
-              </Button>
-              <Button size="small"onClick={()=>handleShowVerifyDetail(index, record)}>
-                Edit
-              </Button>
-            </p>
-            <p>
-              <Button size="small" onClick={()=>handleShowProduct(index,record)}>
-                Daily
-              </Button>
-              <Button size="small" danger onClick={()=>handleShowVerifyDetail(index, record)}>
-                Delete
-              </Button>
-            </p>
+          <div className="Product_operation">
+            <div>
+              <div className="Product_operation-section">
+                <Button size="small" onClick={()=>handleShowProduct(index,record)}>
+                  View
+                </Button>
+              </div>
+              <div className="Product_operation-section">
+                <Button size="small"onClick={()=>handleUpdateProduct(index, record)}>
+                  Edit
+                </Button>
+              </div>
+            </div>
+            <div>
+              <div className="Product_operation-section">
+                <Button size="small" onClick={()=>handleShowLog(index,record)}>
+                  Log
+                </Button>
+              </div>
+              <div className="Product_operation-section">
+                <Button size="small" danger onClick={()=>handleDelete(index, record)}>
+                  Delete
+                </Button>
+              </div>  
+            </div>
           </div>
         )
       }
     ]
-
+    const layout = {
+      labelCol: { span: 8 },
+      wrapperCol: { span: 16 },
+    };
     return(
         <div className="app-container">
             <Card className="filter-container" >
               <div>
                 <SearchOutlined />
                 <span className="font-medium">Filter Search</span>
-                <Button onClick={handleSearchList} size="small" type="primary">
-                    Result
+                <Button onClick={handleSearchList} style={{float:'right'}} size="small" type="primary">
+                    Search
                 </Button>
-                <Button onClick={handleResetSearch} size="small" >
+                <Button onClick={handleResetSearch} style={{float:'right',marginRight:'15px'}} size="small" >
                     Reset
                 </Button>
               </div>
               <div style={{marginTop:'15px'}}>
-                  <Form form={form}>
+                  <Form layout="inline" {...layout} >
                     <Form.Item label="Search">
-                      {/* <InputTag size="small" placeholder="Product Name" onChange={handleChange}name="keyword" value={listQuery.keyword} style={{width:'203px'}}/> */}
-                      <Input size="small" placeholder="Product Name" onChange={handleChange}name="keyword" value={listQuery.keyword} style={{width:'203px'}}/>
+                      <Input size="small" placeholder="Product Name" onChange={handleListQueryChange} value={listQuery.keyword} style={{width:'203px'}}/>
                     </Form.Item>
-                  </Form>
-                  <Form form={form}>
                     <Form.Item label="Sn">
-                      <Input size="small" placeholder="Product Sn" onChange={handleChange}name="productSn" value={listQuery.productSn} style={{width:'203px'}}/>
+                      <Input size="small" placeholder="Product Sn" onChange={handleListQueryChange}value={listQuery.productSn} style={{width:'203px'}}/>
                     </Form.Item>
-                  </Form>
-                  <Form form={form}>
                     <Form.Item label="Category">
-                      <Dropdown overlay={
-                        <Menu>
-                          {productCateOptions.map((option) => (
-                            <Menu.Item key={option.value} value={option.value}>
-                              {option.label}
-                            </Menu.Item>))}
-                        </Menu>
-                        }>
-                        <Button>
-                          Product Category<DownOutlined />
-                        </Button>
-                      </Dropdown>
+                      <Cascader allowClear value={selectProductCateValue} onChange={(e)=>setselectProductCateValue(e)} options={productCateOptions}></Cascader>
                     </Form.Item>
                     <Form.Item label="Brand">
-                      <Select style={{width:'203px'}} onChange={handleBrandSelection} value={listQuery.brandId} size="small" name="brandId" placeholder="Product Brand" allowClear>
+                      <Select style={{width:'203px'}} onChange={(e)=>handleListQueryChange(e,'brandId')} value={listQuery.brandId} size="small"placeholder="Product Brand" allowClear>
                         {brandOptions.map((option) => (
                           <Option key={option.value} >
                             {option.label}
@@ -585,7 +576,7 @@ function Product(){
                       </Select>
                     </Form.Item>
                     <Form.Item label="Published">
-                      <Select style={{width:'203px'}} onChange={handlePublishSelection} value={listQuery.publishStatus} name="publishStatus" size="small" placeholder="All" allowClear>
+                      <Select style={{width:'203px'}} onChange={(e)=>handleListQueryChange(e,'publishStatus')} value={listQuery.publishStatus} size="small" placeholder="All" allowClear>
                         {publishStatusOptions.map((option) => (
                           <Option key={option.value} >
                             {option.label}
@@ -594,9 +585,9 @@ function Product(){
                       </Select>
                     </Form.Item>
                     <Form.Item label="Verify">
-                      <Select style={{width:'203px'}} onChange={handleVerifySelection} value={listQuery.verifyStatus} name="verifyStatus" size="small" placeholder="All" allowClear>
+                      <Select style={{width:'203px'}} onChange={(e)=>handleListQueryChange(e,'verifyStatus')} value={listQuery.verifyStatus}size="small" placeholder="All" allowClear>
                         {verifyStatusOptions.map((option) => (
-                          <Option key={option.value} >
+                          <Option key={option.value} value={option.value} >
                             {option.label}
                           </Option>
                         ))}
@@ -605,29 +596,39 @@ function Product(){
                   </Form>
               </div>
             </Card>
-            <Card>
+            <Card className="operate-container">
               <DatabaseOutlined />
               <span>Data List</span>
-              <Button onClick={handleAddProduct} size="small">
+              <Button onClick={handleAddProduct} className="btn-add" size="small">
                 Add
               </Button>
             </Card>
             <div className="table-container">
-              <Table {...tableStatus} loading={listLoading} columns={columns} dataSource={list}/>
+              <Table rowSelection={{...rowSelection}} {...tableStatus} rowKey="id" loading={listLoading} columns={columns} dataSource={list}/>
+            </div>
+            <div className="batch-operate-container">
+                <Select style={{width:'170px'}} size="small" value={operateType} placeholder="Multiple Operation" onChange={(e)=>setoperateType(e)}>
+                    {operates.map((item)=>{
+                        return <Option key={item.value} value={item.value}>{item.label}</Option>
+                    })}
+                </Select>
+                <Button style={{marginLeft:'20px'}} className="search-button" onClick={handleBatchOperate} type="primary" size="small">
+                    Confirm
+                </Button>
             </div>
             <Modal title="Edit Sku Info" visible={editSkuInfo.dialogVisible} width="40%"
-             onCancel={handleHideSkuEditDialog} okType="primary" onOk={handleEditSkuConfirm,skuConfirm}>
+             onCancel={()=>seteditSkuInfo({...editSkuInfo,dialogVisible:false,keyword:null})} okType="primary" onOk={handleEditSkuConfirm}>
               <span>Sku:</span>
               <span>{editSkuInfo.productSn}</span>
-              <Search placeholder="Search by sku number" value={editSkuInfo.keyword} size="small" style={{width:"50%",marginLeft:"20px"}}
-              onSearch={handleSearchEditSku}/>
-              <Table {...skuTableStatus} dataSource={editSkuInfo.stockList} style={{width:"100%",marginTop:'20px'}}>
-                <Column title='SKU' dataIndex='sku' align='center' render={(text, record, index) =><Input defaultValue={record.skuCode} name="skuCode" onChange={(e)=>handleSkuEditChange(e,record)}/>}/>
+              <Search placeholder="Search by sku number" value={editSkuInfo.keyword} onChange={(e)=>seteditSkuInfo({...editSkuInfo,keyword:e.target.value})} 
+              size="small" style={{width:"50%",marginLeft:"20px"}} onSearch={handleSearchEditSku}/>
+              <Table {...skuTableStatus} dataSource={editSkuInfo.stockList} style={{width:"100%",marginTop:'20px'}} rowKey="skuCode">
+                <Column title='SKU' align='center' render={(text, record, index) =><Input defaultValue={record.skuCode} name="skuCode" onBlur={(e)=>handleSkuEditChange(e,record,index)}/>}/>
                 {editSkuInfo.productAttr.map((item,indexa)=>{
-                return <Column title={item.name} dataIndex={item.id} align='center' render={(text,record,index)=><div>{getProductSkuSp(record,indexa)}</div>}/>})}
-                <Column title='Price' dataIndex='price' width="100px" align='center' render={(text, record, index) =><Input name="price" defaultValue={record.price}/>}/>
-                <Column title='Stock' dataIndex='stock' width="100px" align='center' render={(text, record, index) =><Input name="stock" defaultValue={record.stock}/>}/>
-                <Column title='Low Stock' dataIndex='low'  align='center' render={(text, record, index) =><Input name="lowStock" defaultValue={record.lowStock}/>}/>
+                return <Column key={item.id} title={item.name} align='center' render={(text,record,index)=><div>{getProductSkuSp(record,indexa)}</div>}/>})}
+                <Column title='Price' width="100px" align='center' render={(text, record, index) =><Input name="price" defaultValue={record.price} onBlur={(e)=>handleSkuEditChange(e,record,index)}/>}/>
+                <Column title='Stock' width="100px" align='center' render={(text, record, index) =><Input name="stock" defaultValue={record.stock} onBlur={(e)=>handleSkuEditChange(e,record,index)}/>}/>
+                <Column title='Low Stock' align='center' render={(text, record, index) =><Input name="lowStock" defaultValue={record.lowStock} onBlur={(e)=>handleSkuEditChange(e,record,index)}/>}/>
               </Table>
             </Modal>
         </div>

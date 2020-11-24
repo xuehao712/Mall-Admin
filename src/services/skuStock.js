@@ -1,4 +1,3 @@
-import {apiServices} from './shared/api-service';
 import request from './shared/axios';
 
 export const skuStockServices = {

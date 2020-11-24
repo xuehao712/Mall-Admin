@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const flashSessionServices = {
     fetchList,
@@ -8,27 +8,48 @@ export const flashSessionServices = {
     createSession,
     updateSession
 }
-
 function fetchList(params) {
-    return apiServices.get('/flashSession/list',params);
-}
-
-function fetchSelectList(params) {
-    return apiServices.get('/flashSession/selectList',params);
-}
-
-function updateStatus(id, params) {
-    return apiServices.post('/flashSession/update/status/' + id,params);
-}
-
-function deleteSession(id) {
-    return apiServices.post('/flashSession/delete/' + id,null);
-}
-
-function createSession(data) {
-    return apiServices.post('/flashSession/create',data);
-}
-
-function updateSession(id, data) {
-    return apiServices.post('/flashSession/update/' + id,data);
-}
+    return request({
+      url: '/flashSession/list',
+      method: 'get',
+      params: params
+    })
+  }
+ function fetchSelectList(params) {
+    return request({
+      url: '/flashSession/selectList',
+      method: 'get',
+      params: params
+    })
+  }
+  
+   function updateStatus(id, params) {
+    return request({
+      url: '/flashSession/update/status/' + id,
+      method: 'post',
+      params: params
+    })
+  }
+  
+   function deleteSession(id) {
+    return request({
+      url: '/flashSession/delete/' + id,
+      method: 'post'
+    })
+  }
+  
+   function createSession(data) {
+    return request({
+      url: '/flashSession/create',
+      method: 'post',
+      data: data
+    })
+  }
+  
+   function updateSession(id, data) {
+    return request({
+      url: '/flashSession/update/' + id,
+      method: 'post',
+      data: data
+    })
+  }

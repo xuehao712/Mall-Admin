@@ -5,7 +5,7 @@ function AddProduct(){
     
     
     return(
-        <ProductDetail is-edit='false'/>
+        <ProductDetail isEdit={false} />
     )
 }
 export default AddProduct ;

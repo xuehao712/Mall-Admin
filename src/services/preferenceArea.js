@@ -1,9 +1,12 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const preferenceAreaServices = {
   fetchList
 }
 
-export function fetchList() {
-  return apiServices.get('/preferenceArea/listAll',null);
+function fetchList() {
+  return request({
+    url:'/preferenceArea/listAll',
+    method:'get',
+  })
 }

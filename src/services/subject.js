@@ -1,14 +1,21 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const subjectServices = {
   fetchListAll,
   fetchList
 }
 
-function fetchListAll() {
-  return apiServices.get('/subject/listAll',null);
+ function fetchListAll() {
+  return request({
+    url:'/subject/listAll',
+    method:'get',
+  })
 }
 
-function fetchList(params) {
-  return apiServices.get('/subject/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/subject/list',
+    method:'get',
+    params:params
+  })
 }

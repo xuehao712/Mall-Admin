@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const flashProductRelationServices = {
     fetchList,
@@ -7,18 +7,31 @@ export const flashProductRelationServices = {
     updateFlashProductRelation
 }
 
-function fetchList(params) {
-    return apiServices.get('/flashProductRelation/list',params);
-}
-
-function createFlashProductRelation(data) {
-    return apiServices.post('/flashProductRelation/create',data);
-}
-
-function deleteFlashProductRelation(id) {
-    return apiServices.post('/flashProductRelation/delete/'+id,null);
-}
-
-function updateFlashProductRelation(id,data) {
-    return apiServices.post('/flashProductRelation/update/'+id,data);
-}
+ function fetchList(params) {
+    return request({
+      url:'/flashProductRelation/list',
+      method:'get',
+      params:params
+    })
+  }
+   function createFlashProductRelation(data) {
+    return request({
+      url:'/flashProductRelation/create',
+      method:'post',
+      data:data
+    })
+  }
+   function deleteFlashProductRelation(id) {
+    return request({
+      url:'/flashProductRelation/delete/'+id,
+      method:'post'
+    })
+  }
+   function updateFlashProductRelation(id,data) {
+    return request({
+      url:'/flashProductRelation/update/'+id,
+      method:'post',
+      data:data
+    })
+  }
+  

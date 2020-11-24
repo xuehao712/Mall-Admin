@@ -8,24 +8,17 @@ import {history} from './redux/shared/history-redux';
 import "antd/dist/antd.css";
 import 'assets/Mall-Ui.scss';
 import 'styles/index.scss';
-import PublicLayout from './views/layout/PublicLayout';
-import ProtectedLayout from './views/layout/ProtectedLayout';
+import { AppRoutes } from "./router/routers";
+import "./icons";
 
-renderWithHotReload(PublicLayout);
+renderWithHotReload(AppRoutes);
 function renderWithHotReload(RootElement) {
 
     ReactDom.render(
         <AppContainer>
-            <Router history={history}>
-                <Provider store={store}>
-                    <Switch>
-                        <Route exact path="/login" component={ProtectedLayout}/>
-                        <Route exact path="/404" component={ProtectedLayout}/>
-                        <Route component={RootElement}/>
-                        <Redirect to="/404"/>
-                    </Switch>
-                </Provider>
-            </Router>
+            <Provider store={store}>
+                <RootElement/>
+            </Provider>
         </AppContainer>,
         document.getElementById('app')
     )

@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const couponServices = {
     fetchList,
@@ -8,22 +8,41 @@ export const couponServices = {
     deleteCoupon
 }
 
-function fetchList(params) {
-    return apiServices.get('/coupon/list',params);
-}
-
-function createCoupon(data) {
-    return apiServices.post('/coupon/create',data);
-}
-
-function getCoupon(id) {
-    return apiServices.get('/coupon/'+id,null);
-}
-
-function updateCoupon(id,data) {
-    return apiServices.post('/coupon/update/'+id,data);
-}
-
-function deleteCoupon(id) {
-    return apiServices.post('/coupon/delete/'+id,null);
-}
+ function fetchList(params) {
+    return request({
+      url:'/coupon/list',
+      method:'get',
+      params:params
+    })
+  }
+  
+   function createCoupon(data) {
+    return request({
+      url:'/coupon/create',
+      method:'post',
+      data:data
+    })
+  }
+  
+   function getCoupon(id) {
+    return request({
+      url:'/coupon/'+id,
+      method:'get',
+    })
+  }
+  
+   function updateCoupon(id,data) {
+    return request({
+      url:'/coupon/update/'+id,
+      method:'post',
+      data:data
+    })
+  }
+  
+   function deleteCoupon(id) {
+    return request({
+      url:'/coupon/delete/'+id,
+      method:'post',
+    })
+  }
+  

@@ -1,9 +1,13 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const couponHistoryServices = {
     fetchList
 }
 
 function fetchList(params) {
-    return apiServices.get('/couponHistory/list',params);
+    return request({
+      url:'/couponHistory/list',
+      method:'get',
+      params:params
+    })
 }

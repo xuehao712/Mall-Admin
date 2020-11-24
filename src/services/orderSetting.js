@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const orderSettingServices = {
   getOrderSetting,
@@ -6,9 +6,16 @@ export const orderSettingServices = {
 }
 
 function getOrderSetting(id) {
-  return apiServices.get('/orderSetting/'+id,null);
+  return request({
+    url:'/orderSetting/'+id,
+    method:'get',
+  })
 }
 
 function updateOrderSetting(id,data) {
-  return apiServices.post('/orderSetting/update/'+id,data);
+  return request({
+    url:'/orderSetting/update/'+id,
+    method:'post',
+    data:data
+  })
 }

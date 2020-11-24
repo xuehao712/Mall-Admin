@@ -1,6 +1,6 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
-const hotProductServices = {
+export const hotProductServices = {
   fetchList,
   updateRecommendStatus,
   deleteHotProduct,
@@ -8,22 +8,43 @@ const hotProductServices = {
   updateHotProductSort
 }
 
-function fetchList(params) {
-  return apiServices.get('/home/recommendProduct/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/home/recommendProduct/list',
+    method:'get',
+    params:params
+  })
 }
 
-function updateRecommendStatus(data) {
-  return apiServices.post('/home/recommendProduct/update/recommendStatus',data);
+ function updateRecommendStatus(data) {
+  return request({
+    url:'/home/recommendProduct/update/recommendStatus',
+    method:'post',
+    data:data
+  })
 }
 
-function deleteHotProduct(data) {
-  return apiServices.post('/home/recommendProduct/delete',data);
+ function deleteHotProduct(data) {
+  return request({
+    url:'/home/recommendProduct/delete',
+    method:'post',
+    data:data
+  })
 }
 
-function createHotProduct(data) {
-  return apiServices.post('/home/recommendProduct/create',data);
+ function createHotProduct(data) {
+  return request({
+    url:'/home/recommendProduct/create',
+    method:'post',
+    data:data
+  })
 }
 
-function updateHotProductSort(params) {
-  return apiServices.post('/home/recommendProduct/update/sort/'+params.id,params);
+ function updateHotProductSort(params) {
+  return request({
+    url:'/home/recommendProduct/update/sort/'+params.id,
+    method:'post',
+    params:params
+  })
 }
+

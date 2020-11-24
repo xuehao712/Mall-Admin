@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const returnReasonServices = {
   fetchList,
@@ -9,26 +9,49 @@ export const returnReasonServices = {
   updateReason
 }
 
-function fetchList(params) {
-  return apiServices.get('/returnReason/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/returnReason/list',
+    method:'get',
+    params:params
+  })
 }
 
-function deleteReason(params) {
-  return apiServices.post('/returnReason/delete',params);
+ function deleteReason(params) {
+  return request({
+    url:'/returnReason/delete',
+    method:'post',
+    params:params
+  })
 }
 
-function updateStatus(params) {
-  return apiServices.post('/returnReason/update/status',params);
+ function updateStatus(params) {
+  return request({
+    url:'/returnReason/update/status',
+    method:'post',
+    params:params
+  })
 }
 
-function addReason(data) {
-  return apiServices.post('/returnReason/create',data);
+ function addReason(data) {
+  return request({
+    url:'/returnReason/create',
+    method:'post',
+    data:data
+  })
 }
 
-function getReasonDetail(id) {
-  return apiServices.get('/returnReason/'+id,null);
+ function getReasonDetail(id) {
+  return request({
+    url:'/returnReason/'+id,
+    method:'get'
+  })
 }
 
-function updateReason(id,data) {
-  return apiServices.post('/returnReason/update/'+id,data);
+ function updateReason(id,data) {
+  return request({
+    url:'/returnReason/update/'+id,
+    method:'post',
+    data:data
+  })
 }

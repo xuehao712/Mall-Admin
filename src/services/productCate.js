@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const productCateServices = {
   fetchList,
@@ -11,33 +11,62 @@ export const productCateServices = {
   fetchListWithChildren
 }
 
-function fetchList(parentId,params) {
-  return apiServices.get('/productCategory/list/'+parentId,params);
+ function fetchList(parentId,params) {
+  return request({
+    url:'/productCategory/list/'+parentId,
+    method:'get',
+    params:params
+  })
 }
-function deleteProductCate(id) {
-  return apiServices.post('/productCategory/delete/'+id,null);
-}
-
-function createProductCate(data) {
-  return apiServices.post('/productCategory/create',data);
-}
-
-function updateProductCate(id,data) {
-  return apiServices.post('/productCategory/update/'+id,data);
-}
-
-function getProductCate(id) {
-  return apiServices.get('/productCategory/'+id,null);
+ function deleteProductCate(id) {
+  return request({
+    url:'/productCategory/delete/'+id,
+    method:'post'
+  })
 }
 
-function updateShowStatus(data) {
-  return apiServices.post('/productCategory/update/showStatus',data);
+ function createProductCate(data) {
+  return request({
+    url:'/productCategory/create',
+    method:'post',
+    data:data
+  })
 }
 
-function updateNavStatus(data) {
-  return apiServices.post('/productCategory/update/navStatus',data);
+ function updateProductCate(id,data) {
+  return request({
+    url:'/productCategory/update/'+id,
+    method:'post',
+    data:data
+  })
 }
 
-function fetchListWithChildren() {
-  return apiServices.get('/productCategory/list/withChildren',null);
+ function getProductCate(id) {
+  return request({
+    url:'/productCategory/'+id,
+    method:'get',
+  })
+}
+
+ function updateShowStatus(data) {
+  return request({
+    url:'/productCategory/update/showStatus',
+    method:'post',
+    data:data
+  })
+}
+
+ function updateNavStatus(data) {
+  return request({
+    url:'/productCategory/update/navStatus',
+    method:'post',
+    data:data
+  })
+}
+
+ function fetchListWithChildren() {
+  return request({
+    url:'/productCategory/list/withChildren',
+    method:'get'
+  })
 }

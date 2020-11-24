@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const brandServices = {
     fetchList,
@@ -10,30 +10,54 @@ export const brandServices = {
     updateBrand
 }
 
-function fetchList(params) {
-    return apiServices.get('/brand/list',params);
-}
-
-function createBrand(data) {
-    return apiServices.post('/brand/create',data);
-}
-
-function updateShowStatus(data) {
-    return apiServices.post('/brand/update/showStatus',data);
-}
-
-function updateFactoryStatus(data) {
-    return apiServices.post('/brand/update/factoryStatus',data);
-}
-
-function deleteBrand(id) {
-    return apiServices.get('/brand/delete/'+id,null);
-}
-
-function getBrand(id) {
-    return apiServices.get('/brand/'+id,null);
-}
-
-function updateBrand(data) {
-    return apiServices.post('/brand/update/'+id,data);
-}
+ function fetchList(params) {
+    return request({
+      url:'/brand/list',
+      method:'get',
+      params:params
+    })
+  }
+   function createBrand(data) {
+    return request({
+      url:'/brand/create',
+      method:'post',
+      data:data
+    })
+  }
+   function updateShowStatus(data) {
+    return request({
+      url:'/brand/update/showStatus',
+      method:'post',
+      data:data
+    })
+  }
+  
+   function updateFactoryStatus(data) {
+    return request({
+      url:'/brand/update/factoryStatus',
+      method:'post',
+      data:data
+    })
+  }
+  
+   function deleteBrand(id) {
+    return request({
+      url:'/brand/delete/'+id,
+      method:'get',
+    })
+  }
+  
+   function getBrand(id) {
+    return request({
+      url:'/brand/'+id,
+      method:'get',
+    })
+  }
+  
+   function updateBrand(id,data) {
+    return request({
+      url:'/brand/update/'+id,
+      method:'post',
+      data:data
+    })
+  }

@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const productAttrCateServices = {
   fetchList,
@@ -8,21 +8,40 @@ export const productAttrCateServices = {
   fetchListWithAttr
 }
 
-function fetchList(params) {
-  return apiServices.get('/productAttribute/category/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/productAttribute/category/list',
+    method:'get',
+    params:params
+  })
 }
 
-function createProductAttrCate(data) {
-  return apiServices.post('/productAttribute/category/create',data);
+ function createProductAttrCate(data) {
+  return request({
+    url:'/productAttribute/category/create',
+    method:'post',
+    data:data
+  })
 }
 
-function deleteProductAttrCate(id) {
-  return apiServices.post('/productAttribute/category/delete/'+id,null);
+ function deleteProductAttrCate(id) {
+  return request({
+    url:'/productAttribute/category/delete/'+id,
+    method:'get'
+  })
 }
 
-function updateProductAttrCate(id,data) {
-  return apiServices.post('/productAttribute/category/update/'+id,data);
+ function updateProductAttrCate(id,data) {
+  return request({
+    url:'/productAttribute/category/update/'+id,
+    method:'post',
+    data:data
+  })
 }
-function fetchListWithAttr() {
-  return apiServices.get('/productAttribute/category/list/withAttr',null);
+ function fetchListWithAttr() {
+  return request({
+    url:'/productAttribute/category/list/withAttr',
+    method:'get'
+  })
 }
+

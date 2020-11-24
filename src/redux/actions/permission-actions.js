@@ -1,4 +1,4 @@
-import {asyncRouterMap} from 'router/routerConfig';
+import {asyncRouterMap,constantRouterMap} from 'router/routerConfig';
 
 //Check if has permission
 function hasPermission(menus, route) {

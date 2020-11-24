@@ -1,9 +1,12 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const ossServices = {
   policy
 }
 
 function policy() {
-  return apiServices.get('/aliyun/oss/policy',null);
+  return request({
+    url:'/aliyun/oss/policy',
+    method:'get',
+  })
 }

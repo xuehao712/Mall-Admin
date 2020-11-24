@@ -1,9 +1,13 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const memberLevelServices = {
   fetchList
 }
 
 function fetchList(params) {
-  return apiServices.get('/memberLevel/list',params);
+  return request({
+    url:'/memberLevel/list',
+    method:'get',
+    params:params
+  })
 }

@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const homeSubjectServices = {
   fetchList,
@@ -8,22 +8,42 @@ export const homeSubjectServices = {
   updateHomeSubjectSort
 }
 
-function fetchList(params) {
-  return apiServices.get('/home/recommendSubject/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/home/recommendSubject/list',
+    method:'get',
+    params:params
+  })
 }
 
-function updateRecommendStatus(data) {
-  return apiServices.post('/home/recommendSubject/update/recommendStatus',data);
+ function updateRecommendStatus(data) {
+  return request({
+    url:'/home/recommendSubject/update/recommendStatus',
+    method:'post',
+    data:data
+  })
 }
 
-function deleteHomeSubject(data) {
-  return apiServices.post('/home/recommendSubject/delete',data);
+ function deleteHomeSubject(data) {
+  return request({
+    url:'/home/recommendSubject/delete',
+    method:'post',
+    data:data
+  })
 }
 
-function createHomeSubject(data) {
-  return apiServices.post('/home/recommendSubject/create',data);
+ function createHomeSubject(data) {
+  return request({
+    url:'/home/recommendSubject/create',
+    method:'post',
+    data:data
+  })
 }
 
-function updateHomeSubjectSort(params) {
-  return apiServices.post('/home/recommendSubject/update/sort/'+params.id,params);
+ function updateHomeSubjectSort(params) {
+  return request({
+    url:'/home/recommendSubject/update/sort/'+params.id,
+    method:'post',
+    params:params
+  })
 }

@@ -863,7 +863,7 @@ CREATE TABLE `pms_product` (
   `low_stock` int(11) DEFAULT NULL COMMENT 'low stock',
   `unit` varchar(16) DEFAULT NULL COMMENT 'unit',
   `weight` decimal(10,2) DEFAULT NULL COMMENT 'product weight, default pound',
-  `comment_status` int(1) DEFAULT NULL COMMENT 'whether pcomment product：0->no；1->yes',
+  `preview_status` int(1) DEFAULT NULL COMMENT 'whether preview product：0->no；1->yes',
   `service_ids` varchar(64) DEFAULT NULL COMMENT 'product service id, separate with comma：1->free return；2->refund；3->free shipping',
   `keywords` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -954,7 +954,7 @@ INSERT INTO `pms_product_attribute` VALUES ('32', '2', 'target', '0', '1', 'kid,
 INSERT INTO `pms_product_attribute` VALUES ('33', '2', 'style', '0', '1', 'business,hiphop,classic', '0', '0', '0', '0', '0', '1');
 INSERT INTO `pms_product_attribute` VALUES ('35', '2', 'color', '0', '0', '', '100', '0', '0', '0', '1', '0');
 INSERT INTO `pms_product_attribute` VALUES ('37', '1', 'target', '1', '1', 'kid,young,old', '0', '0', '0', '0', '0', '1');
-INSERT INTO `pms_product_attribute` VALUES ('38', '1', 'year', '1', '1', '2017,2017,2018,2018', '0', '0', '0', '0', '0', '1');
+INSERT INTO `pms_product_attribute` VALUES ('38', '1', 'year', '1', '1', '2017,2018,2019,2020', '0', '0', '0', '0', '0', '1');
 INSERT INTO `pms_product_attribute` VALUES ('39', '1', 'sleeve', '1', '1', 'short,long', '0', '0', '0', '0', '0', '1');
 INSERT INTO `pms_product_attribute` VALUES ('40', '2', 'size', '0', '1', '29,30,31,32,33,34', '0', '0', '0', '0', '0', '0');
 INSERT INTO `pms_product_attribute` VALUES ('41', '2', 'place', '0', '1', 'house,gym,business', '0', '0', '0', '0', '0', '1');

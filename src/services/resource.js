@@ -1,6 +1,6 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
-export const recourceServices = {
+export const resourceServices = {
   fetchList,
   createResource,
   updateResource,
@@ -8,22 +8,40 @@ export const recourceServices = {
   fetchAllResourceList
 }
 
-function fetchList(params) {
-  return apiServices.get('/resource/list',params);
+ function fetchList(params) {
+  return request({
+    url: '/resource/list',
+    method: 'get',
+    params: params
+  })
 }
 
-function createResource(data) {
-  return apiServices.post('/resource/create',data);
+ function createResource(data) {
+  return request({
+    url: '/resource/create',
+    method: 'post',
+    data: data
+  })
 }
 
-function updateResource(id, data) {
-  return apiServices.post('/resource/update/' + id,data);
+ function updateResource(id, data) {
+  return request({
+    url: '/resource/update/' + id,
+    method: 'post',
+    data: data
+  })
 }
 
-function deleteResource(id) {
-  return apiServices.post('/resource/delete/' + id,null);
+ function deleteResource(id) {
+  return request({
+    url: '/resource/delete/' + id,
+    method: 'post'
+  })
 }
 
-function fetchAllResourceList() {
-  return apiServices.get('/resource/listAll',null);
+ function fetchAllResourceList() {
+  return request({
+    url: '/resource/listAll',
+    method: 'get'
+  })
 }

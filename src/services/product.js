@@ -1,4 +1,4 @@
-import {apiServices} from './shared/api-service';
+import request from './shared/axios';
 
 export const productServices = {
   fetchList,
@@ -12,39 +12,74 @@ export const productServices = {
   getProduct
 }
 
-function fetchList(params) {
-  return apiServices.get('/product/list',params);
+ function fetchList(params) {
+  return request({
+    url:'/product/list',
+    method:'get',
+    params:params
+  })
 }
 
-function fetchSimpleList(params) {
-  return apiServices.get('/product/simpleList',params);
+ function fetchSimpleList(params) {
+  return request({
+    url:'/product/simpleList',
+    method:'get',
+    params:params
+  })
 }
 
-function updateDeleteStatus(params) {
-  return apiServices.post('/product/update/deleteStatus',params);
+ function updateDeleteStatus(params) {
+  return request({
+    url:'/product/update/deleteStatus',
+    method:'post',
+    params:params
+  })
 }
 
-function updateNewStatus(params) {
-  return apiServices.post('/product/update/newStatus',params);
+ function updateNewStatus(params) {
+  return request({
+    url:'/product/update/newStatus',
+    method:'post',
+    params:params
+  })
 }
 
-function updateRecommendStatus(params) {
-  return apiServices.post('/product/update/recommendStatus',params);
+ function updateRecommendStatus(params) {
+  return request({
+    url:'/product/update/recommendStatus',
+    method:'post',
+    params:params
+  })
 }
 
-function updatePublishStatus(params) {
-  return apiServices.post('/product/update/publishStatus',params);
+ function updatePublishStatus(params) {
+  return request({
+    url:'/product/update/publishStatus',
+    method:'post',
+    params:params
+  })
 }
 
-function createProduct(data) {
-  return apiServices.post('/product/create',data);
+ function createProduct(data) {
+  return request({
+    url:'/product/create',
+    method:'post',
+    data:data
+  })
 }
 
-function updateProduct(id,data) {
-  return apiServices.post('/product/update/'+id,data);
+ function updateProduct(id,data) {
+  return request({
+    url:'/product/update/'+id,
+    method:'post',
+    data:data
+  })
 }
 
-function getProduct(id) {
-  return apiServices.get('/product/updateInfo/'+id,null);
+ function getProduct(id) {
+  return request({
+    url:'/product/updateInfo/'+id,
+    method:'get',
+  })
 }
 

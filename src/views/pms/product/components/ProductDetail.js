@@ -1,23 +1,30 @@
 import React, {useState, useEffect} from 'react';
-import { Card, message, Steps } from 'antd';
+import { Card, Form, message, Steps } from 'antd';
 import ProductInfoDetail from './ProductInfoDetail';
 import ProductSaleDetail from './ProductSaleDetail';
-import productServices from 'services/product';
+import {productServices} from 'services/product';
 import './ProductDetail.scss';
+import ProductAttrDetail from './ProductAttrDetail';
+import ProductRelationDetail from './ProductRelationDetail';
+import { useLocation } from 'react-router-dom';
+import { history } from '../../../../redux/shared/history-redux';
 
 const { Step } = Steps;
 function ProductDetail(props){
-    const {isEdit,route}= props;
-
+    const {isEdit}= props;
+    const [form]=Form.useForm();
+    const route = useLocation();
+    const defaultStatus=[true,false,false,false];
     useEffect(() => {
         if(isEdit){
-            getProduct(route.query.id).then(response=>{
-                setproductParam(response.data);
+            productServices.getProduct(route.state.id).then(response=>{
+                setProductParam(response.data);
             });
         }
-    }, [])
+    }, []);
 
     const defaultProductParam = {
+        id:null,
         albumPics: '',
         brandId: null,
         brandName: '',
@@ -44,9 +51,9 @@ function ProductDetail(props){
         //member price{memberLevelId: 0,memberPrice: 0,memberLevelName: null}
         memberPriceList: [],
         //full reduction
-        productFullReductionList: [{fullPrice: 0, reducePrice: 0}],
+        productFullReductionList: [{key:0,fullPrice: 0, reducePrice: 0}],
         //ladder price
-        productLadderList: [{count: 0,discount: 0,price: 0}],
+        productLadderList: [{key:0,count: 0,discount: 0,price: 0}],
         previewStatus: 0,
         price: 0,
         productAttributeCategoryId: null,
@@ -67,7 +74,7 @@ function ProductDetail(props){
         promotionStartTime: '',
         promotionType: 0,
         publishStatus: 0,
-        recommandStatus: 0,
+        recommendStatus: 0,
         sale: 0,
         serviceIds: '',
         sort: 0,
@@ -80,61 +87,77 @@ function ProductDetail(props){
     };
     
     const [active, setactive] = useState(0);
-    const [productParam, setproductParam] = useState(defaultProductParam);
-    const [showStatus, setshowStatus] = useState([true,false,false,false]);
+    const [productParam, setProductParam] = useState(defaultProductParam);
+    const [showStatus, setshowStatus] = useState(defaultStatus);
 
+    useEffect(() => {
+        form.setFieldsValue(productParam);
+    }, [productParam])
+    const handleProductParamChange=(e,param)=>{
+        if(param) {
+            setProductParam({...productParam,[param]:e});
+        }else {
+            const {name,value} = e.target;
+            setProductParam({...productParam,[name]:value});
+        }  
+    }
     const prevStep=()=>{
         let act = active;
         let status = showStatus;
         if (active > 0 && active < showStatus.length) {
             act--;
-            setactive(act);
-            status.map=((item)=>false);
+            for(let i =0;i<status.length;i++){
+                status[i] = false;
+            }
             status[act] = true;
             setshowStatus(status);
+            setactive(act);
         }
     }
     const nextStep=()=>{
         let act = active;
         let status = showStatus;
-        if (active < showStatus.length-1) {
+        if (active < status.length-1) {
             act++;
-            setactive(act);
-            status.map=((item)=>false);
+            for(let i =0;i<status.length;i++){
+                status[i] = false;
+            }
             status[act] = true;
             setshowStatus(status);
+            setactive(act);
         }
     }
     const finishCommit=(isEdit)=>{
         if(isEdit){
-            productServices.updateProduct(route.query.id,productParam).then(response=>{
+            productServices.updateProduct(route.state.id,productParam).then(response=>{
                 message.success('Submit Success',10);
+                history.push("/pms/product");
             })
         }else {
             productServices.createProduct(productParam).then(response=>{
                 message.success('Submit Success',10);
+                location.reload();
             })
-            location.reload();
         }
     }
     
     
     return(
-        <Card>
-            <Steps labelPlacement='vertical' className="form-container" finish >
+        <Card size='small' className="form-container" >
+            <Steps labelPlacement='vertical'current={active}>
                 <Step title="Info"/>
                 <Step title="Sale"/>
-                <Step title="Attribution"/>
+                <Step title="Attribute"/>
                 <Step title="Related"/>
             </Steps>
             {showStatus[0] &&
-            <ProductInfoDetail is-edit={isEdit} value={productParam} nextStep={nextStep}/>}
+            <ProductInfoDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep}/>}
             {showStatus[1] &&
-            <ProductInfoDetail is-edit={isEdit} value={productParam} nextStep={nextStep}/>}
-            {/* {showStatus[2] &&
-            <ProductInfoDetail is-edit={isEdit} nextStep={nextStep}/>}
+            <ProductSaleDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep={prevStep}/>}
+            {showStatus[2] &&
+            <ProductAttrDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep ={prevStep}/>}
             {showStatus[3] &&
-            <ProductInfoDetail is-edit={isEdit} nextStep={nextStep}/>} */}
+            <ProductRelationDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} prevStep ={prevStep} finishCommit = {finishCommit}/>}
         </Card>
     )
 }

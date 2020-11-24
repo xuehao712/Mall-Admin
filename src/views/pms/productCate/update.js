@@ -1,19 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-
-import 'react-dates/lib/css/_datepicker.css';
+import ProductCateDetail from './components/productCateDetail';
 
 function UpdateProductCate(){
     
     
     return(
-        <div>
-            
-        </div>
+        <ProductCateDetail isEdit={true}/>
     )
 }
-export { UpdateProductCate };
+export default UpdateProductCate;
