@@ -19,7 +19,7 @@ Material-UI | UI Framework | [https://material-ui.com/](https://material-ui.com/
 
 ### Project Layout
 ``` lua
-src -- 源码目录
+src -- root
 ├── services -- axios request
 ├── assets -- static pictures
 ├── components -- global component 
