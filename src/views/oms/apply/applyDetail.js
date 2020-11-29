@@ -1,4 +1,4 @@
-import { Button, Card, Col, Image, Input, message, Row, Select, Table } from 'antd';
+import { Button, Card, Col, Image, Input, message, Row, Select, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect, useMemo} from 'react';
 import {returnApplyServices} from 'services/returnApply';
@@ -355,14 +355,14 @@ function ReturnApplyDetail(){
                     </Row>
                 </div>}
                 {orderReturnApply.status === 0 &&
-                <div style={{marginTop:'15px',textAlign:'center'}}>
+                <Space style={{marginTop:'15px',textAlign:'center'}}>
                     <Button type="primary" size="small" onClick={()=>handleUpdateStatus(1)}>ConfirmReturn</Button>
                     <Button danger size="small" onClick={()=>handleUpdateStatus(3)}>RefuseReturn</Button>
-                </div>}
+                </Space>}
                 {orderReturnApply.status === 1 &&
-                <div style={{marginTop:'15px',textAlign:'center'}}>
+                <Space style={{marginTop:'15px',textAlign:'center'}}>
                     <Button type="primary" size="small" onClick={()=>handleUpdateStatus(2)}>ConfirmReceive</Button>
-                </div>}
+                </Space>}
             </Card>
         </div>
     )

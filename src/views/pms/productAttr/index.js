@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, message, Modal, Table } from 'antd';
+import { Button, Card, Form, Input, message, Modal, Space, Table } from 'antd';
 import { ProfileOutlined, SearchOutlined } from '@ant-design/icons';
 import React, {useState, useEffect, useRef} from 'react';
 import Column from 'antd/lib/table/Column';
@@ -124,23 +124,23 @@ function ProductAttr(){
                     <Column title="AttrCount" align="center" width="200px" render={(text,record,index)=><div>{record.attributeCount==null?0:record.attributeCount}</div>}/>
                     <Column title="ParamCount" align="center" width="200px" render={(text,record,index)=><div>{record.paramCount==null?0:record.paramCount}</div>}/>
                     <Column title="Setting" align="center" width="200px" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>getAttrList(index,record)}>
                                 AttrList
                             </Button>
                             <Button size="small" onClick={()=>getParamList(index,record)}>
                                 ParamList
                             </Button>
-                        </div>}/>
+                        </Space>}/>
                     <Column title="Operation" align="center" width="200px" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>handleUpdate(index,record)}>
                                 Edit
                             </Button>
                             <Button size="small" danger onClick={()=>handleDelete(index,record)}>
                                 Delete
                             </Button>
-                        </div>}/>
+                        </Space>}/>
                 </Table>
                 <Modal forceRender title={dialogTitle} visible={dialogVisible} width="30%" onOk={handleConfirm} onCancel={()=>setDialogVisible(false)}>
                     <Form form={form} labelCol={{span:5}}>

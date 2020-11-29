@@ -1,6 +1,4 @@
 .navbar {
-  height: 50px;
-  line-height: 50px;
   border-radius: 0px !important;
   .hamburger-container {
     line-height: 58px;
@@ -14,14 +12,16 @@
     top: 16px;
     color: red;
   }
-  .avatar-container {
+  .menu-container{
     height: 50px;
     display: inline-block;
+    position: absolute;
+  }
+  .avatar-container {
     position: absolute;
     right: 35px;
     .avatar-wrapper {
       cursor: pointer;
-      margin-top: 5px;
       position: relative;
       .user-avatar {
         width: 40px;

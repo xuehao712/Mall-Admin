@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Form, Input, message, Select, Table } from 'antd';
+import { Button, Card, DatePicker, Form, Input, message, Select, Space, Table } from 'antd';
 import React, {useState, useEffect} from 'react';
 import {SearchOutlined, ProfileOutlined } from '@ant-design/icons';
 import Column from 'antd/lib/table/Column';
@@ -378,7 +378,7 @@ function Order(){
                             {formatStatus(record.status)}
                         </div>}/>
                     <Column width="200px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>handleViewOrder(index,record)}>Detail</Button>
                             {record.status===0 &&
                             <Button size="small" onClick={()=>handleCloseOrder(index,record)}>Close</Button>}
@@ -388,7 +388,7 @@ function Order(){
                             <Button size="small" onClick={()=>handleViewLogistics(index,record)}>Track</Button>}
                             {record.status===4 &&
                             <Button size="small" onClick={()=>handleDeleteOrder(index,record)}>Delete</Button>}
-                        </div>}/>
+                        </Space>}/>
                 </Table>
             </div>
             <div className="batch-operate-container">

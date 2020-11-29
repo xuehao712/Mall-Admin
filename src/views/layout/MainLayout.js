@@ -39,6 +39,9 @@ function MainLayout(props){
                 <Content>
                     <MainRoutes/>
                 </Content>
+                <Footer style={{textAlign:'center',padding:'10px 50px'}} color="#8f959c">
+                    &#169;Copyright. All right reserved.
+                </Footer>
             </Layout>
         </Layout>           
     )

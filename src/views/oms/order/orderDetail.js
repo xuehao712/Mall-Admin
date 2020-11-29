@@ -1,5 +1,5 @@
 import { EnvironmentOutlined, WarningOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, message, Popover, Row, Steps, Table } from 'antd';
+import { Button, Card, Col, Form, Input, message, Popover, Row, Space, Steps, Table } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
 import Column from 'antd/lib/table/Column';
@@ -365,35 +365,35 @@ function OrderDetail(){
                     <WarningOutlined style={{marginLeft:'20px'}}/>
                     <span className="color-danger">Current Status: {formatStatus(order.status)}</span>
                     {order.status===0 && 
-                    <div className="OrderDetail_operate-button-container">
+                    <Space className="OrderDetail_operate-button-container">
                         <Button size="small" onClick={showUpdateReceiverDialog}>ModifyReceiverInfo</Button>
                         <Button size="small">ModifyProductInfo</Button>
                         <Button size="small" onClick={showUpdateMoneyDialog}>ModifyFeeInfo</Button>
                         <Button size="small" onClick={showMessageDialog}>SendMessage</Button>
                         <Button size="small" onClick={showCloseOrderDialog}>CloseOrder</Button>
                         <Button size="small" onClick={showMarkOrderDialog}>Note</Button>
-                    </div>
+                    </Space>
                     }
                     {order.status===1 && 
-                    <div className="OrderDetail_operate-button-container">
+                    <Space className="OrderDetail_operate-button-container">
                         <Button size="small" onClick={showUpdateReceiverDialog}>ModifyReceiverInfo</Button>
                         <Button size="small" onClick={showMessageDialog}>SendMessage</Button>
                         <Button size="small">CancelOrder</Button>
                         <Button size="small" onClick={showMarkOrderDialog}>Note</Button>
-                    </div>
+                    </Space>
                     }
                     {(order.status===2||order.status===3) && 
-                    <div className="OrderDetail_operate-button-container">
+                    <Space className="OrderDetail_operate-button-container">
                         <Button size="small" onClick={showLogisticsDialog}>TrackOrder</Button>
                         <Button size="small" onClick={showMessageDialog}>SendMessage</Button>
                         <Button size="small" onClick={showMarkOrderDialog}>Note</Button>
-                    </div>
+                    </Space>
                     }
                     {order.status===4 && 
-                    <div className="OrderDetail_operate-button-container">
+                    <Space className="OrderDetail_operate-button-container">
                         <Button size="small" onClick={handleDeleteOrder}>DeleteOrder</Button>
                         <Button size="small" onClick={showMarkOrderDialog}>Note</Button>
-                    </div>
+                    </Space>
                     }
                 </div>
                 <div style={{marginTop:'20px'}}>

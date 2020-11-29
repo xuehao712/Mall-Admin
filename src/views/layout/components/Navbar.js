@@ -29,25 +29,31 @@ function CNavbar(props){
         dispatch(appActions.ToggleSidebar());
     }
     return(
-        <Menu className="navbar" mode="horizontal">
-            <Menu.Item key="hamburger">
-                <CHamburger className="hamburger-container"toggleClick={toggleSideBar} isActive={sideBarState?sideBarState.opened:false}></CHamburger>
-            </Menu.Item>
-            <SubMenu key="icon" className="avatar-container" 
-            icon={<div className="avatar-wrapper">
-            <img className="user-avatar" src={avatar} style={{verticalAlign:'top'}}/>
-            <CaretDownOutlined />
-            </div>} popupClassName="user-dropdown">
-                <Menu.Item key="home">
-                    <Link className="inlineBlock" to="/">
-                        Home
-                    </Link>
+        <div>
+            <Menu className="navbar" mode="horizontal" selectable={false}>
+                <Menu.Item key="hamburger">
+                    <CHamburger className="hamburger-container "toggleClick={toggleSideBar} isActive={sideBarState?sideBarState.opened:false}></CHamburger>
                 </Menu.Item>
-                <Menu.Item key="logout">
-                    <span onClick={logout} style={{display:'block'}}>Logout</span>
+                <Menu.Item key="breadcrumb" style={{cursor:'default'}} className="breadcrumb-container" disabled>
+                    <CBreadcrumb></CBreadcrumb>
                 </Menu.Item>
-            </SubMenu>
-        </Menu>        
+                <SubMenu key="icon" className="avatar-container" 
+                icon={<div className="avatar-wrapper">
+                <img className="user-avatar" src={avatar}/>
+                <CaretDownOutlined />
+                </div>} popupClassName="user-dropdown">
+                    <Menu.Item key="home">
+                        <Link className="inlineBlock" to="/">
+                            Home
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="logout">
+                        <span onClick={logout} style={{display:'block'}}>Logout</span>
+                    </Menu.Item>
+                </SubMenu>
+            </Menu>     
+        </div>
+           
     )
 }
 export default withRouter(CNavbar);

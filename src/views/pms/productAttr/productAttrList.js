@@ -1,5 +1,5 @@
 import { ProfileOutlined } from '@ant-design/icons';
-import { Button, Card, message, Select, Table } from 'antd';
+import { Button, Card, message, Select, Space, Table } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
@@ -140,10 +140,10 @@ function ProductAttrList(){
                     <Column title="InputList" align="center" render={(text,record,index)=><div>{record.inputList}</div>}/>
                     <Column title="Sort" align="center" width="100px" render={(text,record,index)=><div>{record.sort}</div>}/>
                     <Column title="Operation" align="center" width="200px" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>handleUpdate(index,record)}>Edit</Button>
                             <Button size="small" danger onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                        </Space>}/>
                 </Table>
             </div>
             <div className="batch-operate-container">

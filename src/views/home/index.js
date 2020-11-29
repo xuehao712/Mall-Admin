@@ -10,7 +10,7 @@ import {str2Date} from 'utils/date';
 import img_home_order from '../../assets/images/home_order.png'
 import img_home_today_amount from 'assets/images/home_today_amount.png';
 import img_home_yesterday_amount from 'assets/images/home_yesterday_amount.png';
-import { Grid } from '@material-ui/core';
+import { Button, Col, Row } from 'antd';
 
 function Home(props){
     var moment = require('moment');
@@ -86,165 +86,171 @@ function Home(props){
     return(
         <div className="app-container app-container_home">
             <div className="address-layout_home">
-                <Grid container spacing={3}>
-                    <Grid item sm={3}>
+                <Row gutter={20}>
+                    <Col span={6}>
                         <div className="out-border_home">
                             <div className="layout-title_home">BackEnd</div>
                             <div className="text-primary address-content_home">
-                                <Link to="#">mall</Link>
+                                <Button type="link" href="https://github.com/xuehao712/Mall">
+                                    mall
+                                </Button>
                             </div>
                         </div>
-                    </Grid>
-                    <Grid item sm={3}>
+                    </Col>
+                    <Col span={6}>
                         <div className="out-border_home">
                             <div className="layout-title_home">FrontEnd</div>
                             <div className="text-primary address-content_home">
-                                <Link to="#">mall-admin</Link>
+                                <Button type="link" href="https://github.com/xuehao712/Mall-Admin">
+                                    mall-admin
+                                </Button>
                             </div>
                         </div>
-                    </Grid>
-                    <Grid item sm={3}>
+                    </Col>
+                    <Col span={6}>
                         <div className="out-border_home">
                             <div className="layout-title_home">Welcome</div>
                             <div className="text-primary address-content_home">
-                                <Link to="#">My Github</Link>
+                                <Button type="link" href="https://github.com/xuehao712">
+                                    My Github
+                                </Button>
                             </div>
                         </div>
-                    </Grid>
-                </Grid>
+                    </Col>
+                </Row>
             </div>
             <div className="total-layout_home">
-                <Grid container spacing={3}>
-                    <Grid item sm={3}>
+                <Row gutter={20}>
+                    <Col span={6}>
                         <div className="total-frame_home">
                             <img src={img_home_order} className="total-icon_home"></img>
                             <div className="total-title_home">Today order total:</div>
                             <div className="total-value_home">50</div>
                         </div>
-                    </Grid>
-                    <Grid item sm={3}>
+                    </Col>
+                    <Col span={6}>
                         <div className="total-frame_home">
                             <img src={img_home_today_amount} className="total-icon_home"></img>
                             <div className="total-title_home">Today sale total:</div>
                             <div className="total-value_home">$5000.00</div>
                         </div>
-                    </Grid>
-                    <Grid item sm={3}>
+                    </Col>
+                    <Col span={6}>
                         <div className="total-frame_home">
                             <img src={img_home_yesterday_amount} className="total-icon_home"></img>
                             <div className="total-title_home">Yesterday sale total:</div>
                             <div className="total-value_home">$4000.00</div>
                         </div>
-                    </Grid>
-                </Grid>
+                    </Col>
+                </Row>
             </div>
             <div className="un-handle-layout_home">
                 <div className="layout-title_home">Unhandle Business</div>
                 <div className="un-handle-content_home">
-                    <Grid container spacing={3}>
-                        <Grid item sm={4}>
+                    <Row gutter={20}>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Unpaid order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Completed order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Wait to confirm order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Unshipped order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Out of stock</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Unsolved return application</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Shipped order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Unsolved return order</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                        <Grid item sm={4}>
+                        </Col>
+                        <Col span={8}>
                             <div className="un-handle-item_home">
                                 <span className="font-medium">Advertise almost expire</span>
                                 <span style={{float:"right"}} className="color-danger">(20)</span>
                             </div>
-                        </Grid>
-                    </Grid>
+                        </Col>
+                    </Row>
                 </div>
             </div>
             <div className="overview-layout_home">
-                <Grid container spacing={3}>
-                    <Grid item sm={6}>
+                <Row gutter={20}>
+                    <Col span={12}>
                         <div className="out-border_home">
                             <div className="layout-title_home">Product Overview</div>
                             <div style={{padding:"40px"}}>
-                                <Grid container spacing={3}>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">200</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">100</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">200</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">5000</Grid>
-                                </Grid>
-                                <Grid container spacing={3}>
-                                    <Grid item sm={3} className="overview-item-title_home">Unpublished</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Published</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Low-Stock</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Total Products</Grid>
-                                </Grid>
+                                <Row>
+                                    <Col span={6} className="color-danger overview-item-value_home">200</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">100</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">200</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">5000</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={6} className="overview-item-title_home">Unpublished</Col>
+                                    <Col span={6} className="overview-item-title_home">Published</Col>
+                                    <Col span={6} className="overview-item-title_home">Low-Stock</Col>
+                                    <Col span={6} className="overview-item-title_home">Total Products</Col>
+                                </Row>
                             </div>
                         </div>
-                    </Grid>
-                    <Grid item sm={6}>
+                    </Col>
+                    <Col span={12}>
                         <div className="out-border_home">
                             <div className="layout-title_home">User Overview</div>
                             <div style={{padding:"40px"}}>
-                                <Grid container spacing={3}>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">20</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">100</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">220</Grid>
-                                    <Grid item sm={3} className="color-danger overview-item-value_home">4500</Grid>
-                                </Grid>
-                                <Grid container spacing={3}>
-                                    <Grid item sm={3} className="overview-item-title_home">Today Increase</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Yesterday Increase</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Month Increase</Grid>
-                                    <Grid item sm={3} className="overview-item-title_home">Total Users</Grid>
-                                </Grid>
+                                <Row>
+                                    <Col span={6} className="color-danger overview-item-value_home">20</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">100</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">220</Col>
+                                    <Col span={6} className="color-danger overview-item-value_home">4500</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={6} className="overview-item-title_home">Today Increase</Col>
+                                    <Col span={6} className="overview-item-title_home">Yesterday Increase</Col>
+                                    <Col span={6} className="overview-item-title_home">Month Increase</Col>
+                                    <Col span={6} className="overview-item-title_home">Total Users</Col>
+                                </Row>
                             </div>
                         </div>
-                    </Grid>
-                </Grid>
+                    </Col>
+                </Row>
             </div>
             <div className="statistics-layout_home">
                 <div className="layout-title_home">Order Statistics</div>
-                <Grid container spacing={3}>
-                    <Grid item sm={2}>
+                <Row>
+                    <Col span={4}>
                         <div style={{padding:'20px'}}>
                             <div>
                                 <div style={{color:'#909399'}} className="m-size-medium">Monthly Order Amount</div>
@@ -279,8 +285,8 @@ function Home(props){
                                 </div>
                             </div>
                         </div>
-                    </Grid>
-                    <Grid item sm={10}>
+                    </Col>
+                    <Col span={20}>
                         <div style={{borderLeft:'1px solid #DCDFE6'}} className="m-padding-small">
                             <DateRangePicker 
                                 startDate={dateRange.startDate}
@@ -301,8 +307,8 @@ function Home(props){
                                 </LineChart>
                             </ResponsiveContainer>   
                         </div>
-                    </Grid>
-                </Grid>
+                    </Col>
+                </Row>
             </div>
         </div>
     )

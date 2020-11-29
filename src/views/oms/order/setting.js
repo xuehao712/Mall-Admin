@@ -15,26 +15,22 @@ function OrderSetting(){
         finishOvertime: 0,
         commentOvertime: 0
     };
-    const checkTime = (rule, value, callback) => {
+    const checkTime = (rule, value) => {
         if (!value) {
-          return callback(new Error('Time cannot be empty'));
+          return Promise.reject('Time cannot be empty');
         }
         console.log("checkTime",value);
         let intValue = parseInt(value);
         if (!Number.isInteger(intValue)) {
-          return callback(new Error('Please enter number'));
+          return Promise.reject('Please enter number');
         }
-        callback();
+        return Promise.resolve();
     };
-    const [orderSetting, setOrderSetting] = useState(defaultOrderSetting);
 
     //Initial
     useEffect(() => {
         getDetail();
     }, []);
-    useEffect(() => {
-        form.setFieldsValue(orderSetting);
-    }, [orderSetting]);
 
     //Method
     const onConfirm=()=>{
@@ -44,7 +40,7 @@ function OrderSetting(){
             cancelText:'Cancel',
             type:'warning',
             onOk(){
-                orderSettingServices.updateOrderSetting(1,orderSetting).then(response=>{
+                orderSettingServices.updateOrderSetting(1,form.getFieldsValue()).then(response=>{
                     message.success("Submit Success!",10);
                 })
             },
@@ -57,45 +53,31 @@ function OrderSetting(){
     }
     const getDetail=()=>{
         orderSettingServices.getOrderSetting(1).then(response=>{
-            setOrderSetting(response.data);
+            form.setFieldsValue(response.data);
         })
-    }
-    const handleOrderSettingChange =(e)=>{
-        const {value,name} = e.target;
-        setOrderSetting({...orderSetting,[name]:value});
     }
     return(
         <Card className="form-container">
             <Form form={form} labelCol={{span:6}} onFinish={onConfirm} onFinishFailed={onConfirmFail}>
-                <Form.Item label="FlashOrder: " name="flashOrderOvertime"
+                <Form.Item label="FlashOrder: " name="flashOrderOvertime" extra="Unpaid, close order"
                 rules={[{validator:checkTime}]}>
-                    <Input value={OrderSetting.flashOrderOvertime} name="flashOrderOvertime" onChange={handleOrderSettingChange}
-                    className="Setting_input-width" suffix="min" />
-                    <spam className="Setting_note-margin">Unpaid, close order</spam>
+                    <Input type="number" className="Setting_input-width" suffix="min" />
                 </Form.Item>
-                <Form.Item label="NormalOrder: " name="normalOrderOvertime"
+                <Form.Item label="NormalOrder: " name="normalOrderOvertime" extra="Unpaid, close order"
                 rules={[{validator:checkTime}]}>
-                    <Input value={OrderSetting.normalOrderOvertime} name="normalOrderOvertime" onChange={handleOrderSettingChange}
-                    className="Setting_input-width" suffix="min"/>
-                    <spam className="Setting_note-margin">Unpaid, close order</spam>
+                    <Input type="number" className="Setting_input-width" suffix="min"/>
                 </Form.Item>
-                <Form.Item label="Shipped: " name="confirmOvertime"
+                <Form.Item label="Shipped: " name="confirmOvertime" extra="Unconfirm, complete order"
                 rules={[{validator:checkTime}]}>
-                    <Input value={OrderSetting.confirmOvertime} name="confirmOvertime" onChange={handleOrderSettingChange}
-                    className="Setting_input-width" suffix="day"/>
-                    <spam className="Setting_note-margin">Unconfirm, complete order</spam>
+                    <Input type="number" className="Setting_input-width" suffix="day"/>
                 </Form.Item>
-                <Form.Item label="OrderComplete: " name="finishOvertime"
+                <Form.Item label="OrderComplete: " name="finishOvertime" extra="Finish transaction, no customer service"
                 rules={[{validator:checkTime}]}>
-                    <Input value={OrderSetting.finishOvertime} name="finishOvertime" onChange={handleOrderSettingChange}
-                    className="Setting_input-width" suffix="day"/>
-                    <spam className="Setting_note-margin">Finish transaction, no customer service</spam>
+                    <Input type="number" className="Setting_input-width" suffix="day"/>
                 </Form.Item>
-                <Form.Item label="OrderComplete: " name="commentOvertime"
+                <Form.Item label="OrderComplete: " name="commentOvertime" extra="Positive Review"
                 rules={[{validator:checkTime}]}>
-                    <Input value={OrderSetting.commentOvertime} name="commentOvertime" onChange={handleOrderSettingChange}
-                    className="Setting_input-width" suffix="day"/>
-                    <spam className="Setting_note-margin">Positive Review</spam>
+                    <Input type="number" className="Setting_input-width" suffix="day"/>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">

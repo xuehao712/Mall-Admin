@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, message, Radio, Select } from 'antd';
+import { Button, Card, Form, Input, message, Radio, Select, Space } from 'antd';
 import React, {useState, useEffect} from 'react';
 import {productAttrCateServices} from 'services/productAttrCate';
 import {productAttrServices} from 'services/productAttr';
@@ -35,7 +35,7 @@ function ProductAttrDetail(props){
         if(isEdit) {
             productAttrServices.getProductAttr(route.state.id).then(response=>{
                 setProductAttr(response.data);
-                setInputListFormat(response.data.inputList.replace(/,/g,'\n'));
+                setInputListFormat(response.data.inputList);
             });
         }else {
             resetProductAttr();
@@ -44,12 +44,11 @@ function ProductAttrDetail(props){
 
     //Watch value change
     useEffect(() => {
-        form.setFieldsValue(productAttr);
-    }, [productAttr])
+        form.setFieldsValue({...productAttr,inputListFormat:inputListFormat});
+    }, [productAttr,inputListFormat])
     useEffect(() => {
         if(inputListFormat){
-            var newValue = inputListFormat.replace(/\n/g,',');
-            setProductAttr({...ProductAttr,inputList:newValue});
+            setProductAttr({...ProductAttr,inputList:inputListFormat});
         }
     }, [inputListFormat])
 
@@ -165,8 +164,10 @@ function ProductAttrDetail(props){
                     <Input type="number" value={productAttr.sort} name="sort" onChange={handleProductAttrChange}/>
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">Submit</Button>
-                    {!isEdit && <Button onClick={resetForm}>Reset</Button> }
+                    <Space>
+                        <Button type="primary" htmlType="submit">Submit</Button>
+                        {!isEdit && <Button onClick={resetForm}>Reset</Button> }
+                    </Space>  
                 </Form.Item>
             </Form>
         </Card>

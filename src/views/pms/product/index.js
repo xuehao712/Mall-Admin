@@ -498,9 +498,9 @@ function Product(){
         render:(text,record,index)=>(
           <div>
             <p>{verifyStatusFilter(record.verifyStatus)}</p>
-            <Button type="link" onClick={()=>handleShowVerifyDetail(record)}>
+            {/* <Button type="link" onClick={()=>handleShowVerifyDetail(record)}>
               Detail
-            </Button>
+            </Button> */}
           </div>
         )
       },
@@ -511,21 +511,14 @@ function Product(){
         render:(text,record,index)=>(
           <div className="Product_operation">
             <div>
-              <div className="Product_operation-section">
+              {/* <div className="Product_operation-section">
                 <Button size="small" onClick={()=>handleShowProduct(index,record)}>
                   View
                 </Button>
-              </div>
+              </div> */}
               <div className="Product_operation-section">
                 <Button size="small"onClick={()=>handleUpdateProduct(index, record)}>
                   Edit
-                </Button>
-              </div>
-            </div>
-            <div>
-              <div className="Product_operation-section">
-                <Button size="small" onClick={()=>handleShowLog(index,record)}>
-                  Log
                 </Button>
               </div>
               <div className="Product_operation-section">
@@ -533,6 +526,13 @@ function Product(){
                   Delete
                 </Button>
               </div>  
+            </div>
+            <div>
+              {/* <div className="Product_operation-section">
+                <Button size="small" onClick={()=>handleShowLog(index,record)}>
+                  Log
+                </Button>
+              </div> */}
             </div>
           </div>
         )

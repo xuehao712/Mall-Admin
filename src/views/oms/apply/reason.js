@@ -70,7 +70,7 @@ function ReturnReason(){
             returnReasonServices.updateReason(operateReasonId,returnReason).then(response=>{
                 setDialogVisible(false);
                 setOperateReasonId(null);
-                message.success("Add Success",10);
+                message.success("Update Success",10);
                 getList();
             });
         }

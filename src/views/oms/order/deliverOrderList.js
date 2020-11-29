@@ -1,5 +1,5 @@
 import { ProfileOutlined } from '@ant-design/icons';
-import { Button, Card, Input, message, Select, Table } from 'antd';
+import { Button, Card, Input, message, Select, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
@@ -101,8 +101,10 @@ function DeliverOrderList(){
                     />
                 </Table>
                 <div style={{marginTop:'15px',textAlign:'center'}}>
-                    <Button onClick={onCancel}>Cancel</Button>
-                    <Button onClick={onConfirm} type="primary">Confirm</Button>
+                    <Space>
+                        <Button onClick={onCancel}>Cancel</Button>
+                        <Button onClick={onConfirm} type="primary">Confirm</Button>
+                    </Space>
                 </div>
             </div>
         </div>

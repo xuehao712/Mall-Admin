@@ -1,5 +1,5 @@
 import { ProfileOutlined } from '@ant-design/icons';
-import { Button, Card, message, Switch, Table } from 'antd';
+import { Button, Card, message, Space, Switch, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
 import { history } from '../../../redux/shared/history-redux';
@@ -148,15 +148,15 @@ function ProductCate(){
                     <Column title="Display" width="100px" align="center" render={(text,record,index)=><Switch onChange={(e)=>handleShowStatusChange(e,record)} checked={record.showStatus}></Switch>}/>
                     <Column title="Sort" width="100px" align="center" render={(text,record,index)=><div>{record.sort}</div>}/>
                     <Column title="Setting" width="200px" align="center" render={(text,record,index)=>
-                        <div>
-                            <Button size="small"disabled={disableNextLevel(record.level)}  onClick={()=>handleShowNextLevel(record.level)} onClick={()=>handleShowNextLevel(index,record)}>Next Level</Button>
+                        <Space>
+                            <Button size="small"disabled={disableNextLevel(record.level)}  onClick={()=>handleShowNextLevel(index,record)}>Next Level</Button>
                             <Button size="small" onClick={()=>handleTransferProduct(index,record)}>Transfer</Button>
-                        </div>}/>
+                        </Space>}/>
                     <Column title="Operation" width="200px" align="center" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>handleUpdate(index,record)}>Modify</Button>
                             <Button size="small" danger onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                        </Space>}/>
                 </Table>
             </div>
         </div>
