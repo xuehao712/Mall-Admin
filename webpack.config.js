@@ -14,8 +14,7 @@ const publicConfig = {
             {
                 test: /\.(css|scss)$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["style-loader", "css-loader", "postcss-loader",'sass-loader',]
+                    use: [ "css-loader", "postcss-loader",'sass-loader',]
                 })
             }
         ]
