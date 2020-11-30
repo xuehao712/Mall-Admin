@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfig = require('./webpack.common.config.js');
 
 const publicConfig = {
@@ -12,9 +12,9 @@ const publicConfig = {
     module: {
         rules: [
             {
-                test: /\.(css|scss)$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: ExtractTextPlugin.extract({
-                    use: [ "css-loader", "postcss-loader",'sass-loader',]
+                    use: [MiniCssExtractPlugin.loader,"css-loader", "postcss-loader",'sass-loader',]
                 })
             }
         ]
@@ -30,7 +30,8 @@ const publicConfig = {
         new ExtractTextPlugin({
             filename: '[name].[contenthash:5].css',
             allChunks: true
-        })
+        }),
+        new MiniCssExtractPlugin()
     ]
 
 };
