@@ -1,5 +1,20 @@
 module.exports = {
-    plugins: {
-        'postcss-cssnext': {}
-    }
+    plugins: 
+    [
+        require('autoprefixer'),
+        {
+            'postcss-cssnext': {},
+        }
+    ],
+    
 };
+module.exports = {
+    plugins: [
+      [
+        "postcss-preset-env",
+        {
+          // Options
+        },
+      ],
+    ],
+  };

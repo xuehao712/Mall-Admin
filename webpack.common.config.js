@@ -21,6 +21,7 @@ commonConfig = {
         {
             test: /\.js$/,
             use: ['babel-loader?cacheDirectory=true'],
+            
             include: path.join(__dirname, 'src')
         },
         {
@@ -47,16 +48,15 @@ commonConfig = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, 'src/index.html')
-        }),
-        new webpack.HashedModuleIdsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'runtime'
         })
     ],
-
+    
+    optimization: {
+        splitChunks: {
+          // include all types of chunks
+          chunks: 'all'
+        }
+    },
     resolve: {
         alias: {
             views: path.join(__dirname, 'src/views'),

@@ -1,0 +1,1 @@
+{"version":3,"file":"2188.c2eb3.css","sources":["webpack://mall-admin/./src/views/pms/product/index.scss"],"sourcesContent":[".Product_operation-section{\r\n    padding:3px;\r\n}\r\n.Product_operation{\r\n    display: inline-flex;\r\n}"],"mappings":"AAAA;","sourceRoot":""}
