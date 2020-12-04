@@ -31,7 +31,7 @@ const publicConfig = {
     ],
     externals: {
         config: JSON.stringify({
-            apiUrl: 'http://3.14.135.234:8080'
+            apiUrl: 'http://52.15.39.94:8080'
         })
     }
 };
