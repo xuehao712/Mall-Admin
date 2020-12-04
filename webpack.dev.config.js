@@ -29,6 +29,11 @@ const devConfig = {
         contentBase: path.join(__dirname, './dist'),
         historyApiFallback: true,
         host: '0.0.0.0',
+    },
+    externals: {
+        config: JSON.stringify({
+            apiUrl: 'http://localhost:8080'
+        })
     }
 };
 

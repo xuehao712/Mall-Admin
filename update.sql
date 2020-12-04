@@ -1946,7 +1946,7 @@ CREATE TABLE `ums_member_login_log` (
   `ip` varchar(64) DEFAULT NULL,
   `city` varchar(64) DEFAULT NULL,
   `login_type` int(1) DEFAULT NULL COMMENT 'login platform：0->PC；1->android;2->ios;3->other',
-  `province` varchar(64) DEFAULT NULL,
+  `state` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='member login log';
 
@@ -1995,7 +1995,7 @@ CREATE TABLE `ums_member_receive_address` (
   `phone_number` varchar(64) DEFAULT NULL,
   `default_status` int(1) DEFAULT NULL COMMENT 'whether default',
   `zip_code` varchar(100) DEFAULT NULL COMMENT 'zip code',
-  `province` varchar(100) DEFAULT NULL COMMENT 'state',
+  `state` varchar(100) DEFAULT NULL COMMENT 'state',
   `city` varchar(100) DEFAULT NULL COMMENT 'city',
   `detail_address` varchar(128) DEFAULT NULL COMMENT 'detail address',
   PRIMARY KEY (`id`)

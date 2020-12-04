@@ -28,8 +28,12 @@ const publicConfig = {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash:5].css'
         })
-    ]
-
+    ],
+    externals: {
+        config: JSON.stringify({
+            apiUrl: 'http://3.14.135.234:8080'
+        })
+    }
 };
 
 module.exports = merge(commonConfig, publicConfig);
