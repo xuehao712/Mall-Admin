@@ -1,5 +1,5 @@
 import { ProfileOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, message, Select, Switch, Table } from 'antd';
+import { Button, Card, Form, Input, message, Select, Space, Switch, Table } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import Modal from 'antd/lib/modal/Modal';
 import Column from 'antd/lib/table/Column';
@@ -57,7 +57,7 @@ function Brand(){
             okType:'primary',
             onOk(){
                 brandServices.deleteBrand(row.id).then(response=>{
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     getList();
                 })
             },
@@ -76,7 +76,7 @@ function Brand(){
         data.append("ids", row.id);
         data.append("factoryStatus", value);
         brandServices.updateFactoryStatus(data).then(response =>{
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
             getList();
         }).catch(error=>{
             if(row.factoryStatus === 0) {
@@ -92,7 +92,7 @@ function Brand(){
         data.append("ids", row.id);
         data.append("showStatus", value);
         brandServices.updateShowStatus(data).then(response=>{
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
             getList();
         }).catch(error=>{
             if(row.showStatus === 0) {
@@ -123,7 +123,7 @@ function Brand(){
     const handleBatchOperate=()=>{
         console.log(multipleSelection);
         if(multipleSelection<1){
-            message.warning("Please select one record",10);
+            message.warning("Please select one record",5);
             return;
         }
         let showStatus = 0;
@@ -132,19 +132,19 @@ function Brand(){
         } else if(operateType === 'hideBrand') {
             showStatus = 0;
         } else {
-            message.warning("Please select multiple operation type",10);
+            message.warning("Please select multiple operation type",5);
             return;
         }
         let ids = [];
         for(let i = 0; i < multipleSelection.length;i++){
-            ids.push(multipleSelection[i].id);
+            ids.push(multipleSelection[i]);
         }
         let data = new URLSearchParams();
         data.append("ids",ids);
         data.append("showStatus",showStatus);
         brandServices.updateShowStatus(data).then(response => {
             getList();
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
         });
     }
     const addBrand=()=>{
@@ -172,7 +172,7 @@ function Brand(){
                     <span>Filter Search</span>
                     <Button onClick={searchBrandList} type="primary" size="small"
                     style={{float:'right'}}>
-                        Result
+                        Search
                     </Button>
                 </div>
                 <div style={{marginTop:'15px'}}>
@@ -199,7 +199,7 @@ function Brand(){
                     <Column align="center" title="Manufactory" width="100px" render={(text,record,index)=><Switch onChange={(e)=>handleFactoryStatusChange(e,record)} checked={record.factoryStatus} />}/>
                     <Column align="center" title="Display" width="100px" render={(text,record,index)=><Switch onChange={(e)=>handleShowStatusChange(e,record)} checked={record.showStatus} />}/>
                     <Column align="center" title="Related" width="230px" render={(text,record,index)=>(
-                        <div>
+                        <div style={{minWidth:'200px'}}>
                             <span>Product: </span>
                             <Button size="small" type="text" onClick={()=>getProductList(index,record)}>
                                 100
@@ -208,15 +208,15 @@ function Brand(){
                             <Button size="small" type="text" onClick={()=>getProductCommentList(index,record)}>1000</Button>
                         </div>
                     )}/>
-                    <Column align="center" label="Opeartion" width="200px"render={(text,record,index)=>(
-                        <div>
+                    <Column align="center" title="Opeartion" width="200px" render={(text,record,index)=>(
+                        <Space>
                             <Button size="small" onClick={()=>handleUpdate(index,record)}>
                                 Edit
                             </Button>
                             <Button size="small" danger onClick={()=>handleDelete(index,record)}>
                                 Delete
                             </Button>
-                        </div>
+                        </Space>
                     )}/>
                 </Table>
                 <div className="batch-opearte-container">

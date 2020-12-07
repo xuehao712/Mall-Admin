@@ -62,13 +62,13 @@ function HomeAdvertiseDetail(props){
                 if(isEdit) {
                     homeAdvertiseServices.updateHomeAdvertise(route.state.id, homeAdvertiseForm.getFieldValue()).then(response => {
                         homeAdvertiseForm.resetFields();
-                        message.success("Modify Success",10);
+                        message.success("Modify Success",5);
                         history.goBack();
                     });
                 } else {
                     homeAdvertiseServices.createHomeAdvertise( homeAdvertiseForm.getFieldValue()).then(response => {
                         resetForm();
-                        message.success("Submit Success",10);
+                        message.success("Submit Success",5);
                     });
                 }
             },
@@ -76,113 +76,64 @@ function HomeAdvertiseDetail(props){
         });
     }
     const onSubmitFail=()=>{
-        message.error("Validation Fail",10);
+        message.error("Validation Fail",5);
         return false;
     }
     const resetForm=()=>{
         homeAdvertiseForm.setFieldsValue(defaultHomeAdvertise);
     }
     return(
-        // <Card className="form-container">
-        //     <Form form={homeAdvertiseForm} labelCol={{span:6}} size="small" onFinish={onSubmit} onFinishFailed={onSubmitFail}>
-        //         <Form.Item label="Name: " name="name"
-        //         rules={[{required:true,message:'Please enter advertise name'},
-        //         {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-        //             <Input value={homeAdvertise.name} className="input-width" onChange={handleHomeAdvertiseChange} name="name"/>
-        //         </Form.Item>
-        //         <Form.Item label="Type: " name="type">
-        //             <Select value={homeAdvertise.type} onChange={(e)=>handleHomeAdvertiseChange(e,"type")} name="type">
-        //                 {defaultTypeOptions.map((item)=>{
-        //                     return <Option key={item.value} value={item.value}>{item.label}</Option>
-        //                 })}
-        //             </Select>
-        //         </Form.Item>
-        //         <Form.Item label="StartTime: " name="startTime"
-        //         rules={[{required:true,message:'Please enter start time'}]}>
-        //             <DatePicker value={homeAdvertise.startTime?moment(homeAdvertise.startTime):null} format="YYYY-MM-DD HH:mm:ss" showTime
-        //             onChange={(date,dateString)=>setHomeAdvertise({...homeAdvertise,startTime:dateString})} name="startTime" placeholder="Select Date"/>
-        //         </Form.Item>
-        //         <Form.Item label="EndTime: " name="endTime"
-        //         rules={[{required:true,message:'Please enter end time'}]}>
-        //             <DatePicker value={homeAdvertise.endTime?moment(homeAdvertise.endTime):null} format="YYYY-MM-DD HH:mm:ss" showTime
-        //             onChange={(date,dateString)=>setHomeAdvertise({...homeAdvertise,endTime:dateString})} name="endTime" placeholder="Select Date"/>
-        //         </Form.Item>
-        //         <Form.Item label="Status: " name="status">
-        //             <Radio.Group value={homeAdvertise.status} onChange={handleHomeAdvertiseChange} name="status">
-        //                 <Radio value={0}>Unpublish</Radio>
-        //                 <Radio value={1}>Publish</Radio>
-        //             </Radio.Group>
-        //         </Form.Item>
-        //         <Form.Item label="Picture: " name="pic"
-        //         rules={[{required:true,message:'Please select advertise picture'}]}>
-        //             <SingleUpload value={homeAdvertise.pic} onChange={handleHomeAdvertiseChange} name="pic"/>
-        //         </Form.Item>
-        //         <Form.Item label="Sort: " name="sort">
-        //             <Input value={homeAdvertise.sort} className="input-width" onChange={handleHomeAdvertiseChange} name="sort"/>
-        //         </Form.Item>
-        //         <Form.Item label="Url: " name="url"
-        //         rules={[{required:true,message:'Please enter advertise url'}]}>
-        //             <Input value={homeAdvertise.url} className="input-width" onChange={handleHomeAdvertiseChange} name="url"/>
-        //         </Form.Item>
-        //         <Form.Item label="Note: " name="note">
-        //             <TextArea rows={5} value={homeAdvertise.note} className="input-width" 
-        //             onChange={handleHomeAdvertiseChange} name="note" placeholder="Please enter content"/>
-        //         </Form.Item>
-        //         <Form.Item>
-        //             <Button type="primary" htmlType="submit">Confirm</Button>
-        //             {!isEdit && <Button onClick={resetForm}>Reset</Button>}
-        //         </Form.Item>
-        //     </Form>
-        // </Card>
-        <Card className="form-container">
-            <Form form={homeAdvertiseForm} labelCol={{span:6}} size="small" onFinish={onSubmit} onFinishFailed={onSubmitFail}>
-                <Form.Item label="Name: " name="name"
-                rules={[{required:true,message:'Please enter advertise name'},
-                {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-                    <Input className="input-width"/>
-                </Form.Item>
-                <Form.Item label="Type: " name="type">
-                    <Select name="type">
-                        {defaultTypeOptions.map((item)=>{
-                            return <Option key={item.value} value={item.value}>{item.label}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="StartTime: " name="startTime"
-                rules={[{required:true,message:'Please enter start time'}]}>
-                    <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime showTimeplaceholder="Select Date"/>
-                </Form.Item>
-                <Form.Item label="EndTime: " name="endTime" 
-                rules={[{required:true,message:'Please enter end time'}]}>
-                    <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime showTimeplaceholder="Select Date"/>
-                </Form.Item>
-                <Form.Item label="Status: " name="status">
-                    <Radio.Group name="status">
-                        <Radio value={0}>Unpublish</Radio>
-                        <Radio value={1}>Publish</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Picture: " name="pic"
-                rules={[{required:true,message:'Please select advertise picture'}]}>
-                    <SingleUpload form={homeAdvertiseForm}/>
-                </Form.Item>
-                <Form.Item label="Sort: " name="sort">
-                    <Input className="input-width" />
-                </Form.Item>
-                <Form.Item label="Url: " name="url"
-                rules={[{required:true,message:'Please enter advertise url'}]}>
-                    <Input  className="input-width" />
-                </Form.Item>
-                <Form.Item label="Note: " name="note">
-                    <TextArea rows={5} className="input-width" 
-                     placeholder="Please enter content"/>
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">Confirm</Button>
-                    {!isEdit && <Button onClick={resetForm}>Reset</Button>}
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="form-wrapper">
+            <Card className="form-container">
+                <Form form={homeAdvertiseForm} labelCol={{span:6}} size="small" onFinish={onSubmit} onFinishFailed={onSubmitFail}>
+                    <Form.Item label="Name: " name="name"
+                    rules={[{required:true,message:'Please enter advertise name'},
+                    {min:2,max:140,message:'Length must be between 2 and 140'}]}>
+                        <Input className="input-width"/>
+                    </Form.Item>
+                    <Form.Item label="Type: " name="type">
+                        <Select name="type">
+                            {defaultTypeOptions.map((item)=>{
+                                return <Option key={item.value} value={item.value}>{item.label}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="StartTime: " name="startTime"
+                    rules={[{required:true,message:'Please enter start time'}]}>
+                        <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime showTimeplaceholder="Select Date"/>
+                    </Form.Item>
+                    <Form.Item label="EndTime: " name="endTime" 
+                    rules={[{required:true,message:'Please enter end time'}]}>
+                        <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime showTimeplaceholder="Select Date"/>
+                    </Form.Item>
+                    <Form.Item label="Status: " name="status">
+                        <Radio.Group name="status">
+                            <Radio value={0}>Unpublish</Radio>
+                            <Radio value={1}>Publish</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="Picture: " name="pic"
+                    rules={[{required:true,message:'Please select advertise picture'}]}>
+                        <SingleUpload form={homeAdvertiseForm}/>
+                    </Form.Item>
+                    <Form.Item label="Sort: " name="sort">
+                        <Input className="input-width" />
+                    </Form.Item>
+                    <Form.Item label="Url: " name="url"
+                    rules={[{required:true,message:'Please enter advertise url'}]}>
+                        <Input  className="input-width" />
+                    </Form.Item>
+                    <Form.Item label="Note: " name="note">
+                        <TextArea rows={5} className="input-width" 
+                        placeholder="Please enter content"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">Confirm</Button>
+                        {!isEdit && <Button onClick={resetForm}>Reset</Button>}
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default HomeAdvertiseDetail;

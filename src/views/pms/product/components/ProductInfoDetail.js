@@ -104,7 +104,7 @@ function ProductInfoDetail(props){
         nextStep();
     }
     const handleFormFail=()=>{
-        message.error("Validation Fail",10);
+        message.error("Validation Fail",5);
         return false;
     }
 

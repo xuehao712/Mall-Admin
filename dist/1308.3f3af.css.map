@@ -1,1 +1,0 @@
-{"version":3,"file":"1308.3f3af.css","sources":["webpack://mall-admin/./src/views/404.scss"],"sourcesContent":[".app-container {\r\n    width: 80%;\r\n    margin: 120px auto;\r\n  }\r\n\r\n  .img-style {\r\n    width: auto;\r\n    height: auto;\r\n    max-width: 100%;\r\n    max-height: 100%;\r\n  }"],"mappings":"AAAA;","sourceRoot":""}

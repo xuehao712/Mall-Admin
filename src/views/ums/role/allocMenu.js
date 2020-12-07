@@ -1,4 +1,4 @@
-import { Button, Card, message, Tree} from 'antd';
+import { Button, Card, message, Space, Tree} from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import React, {useState, useEffect, useRef} from 'react';
 import {useLocation} from 'react-router-dom';
@@ -69,7 +69,7 @@ function AllocMenu(){
                 params.append("roleId",roleId);
                 params.append("menuIds",Array.from(checkedMenuIds));
                 roleServices.allocMenu(params).then(response => {
-                   message.success("Alloc Success",10);
+                   message.success("Alloc Success",5);
                     history.back();
                 })
             },
@@ -85,14 +85,16 @@ function AllocMenu(){
     }
 
     return(
-       <Card className="form-container">
-           <Tree ref={tree} checkable checkedKeys={menuId}
-           treeData={menuTreeList} onCheck={onCheck}/>
-           <div style={{marginTop:'20px',alignContent:'center'}}>
-                <Button type="primary" onClick={handleSave}>Save</Button>
-                <Button onClick={handleClear}>Clear</Button>
-           </div>
-       </Card>
+        <div className="form-wrapper">
+            <Card className="form-container">
+                <Tree ref={tree} checkable checkedKeys={menuId}
+                treeData={menuTreeList} onCheck={onCheck}/>
+                <Space style={{marginTop:'20px',alignContent:'center'}}>
+                    <Button type="primary" onClick={handleSave}>Save</Button>
+                    <Button onClick={handleClear}>Clear</Button>
+                </Space>
+            </Card>
+        </div>
     )
 }
 export default AllocMenu;

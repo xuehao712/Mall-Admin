@@ -210,20 +210,20 @@ function Role(){
                         <div>
                             <Switch onChange={(e)=>handleStatusChange(e,record)} checked={record.status}/>
                         </div>}/>
-                    <Column width="160px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                    <Column width="150px" align="center" title="Operation" render={(text,record,index)=>
+                        <div style={{minWidth:'150px'}}>
                             <Row>
                                 <Button size="small" type="text" onClick={()=>handleSelectMenu(index,record)}>Menu</Button>
                                 <Button size="small" type="text" onClick={()=>handleSelectResource(index,record)}>Resource</Button>
                             </Row>
                             <Row>
                                 <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                                <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                                <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                             </Row>
                         </div>}/>
                 </Table>
             </div>
-            <Modal title={isEdit?"Modify Role":"Add Role"} visible={dialogVisible} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
+            <Modal title={isEdit?"Modify Role":"Add Role"} visible={dialogVisible} style={{minWidth:'420px'}} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
                 <Form labelCol={{span:6}} size="small">
                     <Form.Item label="Name: ">
                         <Input value={role.name} style={{width:'250px'}} name="name" onChange={(e)=>setRole({...role,name:e.target.value})}/>

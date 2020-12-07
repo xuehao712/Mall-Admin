@@ -1,3 +1,11 @@
-.form-container {
+.ProductDetail_form-container {
     width: 800px;
-  }
+    left: 0;
+    right: 0;
+    padding: 35px 35px 15px 35px;
+    margin: 30px auto;
+}
+.ProductDetail_form-wrapper{
+    margin: min(30px);
+}
+

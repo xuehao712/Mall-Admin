@@ -51,7 +51,7 @@ function Login(){
     //methods
     const handleLogin=()=>{
         setLoading(true);
-        dispatch(userActions.Login(loginForm.getFieldsValue())).then(()=>{
+        dispatch(userActions.Login(loginForm.getFieldsValue())).then((response)=>{
             setLoading(false);
             setCookie("username",loginForm.getFieldValue("username"),15);
             setCookie("password",loginForm.getFieldValue("password"),15);
@@ -61,7 +61,7 @@ function Login(){
         })
     }
     const handleLoginFail=()=>{
-        message.warning("Validation error!",10);
+        message.warning("Validation error!",5);
         return false;
     }
     const handleKeyPress=(e)=>{

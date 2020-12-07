@@ -172,12 +172,12 @@ function Coupon(){
                         Reset
                     </Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div >
                     <Form layout="inline" size="small" labelCol={{span:5}}>
-                        <Form.Item label="Name: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Name: ">
                             <Input value={listQuery.name} name="name" onChange={(e)=>setListQuery({...listQuery,name:e.target.value})} className="HomeCoupon_input-width" placeholder="Coupon Name"/>
                         </Form.Item>
-                        <Form.Item label="Status: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Status: ">
                             <Select value={listQuery.type} placeholder="All" onChange={(e)=>setListQuery({...listQuery,type:e})} allowClear name="type" className="HomeCoupon_input-width">
                                 {typeOptions.map((item)=>{
                                     return <Option key={item.value} value={item.value}>{item.label}</Option>
@@ -234,7 +234,7 @@ function Coupon(){
                         <div>
                             <Button size="small" type="text" onClick={()=>handleView(index,record)}>View</Button>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Edit</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>

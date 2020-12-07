@@ -26,10 +26,9 @@ function Login(userInfo){
                 setToken(tokenStr);  
                 dispatch({type: userConstants.SET_TOKEN,value:tokenStr});
                 resolve(response);
-            }),
-            error => {
+            }).catch((error)=> {
                 reject(error);
-            }
+            })
         })
     }
 }

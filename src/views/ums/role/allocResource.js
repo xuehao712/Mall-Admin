@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Card, Checkbox, Col, message, Row } from 'antd';
+import { Button, Card, Checkbox, Col, message, Row, Space } from 'antd';
 import {resourceServices} from 'services/resource';
 import {resourceCategoryServices} from 'services/resourceCategory';
 import {roleServices} from 'services/role';
@@ -172,7 +172,7 @@ function AllocResource(){
                 params.append("roleId", roleId);
                 params.append("resourceIds", Array.from(checkedResourceIds));
                 roleServices.allocResource(params).then(response => {
-                  message.success("Alloc Success",10);
+                  message.success("Alloc Success",5);
                   history.goBack();
                 })
             },
@@ -230,31 +230,33 @@ function AllocResource(){
       setAllResource([...temp]);
     }
     return(
-        <Card className="form-container">
-            {allResourceCate.map((cate,index)=>{
-                return <div className={index ===0?"AllocResource_top-line":null} key={`cate${cate.id}`}>
-                    <Row key className="AllocResource_table-layout" style={{background:'#F2F6FC'}}>
-                        <Checkbox checked={cate.checked} indeterminate={isIndeterminate(cate.id)}
-                        onChange={(e)=>{handleSetAllResourceCate(e,cate),handleCheckAllChange(e,cate)}}>
-                            {cate.name}
-                        </Checkbox>
-                    </Row>
-                    <Row className="AllocResource_table-layout">
-                        {getResourceByCate(cate.id).map((resource)=>{
-                            return <Col span={8} key={resource.id} style={{padding:'4px 0'}}>
-                                <Checkbox checked={resource.checked} onChange={(e)=>{handleSetAllResource(e,resource),handleCheckChange(resource)}}>
-                                    {resource.name}
-                                </Checkbox>
-                            </Col>
-                        })}
-                    </Row>
-                </div> 
-            })}
-            <div style={{marginTop:'20px',alignContent:'center'}}>
-                <Button type="primary" onClick={handleSave}>Save</Button>
-                <Button onClick={handleClear}>Clear</Button>
-            </div>
-        </Card>
+      <div className="form-wrapper">
+          <Card className="form-container">
+              {allResourceCate.map((cate,index)=>{
+                  return <div className={index ===0?"AllocResource_top-line":null} key={`cate${cate.id}`}>
+                      <Row key className="AllocResource_table-layout" style={{background:'#F2F6FC'}}>
+                          <Checkbox checked={cate.checked} indeterminate={isIndeterminate(cate.id)}
+                          onChange={(e)=>{handleSetAllResourceCate(e,cate),handleCheckAllChange(e,cate)}}>
+                              {cate.name}
+                          </Checkbox>
+                      </Row>
+                      <Row className="AllocResource_table-layout">
+                          {getResourceByCate(cate.id).map((resource)=>{
+                              return <Col span={8} key={resource.id} style={{padding:'4px 0'}}>
+                                  <Checkbox checked={resource.checked} onChange={(e)=>{handleSetAllResource(e,resource),handleCheckChange(resource)}}>
+                                      {resource.name}
+                                  </Checkbox>
+                              </Col>
+                          })}
+                      </Row>
+                  </div> 
+              })}
+              <Space style={{marginTop:'20px',alignContent:'center'}}>
+                  <Button type="primary" onClick={handleSave}>Save</Button>
+                  <Button onClick={handleClear}>Clear</Button>
+              </Space>
+          </Card>
+      </div>
     )
 }
 export default AllocResource ;

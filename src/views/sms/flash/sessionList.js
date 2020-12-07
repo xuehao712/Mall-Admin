@@ -148,7 +148,7 @@ function FlashSession(){
                     <Column width="180px" align="center" title="Operation" render={(text,record,index)=>
                         <div>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>

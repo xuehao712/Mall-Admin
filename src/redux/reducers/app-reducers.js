@@ -33,5 +33,5 @@ export function appReducer(state =initialstate,action){
                 ...state
             }
     }
-    return state;
+    return {...state};
 }

@@ -1,4 +1,4 @@
-import { Button, Card, Cascader, DatePicker, Form, Input, message, Radio, Select, Table } from 'antd';
+import { Button, Card, Cascader, DatePicker, Form, Input, message, Radio, Select, Space, Table } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
@@ -70,45 +70,49 @@ function MenuDetail(props){
         getSelectMenuList();
     }
     return(
-        <Card className="form-container">
-            <Form form={menuForm} labelCol={{span:5}} size="small" onFinish={onsubmit} onFinishFailed={onSubmitFail}>
-                <Form.Item label="MenuTitle: " name="title"
-                rules={[{required:true,message:"Please enter menu title"},
-                {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="ParentMenu: " name="parentId">
-                    <Select placeholder="Please select menu">
-                        {selectMenuList.map((item)=>{
-                            return <Option key={item.id} value={item.id}>{item.title}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="Name: " name="name"
-                rules={[{required:true,message:"Please enter frontend name"},
-                {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Icon: " name="icon"
-                rules={[{required:true,message:"Please enter frontend icon"},
-                {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Hidden: " name="hidden">
-                    <Radio.Group>
-                        <Radio value={0}>Yes</Radio>
-                        <Radio value={1}>No</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Sort: " name="sort">
-                    <Input type="number"/>
-                </Form.Item>
-                <Form.Item >
-                    <Button type="primary" onClick={onSubmit}>Submit</Button>
-                    {!isEdit && <Button onClick={resetForm}>Reset</Button>}
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="form-wrapper">
+            <Card className="form-container">
+                <Form form={menuForm} labelCol={{span:5}} size="small" onFinish={onsubmit} onFinishFailed={onSubmitFail}>
+                    <Form.Item label="MenuTitle: " name="title"
+                    rules={[{required:true,message:"Please enter menu title"},
+                    {min:2,max:140,message:'Length must be between 2 and 140'}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="ParentMenu: " name="parentId">
+                        <Select placeholder="Please select menu">
+                            {selectMenuList.map((item)=>{
+                                return <Option key={item.id} value={item.id}>{item.title}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Name: " name="name"
+                    rules={[{required:true,message:"Please enter frontend name"},
+                    {min:2,max:140,message:'Length must be between 2 and 140'}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Icon: " name="icon"
+                    rules={[{required:true,message:"Please enter frontend icon"},
+                    {min:2,max:140,message:'Length must be between 2 and 140'}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Hidden: " name="hidden">
+                        <Radio.Group>
+                            <Radio value={0}>Yes</Radio>
+                            <Radio value={1}>No</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="Sort: " name="sort">
+                        <Input type="number"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Space>
+                            <Button type="primary" onClick={onSubmit}>Submit</Button>
+                            {!isEdit && <Button onClick={resetForm}>Reset</Button>}
+                        </Space>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default MenuDetail;

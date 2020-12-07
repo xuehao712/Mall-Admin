@@ -94,7 +94,7 @@ function ReturnApply(){
     }
     const handleBatchOperate=()=>{
         if(multipleSelection==null || multipleSelection.length<1) {
-            message.warning("Please select the operation",10);
+            message.warning("Please select the operation",5);
             return;
         }
         if(operateType === 1){
@@ -112,7 +112,7 @@ function ReturnApply(){
                     params.append("ids",ids);
                     returnApplyServices.deleteApply(params).then(response=>{
                         getList();
-                        message.success("Delete Success!",10);
+                        message.success("Delete Success!",5);
                     });
                 },
                 onCancel(){}
@@ -175,26 +175,26 @@ function ReturnApply(){
                         Reset
                     </Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div>
                     <Form layout="inline" size="small" labelCol={{span:8}}>
-                        <Form.Item label="Search: ">
+                        <Form.Item style={{marginTop:'10px'}} label="Search: ">
                             <Input value={listQuery.id} name="id" onChange={handleListQueryChange} className="input-width" placeholder="Service Id"/>
                         </Form.Item>
-                        <Form.Item label="Status: ">
+                        <Form.Item style={{marginTop:'10px'}} label="Status: ">
                             <Select style={{width:'203px'}} value={listQuery.status} onChange={(e)=>handleListQueryChange(e,"status")} placeholder="All" allowClear name="status" className="input-width">
                                 {statusOptions.map((item)=>{
                                     return <Option key={item.value} value={item.value}>{item.label}</Option>
                                 })}
                             </Select>
                         </Form.Item>
-                        <Form.Item label="ApplyDate: ">
+                        <Form.Item style={{marginTop:'10px'}} label="ApplyDate: ">
                             <DatePicker className="input-width" value={listQuery.createTime?moment(listQuery.createTime):null} format="YYYY-MM-DD"
                             placeholder="Please select a date" name="createTime" onChange={(date,dateString)=>setListQuery({...listQuery,createTime:dateString})}/>
                         </Form.Item>
-                        <Form.Item label="Staff: ">
-                            <Input value={listQuery.handleMan} onChange={handleListQueryChange} name="handleMan" className="input-width"/>
+                        <Form.Item style={{marginTop:'10px'}} label="Staff: ">
+                            <Input value={listQuery.handleMan} onChange={handleListQueryChange} name="handleMan" className="input-width" placeholder="Staff name"/>
                         </Form.Item>
-                        <Form.Item label="ResolveDate: ">
+                        <Form.Item style={{marginTop:'10px'}} label="ResolveDate: ">
                             <DatePicker className="input-width" value={listQuery.handleTime?moment(listQuery.handleTime):null} format="YYYY-MM-DD"
                             placeholder="Please select a date" name="handleTime" onChange={(date,dateString)=>setListQuery({...listQuery,handleTime:dateString})}/>
                         </Form.Item>

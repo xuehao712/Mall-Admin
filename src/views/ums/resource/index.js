@@ -1,5 +1,5 @@
 import { ProfileOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, message, Select, Table } from 'antd';
+import { Button, Card, Form, Input, message, Select, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
 import {formatDate} from 'utils/date';
@@ -167,17 +167,17 @@ function Resource(){
                         Reset
                     </Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div>
                     <Form layout="inline" size="small" labelCol={{span:8}}>
-                        <Form.Item label="Name: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Name: ">
                             <Input style={{width:'200px'}} value={listQuery.nameKeyword} name="nameKeyword" onChange={(e)=>setListQuery({...listQuery,nameKeyword:e.target.value})} 
                             className="input-width" placeholder="Resource Name"/>
                         </Form.Item>
-                        <Form.Item label="Url: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Url: ">
                             <Input style={{width:'200px'}} value={listQuery.urlKeyword} name="urlKeyword" onChange={(e)=>setListQuery({...listQuery,urlKeyword:e.target.value})} 
                             className="input-width" placeholder="Resource Url"/>
                         </Form.Item>
-                        <Form.Item label="Category: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Category: ">
                             <Select style={{width:'200px'}} value={listQuery.categoryId} placeholder="All" allowClear 
                             name="categoryId" className="input-width" onChange={(e)=>setListQuery({...listQuery,categoryId:e})}>
                                 {categoryOptions.map((item)=>{
@@ -217,13 +217,13 @@ function Resource(){
                             {formatDateTime(record.createTime)}
                         </div>}/>
                     <Column width="140px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                        </Space>}/>
                 </Table>
             </div>
-            <Modal title={isEdit?"Modify Resource":"Add Resource"} visible={dialogVisible} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
+            <Modal title={isEdit?"Modify Resource":"Add Resource"} visible={dialogVisible} style={{minWidth:'450px'}} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
                 <Form labelCol={{span:5}}>
                     <Form.Item label="Name: ">
                         <Input value={resource.name} style={{width:'250px'}} name="name" onChange={(e)=>setResource({...resource,name:e.target.value})}/>

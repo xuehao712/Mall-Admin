@@ -82,12 +82,12 @@ function ProductAttrDetail(props){
             onOk(){
                 if(isEdit) {
                     productAttrServices.updateProductAttr(route.state.id,productAttr).then(response=>{
-                        message.success("Modify Success",10);
+                        message.success("Modify Success",5);
                         history.goBack();
                     })
                 } else {
                     productAttrServices.createProductAttr(productAttr).then(response=>{
-                        message.success("Submit Success",10);
+                        message.success("Submit Success",5);
                         form.resetFields();
                         resetForm();
                     })
@@ -97,7 +97,7 @@ function ProductAttrDetail(props){
         });
     }
     const onSubmitFail=()=>{
-        message.error("Validate Fail",10);
+        message.error("Validate Fail",5);
         return false;
     }
     const resetForm=()=>{
@@ -105,72 +105,74 @@ function ProductAttrDetail(props){
         resetProductAttr();
     }
     return(
-        <Card className="form-container">
-            <Form form={form} labelCol={{span:5}} onFinish={onSubmit} onFinishFailed={onSubmitFail}>
-                <Form.Item label="AttrName: " name="name"
-                rules={[{required:true,message:'Please enter attr name'},{min:2,max:140,message:"Length must be between 2 and 140"}]}>
-                    <Input value={productAttr.name} name="name" onChange={handleProductAttrChange}/>
-                </Form.Item>
-                <Form.Item label="Category: " name="productAttributeCategoryId">
-                    <Select placeholder="Select" value={productAttr.productAttributeCategoryId} name="productAttributeCategoryId" 
-                    onChange={(e)=>handleProductAttrChange(e,'productAttributeCategoryId')}>
-                        {productAttrCateList.map((item)=>{
-                            return <Option key={item.id} value={item.id}>{item.name}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="FilterType: " name="filterType">
-                    <Radio.Group value={productAttr.filterType} name="filterType" onChange={handleProductAttrChange}>
-                        <Radio value={0}>Normal</Radio>
-                        <Radio value={1}>Color</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="SearchType: " name="searchType">
-                    <Radio.Group value={productAttr.searchType} name="searchType" onChange={handleProductAttrChange}>
-                        <Radio value={0}>No</Radio>
-                        <Radio value={1}>Keyword</Radio>
-                        <Radio value={2}>Range</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="AttrRelation: " name="relatedStatus">
-                    <Radio.Group value={productAttr.relatedStatus} name="relatedStatus" onChange={handleProductAttrChange}>
-                        <Radio value={0}>Yes</Radio>
-                        <Radio value={1}>No</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="SelectType: " name="selectType">
-                    <Radio.Group value={productAttr.selectType} name="selectType" onChange={handleProductAttrChange}>
-                        <Radio value={0}>Unique</Radio>
-                        <Radio value={1}>Single</Radio>
-                        <Radio value={2}>Multiple</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="InputType: " name="inputType">
-                    <Radio.Group value={productAttr.inputType} name="inputType" onChange={handleProductAttrChange}>
-                        <Radio value={0}>Handy</Radio>
-                        <Radio value={1}>Select</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="AttrInputList: " name="inputListFormat">
-                    <Input value={inputListFormat} name="name" onChange={(e)=>setInputListFormat(e.target.value)}/>
-                </Form.Item>
-                <Form.Item label="HandAdded: " name="handAddStatus">
-                    <Radio.Group value={productAttr.handAddStatus} name="handAddStatus" onChange={handleProductAttrChange}>
-                        <Radio value={0}>Yes</Radio>
-                        <Radio value={1}>No</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Sort: " name="sort">
-                    <Input type="number" value={productAttr.sort} name="sort" onChange={handleProductAttrChange}/>
-                </Form.Item>
-                <Form.Item>
-                    <Space>
-                        <Button type="primary" htmlType="submit">Submit</Button>
-                        {!isEdit && <Button onClick={resetForm}>Reset</Button> }
-                    </Space>  
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="form-wrapper">
+            <Card className="form-container">
+                <Form form={form} labelCol={{span:5}} onFinish={onSubmit} onFinishFailed={onSubmitFail}>
+                    <Form.Item label="AttrName: " name="name"
+                    rules={[{required:true,message:'Please enter attr name'},{min:2,max:140,message:"Length must be between 2 and 140"}]}>
+                        <Input value={productAttr.name} name="name" onChange={handleProductAttrChange}/>
+                    </Form.Item>
+                    <Form.Item label="Category: " name="productAttributeCategoryId">
+                        <Select placeholder="Select" value={productAttr.productAttributeCategoryId} name="productAttributeCategoryId" 
+                        onChange={(e)=>handleProductAttrChange(e,'productAttributeCategoryId')}>
+                            {productAttrCateList.map((item)=>{
+                                return <Option key={item.id} value={item.id}>{item.name}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="FilterType: " name="filterType">
+                        <Radio.Group value={productAttr.filterType} name="filterType" onChange={handleProductAttrChange}>
+                            <Radio value={0}>Normal</Radio>
+                            <Radio value={1}>Color</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="SearchType: " name="searchType">
+                        <Radio.Group value={productAttr.searchType} name="searchType" onChange={handleProductAttrChange}>
+                            <Radio value={0}>No</Radio>
+                            <Radio value={1}>Keyword</Radio>
+                            <Radio value={2}>Range</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="AttrRelation: " name="relatedStatus">
+                        <Radio.Group value={productAttr.relatedStatus} name="relatedStatus" onChange={handleProductAttrChange}>
+                            <Radio value={0}>Yes</Radio>
+                            <Radio value={1}>No</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="SelectType: " name="selectType">
+                        <Radio.Group value={productAttr.selectType} name="selectType" onChange={handleProductAttrChange}>
+                            <Radio value={0}>Unique</Radio>
+                            <Radio value={1}>Single</Radio>
+                            <Radio value={2}>Multiple</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="InputType: " name="inputType">
+                        <Radio.Group value={productAttr.inputType} name="inputType" onChange={handleProductAttrChange}>
+                            <Radio value={0}>Handy</Radio>
+                            <Radio value={1}>Select</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="AttrInputList: " name="inputListFormat">
+                        <Input value={inputListFormat} name="name" onChange={(e)=>setInputListFormat(e.target.value)}/>
+                    </Form.Item>
+                    <Form.Item label="HandAdded: " name="handAddStatus">
+                        <Radio.Group value={productAttr.handAddStatus} name="handAddStatus" onChange={handleProductAttrChange}>
+                            <Radio value={0}>Yes</Radio>
+                            <Radio value={1}>No</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="Sort: " name="sort">
+                        <Input type="number" value={productAttr.sort} name="sort" onChange={handleProductAttrChange}/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Space>
+                            <Button type="primary" htmlType="submit">Submit</Button>
+                            {!isEdit && <Button onClick={resetForm}>Reset</Button> }
+                        </Space>  
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default ProductAttrDetail;

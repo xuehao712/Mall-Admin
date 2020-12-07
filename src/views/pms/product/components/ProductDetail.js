@@ -8,6 +8,7 @@ import ProductAttrDetail from './ProductAttrDetail';
 import ProductRelationDetail from './ProductRelationDetail';
 import { useLocation } from 'react-router-dom';
 import { history } from '../../../../redux/shared/history-redux';
+import { min } from 'moment';
 
 const { Step } = Steps;
 function ProductDetail(props){
@@ -143,22 +144,25 @@ function ProductDetail(props){
     
     
     return(
-        <Card size='small' className="form-container" >
-            <Steps labelPlacement='vertical'current={active}>
-                <Step title="Info"/>
-                <Step title="Sale"/>
-                <Step title="Attribute"/>
-                <Step title="Related"/>
-            </Steps>
-            {showStatus[0] &&
-            <ProductInfoDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep}/>}
-            {showStatus[1] &&
-            <ProductSaleDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep={prevStep}/>}
-            {showStatus[2] &&
-            <ProductAttrDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep ={prevStep}/>}
-            {showStatus[3] &&
-            <ProductRelationDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} prevStep ={prevStep} finishCommit = {finishCommit}/>}
-        </Card>
+        <div className="ProductDetail_form-wrapper">
+            <Card size='small' className="ProductDetail_form-container" >
+                <Steps labelPlacement='vertical'current={active}>
+                    <Step title="Info"/>
+                    <Step title="Sale"/>
+                    <Step title="Attribute"/>
+                    <Step title="Related"/>
+                </Steps>
+                {showStatus[0] &&
+                <ProductInfoDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep}/>}
+                {showStatus[1] &&
+                <ProductSaleDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep={prevStep}/>}
+                {showStatus[2] &&
+                <ProductAttrDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} nextStep={nextStep} prevStep ={prevStep}/>}
+                {showStatus[3] &&
+                <ProductRelationDetail isEdit={isEdit} form={form} value={productParam} setProductParam={setProductParam} handleProductParamChange={handleProductParamChange} prevStep ={prevStep} finishCommit = {finishCommit}/>}
+            </Card>
+        </div>
+       
     )
 }
 export default ProductDetail;

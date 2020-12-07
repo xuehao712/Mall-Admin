@@ -37,4 +37,4 @@ function CScrollbar(props){
         </div>
     )
 }
-export { CScrollbar };
+export default CScrollbar;

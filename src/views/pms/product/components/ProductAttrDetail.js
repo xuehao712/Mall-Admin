@@ -210,11 +210,11 @@ function ProductAttrDetail(props){
     const handleAddProductAttrValue=(idx)=>{
       let options = selectProductAttr[idx].options;
         if (addProductAttrValue == null || addProductAttrValue == '') {
-          message.warning("AttrValue cannot be repeated",10);
+          message.warning("AttrValue cannot be repeated",5);
           return
         }
         if (options.indexOf(addProductAttrValue) !== -1) {
-            message.warning("AttrValue cannot be repeated",10);
+            message.warning("AttrValue cannot be repeated",5);
           return;
         }
         let tempOptions = selectProductAttr;
@@ -492,7 +492,7 @@ function ProductAttrDetail(props){
                                     {selectProductAttr[idx].options.map((item,index)=>{
                                       return (<div key={index} className="littleMarginLeft" style={{display:'inline-block'}}>
                                         <Checkbox name={item} key={item} value={item}>{item}</Checkbox>
-                                        <Button type="text" className="littleMarginLeft" onClick={()=>handleRemoveProductAttrValue(idx,index)}>Delete</Button>
+                                        <Button type="text" danger className="littleMarginLeft" onClick={()=>handleRemoveProductAttrValue(idx,index)}>Delete</Button>
                                       </div>)
                                     })}
                                   </Checkbox.Group>
@@ -535,7 +535,7 @@ function ProductAttrDetail(props){
                         )}/>
                         <Column title="Operation " width="80px" align="center" render={(value,record,index)=>(
                             <div>
-                                <Button type="text" onClick={()=>handleRemoveProductSku(index,record)}>Delete</Button>
+                                <Button type="text" danger onClick={()=>handleRemoveProductSku(index,record)}>Delete</Button>
                             </div>
                         )}/>
                     </Table>

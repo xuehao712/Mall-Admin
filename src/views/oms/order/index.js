@@ -167,18 +167,18 @@ function Order(){
     }
     const handleBatchOperate=()=>{
         if(multipleSelection==null || multipleSelection.length<1) {
-            message.warning("Please select the operation",10);
+            message.warning("Please select the operation",5);
             return;
         }
         if(operateType === 1){
             let list=[];
             for(let i=0;i<multipleSelection.length;i++){
                 if(multipleSelection[i].status===1){
-                    list.push(covertOrder(multipleSelection[i]));
+                    list.push(convertOrder(multipleSelection[i]));
                 }
             }
             if(list.length===0){
-                message.warning("No orders are available to ship",10);
+                message.warning("No orders are available to ship",5);
                 return;
             }
             history.push('/oms/deliverOrderList',{list:list})
@@ -223,7 +223,7 @@ function Order(){
     }
     const handleCloseOrderConfirm=()=>{
         if (closeOrder.content == null || closeOrder.content === '') {
-            message.warning("Note cannot be empty",10);
+            message.warning("Note cannot be empty",5);
             return;
         }
         let params = new URLSearchParams();
@@ -232,7 +232,7 @@ function Order(){
         orderServices.closeOrder(params).then(response=>{
             setCloseOrder({...closeOrder,orderIds:[],dialogVisible:false});
             getList();
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
         });
     }
     const getList=()=>{
@@ -252,14 +252,14 @@ function Order(){
                 let params = new URLSearchParams();
                 params.append("ids",ids);
                 orderServices.deleteOrder(params).then(response=>{
-                    message.success("Delete Success!",10);
+                    message.success("Delete Success!",5);
                     getList();
                 });
             },
             onCancel(){}
         });
     }
-    const covertOrder=(order)=>{
+    const convertOrder=(order)=>{
         let address=order.receiverDetailAddress+", "+order.receiverCity+", "+order.receiverState;
         let listItem={
           orderId:order.id,
@@ -387,7 +387,7 @@ function Order(){
                             {(record.status===2||record.status===3) &&
                             <Button size="small" onClick={()=>handleViewLogistics(index,record)}>Track</Button>}
                             {record.status===4 &&
-                            <Button size="small" onClick={()=>handleDeleteOrder(index,record)}>Delete</Button>}
+                            <Button size="small" danger onClick={()=>handleDeleteOrder(index,record)}>Delete</Button>}
                         </Space>}/>
                 </Table>
             </div>

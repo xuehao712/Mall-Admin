@@ -41,7 +41,7 @@ function ProductCate(){
     }
     const getList=()=>{
         setListLoading(true);
-        productCateServices.fetchList(parentId,listQuery).then(response=>{
+        productCateServices.fetchList(route.state&&route.state.parentId||0,listQuery).then(response=>{
             setListLoading(false);
             setList(response.data.list);
             setTotal(response.data.total);
@@ -68,7 +68,7 @@ function ProductCate(){
         data.append('ids',ids);
         data.append('navStatus',value);
         productCateServices.updateNavStatus(data).then(response=>{
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
             getList();
         })
     }
@@ -80,18 +80,18 @@ function ProductCate(){
         data.append('ids',ids);
         data.append('showStatus',value);
         productCateServices.updateShowStatus(data).then(response=>{
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
             getList();
         })
     }
     const handleShowNextLevel=(index,row)=>{
         history.push("/pms/productCate",{parentId:row.id});
     }
-    const handleTransferProduct=(index,row)=>{
-        console.log('handleAddProductCate');
-    }
     const handleUpdate=(index,row)=>{
         history.push("/pms/updateProductCate",{id:row.id});
+    }
+    const handleShowParentLevel=(index,row)=>{
+        history.push("/pms/productCate");
     }
     const handleDelete = (index,row)=>{
         confirm({
@@ -100,7 +100,7 @@ function ProductCate(){
             okType:'primary',
             onOk(){
                 productCateServices.deleteProductCate(row.id).then(response=>{
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     getList();
                 })
             },
@@ -150,7 +150,6 @@ function ProductCate(){
                     <Column title="Setting" width="200px" align="center" render={(text,record,index)=>
                         <Space>
                             <Button size="small"disabled={disableNextLevel(record.level)}  onClick={()=>handleShowNextLevel(index,record)}>Next Level</Button>
-                            <Button size="small" onClick={()=>handleTransferProduct(index,record)}>Transfer</Button>
                         </Space>}/>
                     <Column title="Operation" width="200px" align="center" render={(text,record,index)=>
                         <Space>
@@ -159,6 +158,11 @@ function ProductCate(){
                         </Space>}/>
                 </Table>
             </div>
+            {route.state &&route.state.parentId!=0 &&
+                <div className="operate-container">
+                    <Button size="middle" type="primary" style={{float:'left'}} onClick={handleShowParentLevel}>Back</Button>
+                </div>  
+            }
         </div>
     )
 }

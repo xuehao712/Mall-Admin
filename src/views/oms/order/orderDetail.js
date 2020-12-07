@@ -323,7 +323,7 @@ function OrderDetail(){
                 let params = new URLSearchParams();
                 params.append("ids",[id]);
                 orderServices.deleteOrder(params).then(response=>{
-                    ModalMessage.success("Delete success",10);
+                    ModalMessage.success("Delete success",5);
                     history.goBack();
                 });
             },

@@ -96,11 +96,11 @@ function HomeAdvertise(){
             onOk(){
                 homeAdvertiseServices.updateStatus(row.id,{status:value}).then(response=>{
                     getList();
-                    message.success("Modify Success",10);
+                    message.success("Modify Success",5);
                 });
             },
             onCancel(){
-                message.success("Cancel Operation",10);
+                message.success("Cancel Operation",5);
                 getList();
             }
         });
@@ -110,7 +110,7 @@ function HomeAdvertise(){
     }
     const handleBatchOperate=()=>{
         if( multipleSelection.length<1) {
-            message.warning("Please select the operation",10);
+            message.warning("Please select the operation",5);
             return;
         }
         let ids = [];
@@ -121,7 +121,7 @@ function HomeAdvertise(){
             //Delete
             deleteHomeAdvertise(ids);
         } else {
-            message.warning("Please select multiple operation type!",10);
+            message.warning("Please select multiple operation type!",5);
         }
     }
     const handleAdd=()=>{
@@ -148,7 +148,7 @@ function HomeAdvertise(){
                 params.append("ids",ids);
                 homeAdvertiseServices.deleteHomeAdvertise(params).then(response=>{
                     getList();
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                 });
             },
             onCancel(){}
@@ -181,19 +181,19 @@ function HomeAdvertise(){
                         Reset
                     </Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div>
                     <Form layout="inline" size="small" labelCol={{span:6}}>
-                        <Form.Item label="Name: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Name: ">
                             <Input value={listQuery.name} name="name" onChange={(e)=>setListQuery({...listQuery,name:e.target.value})} className="Advertise_input-width" placeholder="Advertise Name"/>
                         </Form.Item>
-                        <Form.Item label="Type: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Type: ">
                             <Select value={listQuery.type} onChange={(e)=>setListQuery({...listQuery,type:e})} placeholder="All" allowClear name="type" className="Advertise_input-width">
                                 {typeOptions.map((item)=>{
                                     return <Select.Option key={item.value} value={item.value}>{item.label}</Select.Option>
                                 })}
                             </Select>
                         </Form.Item>
-                        <Form.Item label="EndDate: ">
+                        <Form.Item style={{marginTop:'15px'}} label="EndDate: ">
                             <DatePicker className="Advertise_input-width" value={listQuery.endTime?moment(listQuery.endTime):null} format="YYYY-MM-DD"
                             placeholder="Please select a date" name="endTime" onChange={(date,dateString)=>setListQuery({...listQuery,endTime:dateString})}/>
                         </Form.Item>
@@ -220,11 +220,11 @@ function HomeAdvertise(){
                             {formatType(record.type)}
                         </div>}/>
                     <Column width="120px" align="center" title="Picture" render={(text,record,index)=>
-                        <div>
+                        <div style={{minWidth:'120px'}}>
                             <Image style={{height:'80px'}} src={record.pic}/>
                         </div>}/>
                     <Column width="220px" align="center" title="Time" render={(text,record,index)=>
-                        <div>
+                        <div style={{minWidth:'220px'}}>
                             <p>StartTime: {formatTime(record.startTime)}</p>
                             <p>EndTime: {formatTime(record.endTime)}</p>
                         </div>}/>
@@ -243,7 +243,7 @@ function HomeAdvertise(){
                     <Column width="120px" align="center" title="Operation" render={(text,record,index)=>
                         <div>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Edit</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>

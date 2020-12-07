@@ -164,11 +164,6 @@ function Flash(){
         bordered:true,
         size:'default'
     };
-    const rowSelection={
-        onChange:(e,value)=>{
-            handleSelectionChange(value);
-        }
-    }
     return(
         <div className="app-container">
             <Card className="filter-container">
@@ -197,7 +192,7 @@ function Flash(){
                 <Button size="small" className="btn-add" onClick={handleShowSessionList}>FlashList</Button>
             </Card>
             <div className="table-container">
-                <Table rowSelection={{...rowSelection}} rowKey="id" {...tableStatus} dataSource={list} style={{width:'100%'}} loading={listLoading}>
+                <Table rowSelection rowKey="id" {...tableStatus} dataSource={list} style={{width:'100%'}} loading={listLoading}>
                     <Column width="100px" align="center" title="Id" render={(text,record,index)=>
                         <div>
                             {record.id}
@@ -226,11 +221,11 @@ function Flash(){
                         <div>
                             <Button size="small" type="text" onClick={()=>handleSelectSession(index,record)}>SetProduct</Button><br/>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button><br/>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>
-            <Modal title="Add Event" visible={dialogVisible} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
+            <Modal title="Add Event" visible={dialogVisible} style={{minWidth:'500px'}} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
                 <Form labelCol={{span:5}} size="small">
                     <Form.Item label="Title: ">
                         <Input value={flashPromotion.title} name="title" style={{width:'250px'}} onChange={(e)=>setFlashPromotion({...flashPromotion,title:e.target.value})}/>

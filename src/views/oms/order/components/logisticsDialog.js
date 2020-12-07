@@ -17,7 +17,7 @@ function LogisticsDialog(props){
 
     const [logisticsList, setLogisticsList] = useState(defaultLogisticsList);
     return(
-        <Modal title="Order Tracking" width="40%" visible={value} onCancel={()=>onChange(false)}
+        <Modal title="Order Tracking" width="600px" visible={value} onCancel={()=>onChange(false)}
         okButtonProps={{ style: { display: 'none' } }}>
             <Steps direction="vertical" current={6} status="finish">
                 {logisticsList.map((item)=>{

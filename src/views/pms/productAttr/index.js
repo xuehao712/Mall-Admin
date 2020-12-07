@@ -60,7 +60,7 @@ function ProductAttr(){
             okType:'primary',
             onOk(){
                 productAttrCateServices.deleteProductAttrCate(row.id).then(response=>{
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     getList();
                 })
             },
@@ -83,20 +83,20 @@ function ProductAttr(){
         data.append("name",productAttrCate.name);
         if(dialogTitle==="Add Type"){
             productAttrCateServices.createProductAttrCate(data).then(response=>{
-                message.success("Add Success",10);
+                message.success("Add Success",5);
                 setDialogVisible(false);
                 getList();
             })
         } else {
             productAttrCateServices.updateProductAttrCate(productAttrCate.id,data).then(response=>{
-                message.success("Modify Success",10);
+                message.success("Modify Success",5);
                 setDialogVisible(false);
                 getList();
             })
         }
     }
     const handleConfirmFail=()=>{
-        message.error("Error Submit",10);
+        message.error("Error Submit",5);
         return false;
     }
     const tableStatus = {
@@ -142,8 +142,8 @@ function ProductAttr(){
                             </Button>
                         </Space>}/>
                 </Table>
-                <Modal forceRender title={dialogTitle} visible={dialogVisible} width="30%" onOk={handleConfirm} onCancel={()=>setDialogVisible(false)}>
-                    <Form form={form} labelCol={{span:5}}>
+                <Modal forceRender title={dialogTitle} visible={dialogVisible} width="500px" onOk={handleConfirm} onCancel={()=>setDialogVisible(false)}>
+                    <Form form={form} labelCol={{span:6}}>
                         <Form.Item label="Cate Name" name="name" rules={[{required:true,message:"Please enter category name"}]} >
                             <Input value={productAttrCate.name} name="name" onChange={(e)=>setProductAttrCate({...productAttrCate,name:e.target.value})}/>
                         </Form.Item>

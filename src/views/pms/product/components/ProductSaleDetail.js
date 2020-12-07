@@ -256,7 +256,7 @@ function ProductSaleDetail(props){
                         )}/>
                         <Column title="Operation" align="center" render={(text,record,index)=>(
                             <Space>
-                                <Button type="text" onClick={()=>handleRemoveProductLadder(index,record)}>Delete</Button>
+                                <Button type="text" danger onClick={()=>handleRemoveProductLadder(index,record)}>Delete</Button>
                                 <Button type="text" onClick={()=>handleAddProductLadder(index,record)}>Add</Button>
                             </Space>
                         )}/>
@@ -277,7 +277,7 @@ function ProductSaleDetail(props){
                         )}/>
                         <Column title="Operation" align="center" render={(text,record,index)=>(
                             <Space>
-                                <Button type="text" onClick={()=>handleRemoveFullReduction(index,record)}>Delete</Button>
+                                <Button type="text" danger onClick={()=>handleRemoveFullReduction(index,record)}>Delete</Button>
                                 <Button type="text" onClick={()=>handleAddFullReduction(index,record)}>Add</Button>
                             </Space>
                         )}/>

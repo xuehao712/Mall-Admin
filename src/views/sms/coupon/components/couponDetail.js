@@ -1,4 +1,4 @@
-import { Button, Card, Cascader, DatePicker, Form, Input, message, Radio, Select, Table } from 'antd';
+import { Button, Card, Cascader, DatePicker, Form, Input, message, Radio, Select, Space, Table } from 'antd';
 import Item from 'antd/lib/list/Item';
 import confirm from 'antd/lib/modal/confirm';
 import Column from 'antd/lib/table/Column';
@@ -216,109 +216,113 @@ function CouponDetail(props){
         return {productCategoryId: ids[1], productCategoryName: name, parentCategoryName: parentName};
     }
     return(
-        <Card className="form-container">
-            <Form form={couponForm} labelCol={{span:5}} size="small" onFinish={onSubmit} onFinishFailed={onSubmitFail}>
-                <Form.Item label="CouponType: " name="type">
-                    <Select className="HomeCouponDetail_input-width">
-                        {typeOptions.map((type)=>{
-                            return <Option key={type.value} value={type.value}>{type.label}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="CouponName: " name="name"
-                rules={[{required:true,message:"Please enter coupon name"},
-                {min:2,max:140,message:'Length must be between 2 and 140'}]}>
-                    <Input className="HomeCouponDetail_input-width"/>
-                </Form.Item>
-                <Form.Item label="Platform: " name="platform">
-                    <Select className="HomeCouponDetail_input-width">
-                        {platformOptions.map((item)=>{
-                            return <Option key={item.value} value={item.value}>{item.label}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="PublishCount: " name="publishCount"
-                rules={[{required:true,message:"Enter only position number"}]}>
-                    <Input type="number"className="HomeCouponDetail_input-width" placeholder="Only positive number"/>
-                </Form.Item>
-                <Form.Item label="Amount: " name="amount"
-                rules={[{required:true,message:"Enter only position number"}]}>
-                    <Input type="number"className="HomeCouponDetail_input-width" placeholder="Two decimal numbers" suffix="Dollar"/>
-                </Form.Item>
-                <Form.Item label="Limit: " name="perLimit">
-                    <Input type="number" className="HomeCouponDetail_input-width" placeholder="Only positive number" suffix="Piece"/>
-                </Form.Item>
-                <Form.Item label="MinPoint: " name="minPoint"
-                rules={[{required:true,message:"Enter only position number"}]}>
-                    <Input type="number" className="HomeCouponDetail_input-width" placeholder="Only positive number" suffix="Dollar" prefix="Min"/>
-                </Form.Item>
-                <Form.Item label="ValidDate: " name="formTime" >
-                    <RangePicker placeholder="Select date"/>
-                </Form.Item>
-                <Form.Item label="UseType: " name="useType">
-                    <Radio.Group onChange={(e)=>setCoupon({...coupon,useType:e.target.value})}>
-                        <Radio value={0}>All</Radio>
-                        <Radio value={1}>Category</Radio>
-                        <Radio value={2}>Product</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                {couponForm.getFieldValue().useType === 1 &&
-                <Form.Item>
-                    <Cascader allowClear placeholder="Please select category" value={selectProductCate}
-                    onChange={(e)=>setSelectProductCate(e)} options={productCateOptions}/>
-                    <Button onClick={handleAddProductCategoryRelation} >Add</Button>
-                    <Table rowKey="id" dataSource={coupon.productCategoryRelationList} style={{width:'100%',marginTop:'20px'}} bordered size="small">
-                        <Column title="Name" align="center" render={(text,record,index)=>
-                            <div>
-                                {record.parentCategoryName}
-                            </div>
-                        }/>
-                        <Column title="Operation" align="center" width="100px" render={(text,record,index)=>
-                            <div>
-                                <Button size="small" type="text" onClick={()=>handleDeleteProductCateRelation(index,record)}>Delete</Button>
-                            </div>
-                        }/>
-                    </Table>
-                </Form.Item>}
-                {couponForm.getFieldValue().useType === 2 && 
-                <Form.Item>
-                    <Select value={selectProduct} onChange={(e)=>setSelectProduct(e)} filterOption={false } onSearch={searchProductMethod}
-                    loading={selectProductLoading} placeholder="Name/Id" showSearch>
-                        {selectProductOptions.map((item)=>{
-                            return <Option value={item.productId} key={item.productId}>
-                                        <span style={{float:'left'}}>{item.productName}</span>
-                                        <span style={{float:'right',color:'#8492a6',fontSize:'13px'}}>NO.{Item.productSn}</span>
-                                    </Option>
-                        })}
-                    </Select>
-                    <Button onClick={handleAddProductRelation}>Add</Button>
-                    <Table rowKey="productId" dataSource={coupon.productRelationList} style={{width:'100%',marginTop:'20px'}} bordered size="small">
-                        <Column title="Name" align="center" render={(text,record,index)=>
-                            <div>
-                                {record.productName}
-                            </div>
-                        }/>
-                        <Column title="Sn" width="120px" align="center" render={(text,record,index)=>
-                            <div>
-                                NO.{record.productSn}
-                            </div>
-                        }/>
-                        <Column title="Operation" width="100px" align="center" render={(text,record,index)=>
-                            <div>
-                                <Button size="small" type="text" onClick={()=>handleDeleteProductRelation(index,record)}>Delete</Button>
-                            </div>
-                        }/>
-                    </Table>
-                </Form.Item>}
-                <Form.Item label="Note: " name="note">
-                    <TextArea className="HomeCouponDetail_input-width" rows={5} placeholder="Please enter content"/>
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">Submit</Button>
-                    {!isEdit &&<Button onClick={resetForm}>Reset</Button>}
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="form-wrapper">
+            <Card className="form-container">
+                <Form form={couponForm} labelCol={{span:5}} size="small" onFinish={onSubmit} onFinishFailed={onSubmitFail}>
+                    <Form.Item label="CouponType: " name="type">
+                        <Select className="HomeCouponDetail_input-width">
+                            {typeOptions.map((type)=>{
+                                return <Option key={type.value} value={type.value}>{type.label}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="CouponName: " name="name"
+                    rules={[{required:true,message:"Please enter coupon name"},
+                    {min:2,max:140,message:'Length must be between 2 and 140'}]}>
+                        <Input className="HomeCouponDetail_input-width"/>
+                    </Form.Item>
+                    <Form.Item label="Platform: " name="platform">
+                        <Select className="HomeCouponDetail_input-width">
+                            {platformOptions.map((item)=>{
+                                return <Option key={item.value} value={item.value}>{item.label}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="PublishCount: " name="publishCount"
+                    rules={[{required:true,message:"Enter only position number"}]}>
+                        <Input type="number"className="HomeCouponDetail_input-width" placeholder="Only positive number"/>
+                    </Form.Item>
+                    <Form.Item label="Amount: " name="amount"
+                    rules={[{required:true,message:"Enter only position number"}]}>
+                        <Input type="number"className="HomeCouponDetail_input-width" placeholder="Two decimal numbers" suffix="Dollar"/>
+                    </Form.Item>
+                    <Form.Item label="Limit: " name="perLimit">
+                        <Input type="number" className="HomeCouponDetail_input-width" placeholder="Only positive number" suffix="Piece"/>
+                    </Form.Item>
+                    <Form.Item label="MinPoint: " name="minPoint"
+                    rules={[{required:true,message:"Enter only position number"}]}>
+                        <Input type="number" className="HomeCouponDetail_input-width" placeholder="Only positive number" suffix="Dollar" prefix="Min"/>
+                    </Form.Item>
+                    <Form.Item label="ValidDate: " name="formTime" >
+                        <RangePicker/>
+                    </Form.Item>
+                    <Form.Item label="UseType: " name="useType">
+                        <Radio.Group onChange={(e)=>setCoupon({...coupon,useType:e.target.value})}>
+                            <Radio value={0}>All</Radio>
+                            <Radio value={1}>Category</Radio>
+                            <Radio value={2}>Product</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    {couponForm.getFieldValue().useType === 1 &&
+                    <Form.Item>
+                        <Cascader allowClear placeholder="Please select category" value={selectProductCate}
+                        onChange={(e)=>setSelectProductCate(e)} options={productCateOptions}/>
+                        <Button onClick={handleAddProductCategoryRelation} >Add</Button>
+                        <Table rowKey="id" dataSource={coupon.productCategoryRelationList} style={{width:'100%',marginTop:'20px'}} bordered size="small">
+                            <Column title="Name" align="center" render={(text,record,index)=>
+                                <div>
+                                    {record.parentCategoryName}
+                                </div>
+                            }/>
+                            <Column title="Operation" align="center" width="100px" render={(text,record,index)=>
+                                <div>
+                                    <Button size="small" type="text" danger onClick={()=>handleDeleteProductCateRelation(index,record)}>Delete</Button>
+                                </div>
+                            }/>
+                        </Table>
+                    </Form.Item>}
+                    {couponForm.getFieldValue().useType === 2 && 
+                    <Form.Item>
+                        <Select value={selectProduct} onChange={(e)=>setSelectProduct(e)} filterOption={false } onSearch={searchProductMethod}
+                        loading={selectProductLoading} placeholder="Name/Id" showSearch>
+                            {selectProductOptions.map((item)=>{
+                                return <Option value={item.productId} key={item.productId}>
+                                            <span style={{float:'left'}}>{item.productName}</span>
+                                            <span style={{float:'right',color:'#8492a6',fontSize:'13px'}}>NO.{Item.productSn}</span>
+                                        </Option>
+                            })}
+                        </Select>
+                        <Button onClick={handleAddProductRelation}>Add</Button>
+                        <Table rowKey="productId" dataSource={coupon.productRelationList} style={{width:'100%',marginTop:'20px'}} bordered size="small">
+                            <Column title="Name" align="center" render={(text,record,index)=>
+                                <div>
+                                    {record.productName}
+                                </div>
+                            }/>
+                            <Column title="Sn" width="120px" align="center" render={(text,record,index)=>
+                                <div>
+                                    NO.{record.productSn}
+                                </div>
+                            }/>
+                            <Column title="Operation" width="100px" align="center" render={(text,record,index)=>
+                                <div>
+                                    <Button size="small" danger type="text" onClick={()=>handleDeleteProductRelation(index,record)}>Delete</Button>
+                                </div>
+                            }/>
+                        </Table>
+                    </Form.Item>}
+                    <Form.Item label="Note: " name="note">
+                        <TextArea className="HomeCouponDetail_input-width" rows={5} placeholder="Please enter content"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Space>
+                            <Button type="primary" htmlType="submit">Submit</Button>
+                            {!isEdit &&<Button onClick={resetForm}>Reset</Button>}
+                        </Space>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default CouponDetail;

@@ -3,6 +3,7 @@ import { useForm } from 'antd/lib/form/Form';
 import confirm from 'antd/lib/modal/confirm';
 import React, {useState, useEffect} from 'react';
 import {orderSettingServices} from 'services/orderSetting';
+import './setting.scss';
 
 function OrderSetting(){
     //Data
@@ -41,7 +42,7 @@ function OrderSetting(){
             type:'warning',
             onOk(){
                 orderSettingServices.updateOrderSetting(1,form.getFieldsValue()).then(response=>{
-                    message.success("Submit Success!",10);
+                    message.success("Submit Success!",5);
                 })
             },
             onCancel(){}
@@ -57,35 +58,37 @@ function OrderSetting(){
         })
     }
     return(
-        <Card className="form-container">
-            <Form form={form} labelCol={{span:6}} onFinish={onConfirm} onFinishFailed={onConfirmFail}>
-                <Form.Item label="FlashOrder: " name="flashOrderOvertime" extra="Unpaid, close order"
-                rules={[{validator:checkTime}]}>
-                    <Input type="number" className="Setting_input-width" suffix="min" />
-                </Form.Item>
-                <Form.Item label="NormalOrder: " name="normalOrderOvertime" extra="Unpaid, close order"
-                rules={[{validator:checkTime}]}>
-                    <Input type="number" className="Setting_input-width" suffix="min"/>
-                </Form.Item>
-                <Form.Item label="Shipped: " name="confirmOvertime" extra="Unconfirm, complete order"
-                rules={[{validator:checkTime}]}>
-                    <Input type="number" className="Setting_input-width" suffix="day"/>
-                </Form.Item>
-                <Form.Item label="OrderComplete: " name="finishOvertime" extra="Finish transaction, no customer service"
-                rules={[{validator:checkTime}]}>
-                    <Input type="number" className="Setting_input-width" suffix="day"/>
-                </Form.Item>
-                <Form.Item label="OrderComplete: " name="commentOvertime" extra="Positive Review"
-                rules={[{validator:checkTime}]}>
-                    <Input type="number" className="Setting_input-width" suffix="day"/>
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="OrderSetting_form-wrapper">
+            <Card className="OrderSetting_form-container">
+                <Form form={form} labelCol={{span:5}} onFinish={onConfirm} onFinishFailed={onConfirmFail}>
+                    <Form.Item label="FlashOrder: " name="flashOrderOvertime" extra="Unpaid, close order"
+                    rules={[{validator:checkTime}]}>
+                        <Input type="number" className="Setting_input-width" suffix="min" />
+                    </Form.Item>
+                    <Form.Item label="NormalOrder: " name="normalOrderOvertime" extra="Unpaid, close order"
+                    rules={[{validator:checkTime}]}>
+                        <Input type="number" className="Setting_input-width" suffix="min"/>
+                    </Form.Item>
+                    <Form.Item label="Shipped: " name="confirmOvertime" extra="Unconfirm, complete order"
+                    rules={[{validator:checkTime}]}>
+                        <Input type="number" className="Setting_input-width" suffix="day"/>
+                    </Form.Item>
+                    <Form.Item label="OrderComplete: " name="finishOvertime" extra="Finish transaction, no customer service"
+                    rules={[{validator:checkTime}]}>
+                        <Input type="number" className="Setting_input-width" suffix="day"/>
+                    </Form.Item>
+                    <Form.Item label="OrderComplete: " name="commentOvertime" extra="Positive Review"
+                    rules={[{validator:checkTime}]}>
+                        <Input type="number" className="Setting_input-width" suffix="day"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default OrderSetting;

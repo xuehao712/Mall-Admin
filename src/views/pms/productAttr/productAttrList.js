@@ -41,11 +41,11 @@ function ProductAttrList(){
     }
     const handleBatchOperate=()=>{
         if(multipleSelection<1) {
-            message.warning("Please select a record",10);
+            message.warning("Please select a record",5);
             return;
         }
         if(operateType !=='deleteProductAttr') {
-            message.warning("Please select multiple operation type",10);
+            message.warning("Please select multiple operation type",5);
             return;
         }
         let ids =[];
@@ -79,7 +79,7 @@ function ProductAttrList(){
                 let data = new URLSearchParams();
                 data.append("ids",ids);
                 productAttrServices.deleteProductAttr(data).then(response=>{
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     getList();
                 })
             },

@@ -1,5 +1,5 @@
 import { ProfileOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, message, Select, Switch, Table } from 'antd';
+import { Button, Card, Form, Input, message, Select, Space, Switch, Table } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
@@ -62,7 +62,7 @@ function ReturnReason(){
             returnReasonServices.addReason(returnReason).then(response=>{
                 setDialogVisible(false);
                 setOperateReasonId(null);
-                message.success("Add Success",10);
+                message.success("Add Success",5);
                 getList();
             });
         } else {
@@ -70,7 +70,7 @@ function ReturnReason(){
             returnReasonServices.updateReason(operateReasonId,returnReason).then(response=>{
                 setDialogVisible(false);
                 setOperateReasonId(null);
-                message.success("Update Success",10);
+                message.success("Update Success",5);
                 getList();
             });
         }
@@ -98,13 +98,13 @@ function ReturnReason(){
         param.append("status",e);
         param.append("ids",ids);
         returnReasonServices.updateStatus(param).then(response=>{
-          message.success("Status Modify Success",10);
+          message.success("Status Modify Success",5);
           getList();
         });
     };
     const handleBatchOperate=()=>{
         if(multipleSelection==null||multipleSelection.length<1){
-          message.warning("Please select the operation",10);
+          message.warning("Please select the operation",5);
           return;
         }
         if(operateType===1){
@@ -145,7 +145,7 @@ function ReturnReason(){
                 let params = new URLSearchParams();
                 params.append("ids",ids);
                 returnReasonServices.deleteReason(params).then(response=>{
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     setListQuery({...listQuery,pageNum:1})
                     getList();
                 });
@@ -201,10 +201,10 @@ function ReturnReason(){
                             {formatCreateTime(record.createTime)}
                         </div>}/>
                     <Column title="Operation" width="160px" align="center"render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" onClick={()=>handleUpdate(index,record)}>Edit</Button>
-                            <Button size="small" onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                            <Button size="small" danger onClick={()=>handleDelete(index,record)}>Delete</Button>
+                        </Space>}/>
                 </Table>
             </div>
             <div className="batch-operate-container">
@@ -217,8 +217,8 @@ function ReturnReason(){
                     Confirm
                 </Button>
             </div>
-            <Modal forceRender title="Add Return Reason" visible={dialogVisible} width="30%" onOk={handleConfirm} onCancel={()=>setDialogVisible(false)}>
-                <Form form={reasonForm} labelCol={{span:5}}>
+            <Modal forceRender title="Add Return Reason" visible={dialogVisible} style={{minWidth:'350px'}} width="30%" onOk={handleConfirm} onCancel={()=>setDialogVisible(false)}>
+                <Form form={reasonForm} labelCol={{span:8}}>
                     <Form.Item label="ReasonType: " name="name">
                         <Input value={returnReason.name} name="name" onChange={handleReturnReasonChange} className="input-width"/>
                     </Form.Item>

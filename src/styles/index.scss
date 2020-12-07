@@ -98,12 +98,15 @@ a:hover {
 
 //Add or update form container
 .form-container {
-  position: absolute;
   left: 0;
   right: 0;
   width: 720px;
   padding: 35px 35px 15px 35px;
-  margin: 20px auto;
+  margin: 30px auto;
+}
+
+.form-wrapper{
+  margin: min(30px);
 }
 
 //Title
@@ -135,6 +138,11 @@ a:hover {
 
 .font-extra-small {
   font-size: 13px;
+  color: #606266;
+}
+
+.font-extreme-small {
+  font-size: 10px;
   color: #606266;
 }
 

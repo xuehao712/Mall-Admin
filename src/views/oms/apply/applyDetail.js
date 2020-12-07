@@ -84,11 +84,11 @@ function ReturnApplyDetail(){
         return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
     const formatRegion=(address)=>{
-        let str = address.province;
+        let str = "";
         if (address.city != null) {
-          str += "  " + address.city;
+          str +=address.city;
         }
-        str += "  " + address.region;
+        str += " " + address.state;
         return str;
     }
 
@@ -119,11 +119,11 @@ function ReturnApplyDetail(){
     const getCompanyAddressList=()=>{
         companyAddressServices.fetchList().then(response=>{
             console.log("getcompanyaddress");
-            setCompanyAddressList(response.data);
+            setCompanyAddressList([...response.data]);
             let tempId = null;
-            for (let i = 0; i < companyAddressList.length; i++) {
-                if (companyAddressList[i].receiveStatus === 1&&orderReturnApply.status===0) {
-                  tempId=companyAddressList[i].id;
+            for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].receiveStatus === 1&&orderReturnApply.status===0) {
+                  tempId=response.data[i].id;
                 }
             }
             if(tempId!=null){
@@ -138,7 +138,7 @@ function ReturnApplyDetail(){
             okText:'OK',
             okType:'primary',
             onOk(){returnApplyServices.updateApplyStatus(id,updateStatusParam).then(response=>{
-                message.success("Operation Success!",10);
+                message.success("Operation Success!",5);
                 history.goBack();
             })},
             onCancel(){}
@@ -256,7 +256,9 @@ function ReturnApplyDetail(){
                         <Col span={6} className="form-border form-left-bg font-small" style={{height:'100px',lineHeight:'80px'}}>Picture</Col>
                         <Col span={18} className="form-border font-small" style={{height:'100px'}}>
                             {proofPics.map((item)=>{
-                                return <img key={item} style={{width:'80px',height:'80px'}} src={item}/>
+                                if(item.length>0){
+                                    return <img key={item} style={{width:'80px',height:'80px'}} src={item}/>
+                                }
                             })}
                         </Col>
                     </Row>
@@ -281,7 +283,7 @@ function ReturnApplyDetail(){
                                 <Select size="small" style={{width:'200px'}} disabled={orderReturnApply.status!==0}
                                 value={updateStatusParam.companyAddressId} name="companyAddressId" onChange={(e)=>handleUpdateStatusParamChange(e,'companyAddressId')}>
                                     {companyAddressList.map((item)=>{
-                                        <Option key={item.id} value={item.id}>{item.addressName}</Option>
+                                        return <Option key={item.id} value={item.id}>{item.addressName}</Option>
                                     })}
                                 </Select>
                             </Col>
@@ -308,30 +310,30 @@ function ReturnApplyDetail(){
                 <div className="form-container-border">
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>Staff</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.handleMan:null}</Col>
+                        <Col className="form-border font-small" span={18}>{orderReturnApply.handleMan}</Col>
                     </Row>
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>ResolveTime</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.handleTime:null}</Col>
+                        <Col className="form-border font-small" span={18}>{formatTime(orderReturnApply.handleTime)}</Col>
                     </Row>
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>ResolveNote</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.handleNote:null}</Col>
+                        <Col className="form-border font-small" span={18}>{orderReturnApply.handleNote}</Col>
                     </Row>
                 </div>}
                 {orderReturnApply.status ===2 &&
                 <div className="form-container-border">
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>Receiver</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.receiveMan:null}</Col>
+                        <Col className="form-border font-small" span={18}>{orderReturnApply.receiveMan}</Col>
                     </Row>
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>ReceiveTime</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.receiveTime:null}</Col>
+                        <Col className="form-border font-small" span={18}>{formatTime(orderReturnApply.receiveTime)}</Col>
                     </Row>
                     <Row>
                         <Col className="form-border form-left-bg font-small" span={6}>ReceiveNote</Col>
-                        <Col className="form-border font-small" span={18}>{currentAddress?currentAddress.receiveNote:null}</Col>
+                        <Col className="form-border font-small" span={18}>{orderReturnApply.receiveNote}</Col>
                     </Row>
                 </div>}
                 {orderReturnApply.status === 0 &&
@@ -356,12 +358,12 @@ function ReturnApplyDetail(){
                 </div>}
                 {orderReturnApply.status === 0 &&
                 <Space style={{marginTop:'15px',textAlign:'center'}}>
-                    <Button type="primary" size="small" onClick={()=>handleUpdateStatus(1)}>ConfirmReturn</Button>
-                    <Button danger size="small" onClick={()=>handleUpdateStatus(3)}>RefuseReturn</Button>
+                    <Button type="primary" size="small" onClick={()=>handleUpdateStatus(1)}>Confirm Return</Button>
+                    <Button danger size="small" onClick={()=>handleUpdateStatus(3)}>Refuse Return</Button>
                 </Space>}
                 {orderReturnApply.status === 1 &&
                 <Space style={{marginTop:'15px',textAlign:'center'}}>
-                    <Button type="primary" size="small" onClick={()=>handleUpdateStatus(2)}>ConfirmReceive</Button>
+                    <Button type="primary" size="small" onClick={()=>handleUpdateStatus(2)}>Confirm Receive</Button>
                 </Space>}
             </Card>
         </div>

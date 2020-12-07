@@ -43,15 +43,19 @@ function CBreadcrumb(props){
         return result;
     }
 
+    const upperCase=(s)=>{
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
     return(
         <Breadcrumb className="app-breadcrumb" separator="/">
             {levelList.map((item,index)=>{
                 return (item.meta.title && 
                     <Breadcrumb.Item key={item.path}>
                         {(item.redirect ==='noredirect'||index==levelList.length-1)?
-                        <span className="no-redirect">{item.meta.title}</span>
+                        <span className="no-redirect">{upperCase(item.meta.title)}</span>
                         :
-                        <a href={item.redirect||item.path}>{item.meta.title}</a>}
+                        <a href={item.redirect||item.path}>{upperCase(item.meta.title)}</a>}
                     </Breadcrumb.Item>)
             })}
         </Breadcrumb>

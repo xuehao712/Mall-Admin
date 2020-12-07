@@ -1,6 +1,6 @@
 import { ProfileOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@material-ui/icons';
-import { Button, Card, DatePicker, Form, Input, message, Radio, Select, Switch, Table } from 'antd';
+import { Button, Card, DatePicker, Form, Input, message, Radio, Select, Space, Switch, Table } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import Modal from 'antd/lib/modal/Modal';
 import Column from 'antd/lib/table/Column';
@@ -247,11 +247,11 @@ function Admin(){
                             {record.email}
                         </div>}/>
                     <Column align="center" title="CreateTime" width="160px" render={(text,record,index)=>
-                        <div>
+                        <div style={{minWidth:'160px'}}>
                             {formatDateTime(record.createTime)}
                         </div>}/>
                     <Column align="center" title="LoginTime" width="160px" render={(text,record,index)=>
-                        <div>
+                        <div style={{minWidth:'160px'}}>
                             {formatDateTime(record.loginTime)}
                         </div>}/>
                     <Column align="center" title="Status" width="140px" render={(text,record,index)=>
@@ -259,14 +259,14 @@ function Admin(){
                             <Switch onChange={(e)=>handleStatusChange(e,record)} checked={record.status}/>
                         </div>}/>
                     <Column width="180px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" type="text" onClick={()=>handleSelectRole(index,record)}>Role</Button><br/>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button><br/>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                        </Space>}/>
                 </Table>
             </div>
-            <Modal title={isEdit?"Edit Admin":"Add Admin"} visible={dialogVisible} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
+            <Modal title={isEdit?"Edit Admin":"Add Admin"} visible={dialogVisible} style={{minWidth:'500px'}} width="40%" onCancel={()=>setDialogVisible(false)} onOk={handleDialogConfirm}>
                 <Form labelCol={{span:8}} size="small">
                     <Form.Item label="Username: ">
                         <Input value={admin.username} style={{width:'250px'}} name="username" onChange={handleAdminChange}/>
@@ -291,7 +291,7 @@ function Admin(){
                     </Form.Item>
                 </Form>
             </Modal>
-            <Modal title="Assign Role" visible={allocDialogVisible} width="30%" onCancel={()=>setAllocDialogVisible(false)} onOk={handleAllocDialogConfirm}>
+            <Modal title="Assign Role" visible={allocDialogVisible} style={{minWidth:'350px'}} width="30%" onCancel={()=>setAllocDialogVisible(false)} onOk={handleAllocDialogConfirm}>
                 <Select value={allocRoleIds} mode="multiple" onChange={(e)=>setAllocRoleIds(e)} placeholder="Please select" size="small"
                 style={{width:'80%'}}>
                     {allRoleList.map((item)=>{

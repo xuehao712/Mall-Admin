@@ -198,7 +198,7 @@ function Product(){
     }
     const handleEditSkuConfirm=()=>{
       if(editSkuInfo.stockList==null||editSkuInfo.stockList.length<=0){
-        message.warning("No Sku Info!",10);
+        message.warning("No Sku Info!",5);
         return;
       }else {
         confirm({
@@ -207,7 +207,7 @@ function Product(){
           okType:'primary',
           onOk(){
             skuStockServices.update(editSkuInfo.productId,editSkuInfo.stockList).then(response=>{
-              message.success("Modify Success!",10);
+              message.success("Modify Success!",5);
               seteditSkuInfo({...editSkuInfo,dialogVisible:false});
             });
           },
@@ -227,11 +227,11 @@ function Product(){
     }
     const handleBatchOperate=()=>{
       if(operateType == null) {
-        message.warning("Please select operate type！",10);
+        message.warning("Please select operate type！",5);
         return;
       }
       if(multipleSelection == null || multipleSelection.length<1) {
-        message.warning("Please select the product you want to perform opeartion!",10);
+        message.warning("Please select the product you want to perform opeartion!",5);
         return;
       }
       confirm({
@@ -332,15 +332,6 @@ function Product(){
         {id:row.id}
       )
     }
-    const handleShowProduct=(index,row)=>{
-      console.log("handleShowProduct",row);
-    }
-    const handleShowVerifyDetail=(index,row)=>{
-      console.log("handleShowVerifyDetail",row);
-    }
-    const handleShowLog=(index,row)=>{
-      console.log("handleShowLog",row);
-    }
 
     const updatePublishStatus=(publishStatus,ids)=>{
       let params = new URLSearchParams();
@@ -348,7 +339,7 @@ function Product(){
       params.append('ids', ids);
       params.append('publishStatus', publishStatus);
       productServices.updatePublishStatus(params).then(response=>{
-        message.success("Modify Success!",10);
+        message.success("Modify Success!",5);
         getList();
       });
     }
@@ -359,7 +350,7 @@ function Product(){
       params.append('ids', ids);
       params.append('newStatus', newStatus);
       productServices.updateNewStatus(params).then(response => {
-        message.success("Modify Success!",10);
+        message.success("Modify Success!",5);
         getList();
       });
       
@@ -370,7 +361,7 @@ function Product(){
       params.append('ids', ids);
       params.append('recommendStatus', recommendStatus);
       productServices.updateRecommendStatus(params).then(response => {
-        message.success("Modify Success!",10);
+        message.success("Modify Success!",5);
         getList();
       });
     }
@@ -379,7 +370,7 @@ function Product(){
       params.append('ids', ids);
       params.append('deleteStatus', deleteStatus);
       productServices.updateDeleteStatus(params).then(response => {
-        message.success("Modify Success!",10);
+        message.success("Modify Success!",5);
         getList();
       });
     }
@@ -455,8 +446,9 @@ function Product(){
         dataIndex: 'label',
         align:'center',
         width:'170px',
+        textWrap: 'word-break',
         render:(text,record,index)=>(
-          <div>
+          <div style={{minWidth:'140px'}}> 
             <div>Publish:
               <Switch checked={record.publishStatus} onChange={(value)=>handlePublishStatusChange(value,record)}
               />
@@ -497,10 +489,7 @@ function Product(){
         align:'center',
         render:(text,record,index)=>(
           <div>
-            <p>{verifyStatusFilter(record.verifyStatus)}</p>
-            {/* <Button type="link" onClick={()=>handleShowVerifyDetail(record)}>
-              Detail
-            </Button> */}
+            {verifyStatusFilter(record.verifyStatus)}
           </div>
         )
       },
@@ -509,32 +498,14 @@ function Product(){
         dataIndex: 'operations',
         align:'center',
         render:(text,record,index)=>(
-          <div className="Product_operation">
-            <div>
-              {/* <div className="Product_operation-section">
-                <Button size="small" onClick={()=>handleShowProduct(index,record)}>
-                  View
-                </Button>
-              </div> */}
-              <div className="Product_operation-section">
-                <Button size="small"onClick={()=>handleUpdateProduct(index, record)}>
-                  Edit
-                </Button>
-              </div>
-              <div className="Product_operation-section">
-                <Button size="small" danger onClick={()=>handleDelete(index, record)}>
-                  Delete
-                </Button>
-              </div>  
-            </div>
-            <div>
-              {/* <div className="Product_operation-section">
-                <Button size="small" onClick={()=>handleShowLog(index,record)}>
-                  Log
-                </Button>
-              </div> */}
-            </div>
-          </div>
+          <Space >
+            <Button size="small"onClick={()=>handleUpdateProduct(index, record)}>
+              Edit
+            </Button>
+            <Button size="small" danger onClick={()=>handleDelete(index, record)}>
+              Delete
+            </Button>
+          </Space>
         )
       }
     ]
@@ -616,7 +587,7 @@ function Product(){
                     Confirm
                 </Button>
             </div>
-            <Modal title="Edit Sku Info" visible={editSkuInfo.dialogVisible} width="40%"
+            <Modal title="Edit Sku Info" visible={editSkuInfo.dialogVisible} width="750px"
              onCancel={()=>seteditSkuInfo({...editSkuInfo,dialogVisible:false,keyword:null})} okType="primary" onOk={handleEditSkuConfirm}>
               <span>Sku:</span>
               <span>{editSkuInfo.productSn}</span>

@@ -47,6 +47,7 @@
     "js-cookie": "^2.2.0",
     "moment": "^2.18.1",
     "node-sass": "^5.0.0",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",

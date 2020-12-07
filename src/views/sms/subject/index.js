@@ -120,7 +120,7 @@ function HomeSubject(){
     }
     const handleBatchOperate=()=>{
         if( multipleSelection.length<1) {
-            message.warning("Please select the operation",10);
+            message.warning("Please select the operation",5);
             return;
         }
         let ids = [];
@@ -204,7 +204,7 @@ function HomeSubject(){
                 homeSubjectServices.updateHomeSubjectSort(sortDialogData).then(response=>{
                     setSortDialogVisible(false);
                     getList();
-                    message.success("Update Success!",10);
+                    message.success("Update Success!",5);
                 });
             },
             onCancel(){}
@@ -229,11 +229,11 @@ function HomeSubject(){
                 params.append("recommendStatus",status);
                 homeSubjectServices.updateRecommendStatus(params).then(response=>{
                     getList();
-                    message.success("Modify Success",10);
+                    message.success("Modify Success",5);
                 });
             },
             onCancel(){
-                message.success("Success Cancel Operate!",10);
+                message.success("Success Cancel Operate!",5);
                 getList();
             }
         });
@@ -249,7 +249,7 @@ function HomeSubject(){
                 params.append("recommendStatus",status);
                 homeSubjectServices.deleteHomeSubject(params).then(response=>{
                     getList();
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                 });
             },
             onCancel(){}
@@ -301,13 +301,13 @@ function HomeSubject(){
                         Reset
                     </Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div>
                     <Form layout="inline" size="small" labelCol={{span:5}}>
-                        <Form.Item label="Name: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Name: ">
                             <Input style={{width:'200px'}}value={listQuery.subjectName} name="subjectName" onChange={(e)=>setListQuery({...listQuery,subjectName:e.target.value})} 
                             className="input-width" placeholder="Product Name"/>
                         </Form.Item>
-                        <Form.Item label="Status: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Status: ">
                             <Select style={{width:'200px'}} value={listQuery.recommendStatus} placeholder="All" allowClear 
                             name="recommendStatus" className="input-width" onChange={(e)=>setListQuery({...listQuery,recommendStatus:e})}>
                                 {recommendOptions.map((item)=>{
@@ -348,7 +348,7 @@ function HomeSubject(){
                     <Column width="180px" align="center" title="Operation" render={(text,record,index)=>
                         <div>
                             <Button size="small" type="text" onClick={()=>handleEditSort(index,record)}>SetSort</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>
@@ -362,7 +362,7 @@ function HomeSubject(){
                     Confirm
                 </Button>
             </div>
-            <Modal title="Select Subject" visible={selectDialogVisible} width="50%" onCancel={()=>setSelectDialogVisible(false)} onOk={handleSelectDialogConfirm}>
+            <Modal title="Select Subject" visible={selectDialogVisible} style={{minWidth:'600px'}} width="50%" onCancel={()=>setSelectDialogVisible(false)} onOk={handleSelectDialogConfirm}>
                 <Search value={dialogData.listQuery.keyword} name="keyword" onChange={(e)=>setDialogData({...dialogData,listQuery:{...dialogData.listQuery,keyword:e.target.value}})}
                 style={{width:'250px',marginBottom:'20px'}} size="small" placeholder="Subject Search"
                 onSearch={handleSelectSearch}/>
@@ -384,7 +384,7 @@ function HomeSubject(){
                     }/>
                 </Table>
             </Modal>
-            <Modal title="SetSort" visible={sortDialogVisible} width="40%" onOk={handleUpdateSort} onCancel={()=>setSortDialogVisible(false)}>
+            <Modal title="SetSort" visible={sortDialogVisible} style={{minWidth:'450px'}} width="40%" onOk={handleUpdateSort} onCancel={()=>setSortDialogVisible(false)}>
                 <Form labelCol={{span:5}}>
                     <Form.Item label="Sort: ">
                         <Input value={sortDialogData.sort} style={{width:'200px'}} name="sort" onChange={(e)=>setSortDialogData({...sortDialogData,sort:e.target.value})}/>

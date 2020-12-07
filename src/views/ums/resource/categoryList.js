@@ -1,5 +1,5 @@
 import { ProfileOutlined, SearchOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, message, Select, Table } from 'antd';
+import { Button, Card, Form, Input, message, Select, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
 import {formatDate} from 'utils/date';
@@ -119,13 +119,13 @@ function ResourceCategory(){
                             {record.sort}
                         </div>}/>
                     <Column width="180px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                        <Space>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                        </Space>}/>
                 </Table>
             </div>
-            <Modal title="Add Category" visible={dialogVisible} width="40%" onOk={handleDialogConfirm} onCancel={()=>setDialogVisible(false)}>
+            <Modal title="Add Category" visible={dialogVisible} style={{minWidth:'500px'}} width="40%" onOk={handleDialogConfirm} onCancel={()=>setDialogVisible(false)}>
                 <Form labelCol={{span:5}} size="small">
                     <Form.Item label="Name: ">
                         <Input value={resourceCategory.name} style={{width:'250px'}} name="name" onChange={(e)=>setResourceCategory({...resourceCategory,name:e.target.value})}/>

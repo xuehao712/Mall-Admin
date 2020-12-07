@@ -1,5 +1,5 @@
 import { ProfileOutlined } from '@ant-design/icons';
-import { Button, Card, message, Switch, Table } from 'antd';
+import { Button, Card, message, Space, Switch, Table } from 'antd';
 import confirm from 'antd/lib/modal/confirm';
 import Column from 'antd/lib/table/Column';
 import React, {useState, useEffect} from 'react';
@@ -82,7 +82,7 @@ function Menu(){
     }
     const handleHiddenChange=(value,row)=>{
         menuServices.updateHidden(row.id,{hidden:value?1:0}).then(response=>{
-            message.success("Modify Success",10);
+            message.success("Modify Success",5);
             getList();
         });
     }
@@ -102,7 +102,7 @@ function Menu(){
             okType:'primary',
             onOk(){
                 menuServices.deleteMenu(row.id).then(response => {
-                    message.success("Delete Success",10);
+                    message.success("Delete Success",5);
                     getList();
                 });
             },
@@ -161,15 +161,17 @@ function Menu(){
                             onClick={()=>handleShowNextLevel(index,record)}>NextLevel</Button>
                         </div>}/>
                     <Column width="200px" align="center" title="Operation" render={(text,record,index)=>
-                        <div>
+                        <Space style={{minWidth:'150px'}}>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
-                        </div>}/>
+                            <Button size="small" type="text" danger onClick={()=>handleDelete(index,record)}>Delete</Button>
+                        </Space>}/>
                 </Table>
             </div>
-            <div className="operate-container">
-                <Button size="middle" type="primary" style={{float:'left'}} onClick={handleShowParentLevel}>Back</Button>
-            </div>
+            {route.state &&route.state.parentId!=0 &&
+                <div className="operate-container">
+                    <Button size="middle" type="primary" style={{float:'left'}} onClick={handleShowParentLevel}>Back</Button>
+                </div>  
+            }
         </div>
     )
 }

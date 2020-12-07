@@ -174,40 +174,44 @@ function CouponHistory(){
     };
     return(
         <div className="CouponHistory_app-container">
-            <div className="CouponHistory_table-layout">
+            <div className="CouponHistory_table-layout" style={{minWidth:'700px'}}>
                 <Row>
-                    <Col span={4} className="CouponHistory_table-cell-title">Name</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">Type</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">UseType</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">MinPoint</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">Amount</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">Status</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Name</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Type</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">UseType</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">MinPoint</Col>
                 </Row>
                 <Row>
-                    <Col span={4} className="CouponHistory_table-cell">{coupon.name}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{formatType(coupon.type)}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{formatUseType(coupon.useType)}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">Min: {coupon.minPoint}$</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{coupon.amount}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{formatStatus(coupon.endTime)}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{coupon.name}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{formatType(coupon.type)}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{formatUseType(coupon.useType)}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">Min: {coupon.minPoint}$</Col>
                 </Row>
                 <Row>
-                    <Col span={4} className="CouponHistory_table-cell-title">Valid</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">PublishCount</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">ReceiveCount</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">AvailableCount</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">Used</Col>
-                    <Col span={4} className="CouponHistory_table-cell-title">Unused</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Amount</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Status</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Valid</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">PublishCount</Col>
                 </Row>
                 <Row>
-                    <Col span={4} className="CouponHistory_table-cell" style={{fontSize:'13px'}}>
-                        {localFormatDate(coupon.startTime)} To {localFormatDate(coupon.endTime)}
+                    <Col span={6} className="CouponHistory_table-cell">{coupon.amount}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{formatStatus(coupon.endTime)}</Col>
+                    <Col span={6} className="CouponHistory_table-cell" style={{fontSize:'13px'}}>
+                        {localFormatDate(coupon.startTime)} to {localFormatDate(coupon.endTime)}
                     </Col>
-                    <Col span={4} className="CouponHistory_table-cell">{coupon.publishCount}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{coupon.receiveCount}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{(coupon.publishCount &&coupon.receiveCount)?coupon.publishCount-coupon.receiveCount:'N/A'}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{coupon.useCount}</Col>
-                    <Col span={4} className="CouponHistory_table-cell">{(coupon.publishCount&&coupon.useCount)?coupon.publishCount-coupon.useCount:'N/A'}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{coupon.publishCount}</Col>
+                </Row>
+                <Row>
+                    <Col span={6} className="CouponHistory_table-cell-title">ReceiveCount</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">AvailableCount</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Used</Col>
+                    <Col span={6} className="CouponHistory_table-cell-title">Unused</Col>
+                </Row>
+                <Row>
+                    <Col span={6} className="CouponHistory_table-cell">{coupon.receiveCount}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{(coupon.publishCount &&coupon.receiveCount)?coupon.publishCount-coupon.receiveCount:'N/A'}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{coupon.useCount}</Col>
+                    <Col span={6} className="CouponHistory_table-cell">{(coupon.publishCount&&coupon.useCount)?coupon.publishCount-coupon.useCount:'N/A'}</Col>
                 </Row>
             </div>
             <Card className="CouponHistory_filter-container">
@@ -217,9 +221,9 @@ function CouponHistory(){
                     <Button style={{float:'right'}} type="primary" onClick={handleSearchList} size="small">Search</Button>
                     <Button style={{float:'right',marginRight:'15px'}} onClick={handleResetSearch} size="small">Reset</Button>
                 </div>
-                <div style={{marginTop:'15px'}}>
+                <div>
                     <Form layout="inline" size="small" labelCol={{span:5}}>
-                        <Form.Item label="Status: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Status: ">
                             <Select value={listQuery.useStatus} style={{width:'200px'}} name="useStatus" onChange={(e)=>setListQuery({...listQuery,useStatus:e})}
                             placeholder="all" allowClear className="input-width">
                                 {useTypeOptions.map((item)=>{
@@ -227,7 +231,7 @@ function CouponHistory(){
                                 })}
                             </Select>
                         </Form.Item>
-                        <Form.Item label="Id: ">
+                        <Form.Item style={{marginTop:'15px'}} label="Id: ">
                             <Input value={listQuery.orderSn} style={{width:'200px'}} name="orderSn" onChange={(e)=>setListQuery({...listQuery,orderSn:e.target.value})} placeholder="Order Sn" 
                             className="input-width"/>
                         </Form.Item>

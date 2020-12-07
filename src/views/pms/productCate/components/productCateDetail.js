@@ -7,6 +7,7 @@ import SingleUpload from '../../../../components/Upload/singleUpload';
 import { history } from '../../../../redux/shared/history-redux';
 import { useLocation } from 'react-router-dom';
 import confirm from 'antd/lib/modal/confirm';
+import './productCateDetail.scss';
 
 const { Option } = Select;
 const {TextArea} = Input;
@@ -104,13 +105,13 @@ function ProductCateDetail(props){
                 console.log(productCateForm.getFieldsValue());
                 if(isEdit) {
                     productCateServices.updateProductCate(route.state.id,productCateForm.getFieldsValue()).then(response=>{
-                        message.success("Modify Success",10);
+                        message.success("Modify Success",5);
                         history.goBack();
                     })
                 } else {
                     productCateServices.createProductCate(productCateForm.getFieldsValue()).then(response=>{
                         resetForm();
-                        message.success("Submit Success",10);
+                        message.success("Submit Success",5);
                     })
                 }
             },
@@ -118,7 +119,7 @@ function ProductCateDetail(props){
         })
     }
     const onSubmitFail=()=>{
-        message.error("Validation Fail",10);
+        message.error("Validation Fail",5);
         return false;
     }
     const resetForm=()=>{
@@ -128,7 +129,7 @@ function ProductCateDetail(props){
     }
     const removeFilterAttr=(productAttributeId)=>{
         if(filterProductAttrList.length === 1) {
-            message.warning("At least one",10);
+            message.warning("At least one",5);
             return;
         }
         var index = filterProductAttrList.indexOf(productAttributeId);
@@ -140,7 +141,7 @@ function ProductCateDetail(props){
     }
     const handleAddFilterAttr=()=>{
         if(filterProductAttrList.length === 3) {
-            message.warning("Most three items",10);
+            message.warning("Most three items",5);
             return;
         }
         const data={
@@ -162,72 +163,74 @@ function ProductCateDetail(props){
         }
     }
     return(
-        <Card className="form-container">
-            <Form labelCol={{span:5}} form={productCateForm} onFinish={onSubmit} onFinishFailed={onSubmitFail}>
-                <Form.Item label="Name: " name="name"
-                rules={[{required:true,message:'Please enter brand name'},{min:2,max:140,message:'Length must between 2 and 140'}]}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Parent: " name="parentId">
-                    <Select placeholder="Please select">
-                        {selectProductCateList.map((item)=>{
-                            return <Option key={item.id} value={item.id}>{item.name}</Option>
-                        })}
-                    </Select>
-                </Form.Item>
-                <Form.Item label="Unit: " name="productUnit">
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Sort: " name="sort">
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Display: " name="showStatus">
-                    <Radio.Group>
-                        <Radio value={1}>Yes</Radio>
-                        <Radio value={0}>No</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Nav: " name="navStatus">
-                    <Radio.Group>
-                        <Radio value={1}>Yes</Radio>
-                        <Radio value={0}>No</Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Icon: " name="icon">
-                    <SingleUpload/>
-                </Form.Item>
-                {filterProductAttrList.map((filterProductAttr,index)=>{
-                    return( 
-                    <Form.Item colon={index===0?true:false} label={filterLabelFilter(index)} key={index}>
-                        <Cascader allowClear key={index} value={filterProductAttr.value} onChange={(e)=>handleFilterProductAttrChange(e,index)} 
-                        options={filterAttrs} name="value"/>
-                        <Button style={{marginTop:'10px'}} onClick={()=>removeFilterAttr(filterProductAttr)}>Delete</Button>
-                    </Form.Item>)
-                })}
-                <Form.Item style={{textAlign:'center'}}>
-                    <Button size="small" type="primary" onClick={handleAddFilterAttr}>Add</Button>
-                </Form.Item>
-                <Form.Item label="Keyword: " name="keywords">
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="Description: " name="description">
-                    <TextArea autoSize="true"/>
-                </Form.Item>
-                <Form.Item>
-                    <Space>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                        {!isEdit &&
-                            <Button onClick={resetForm}>Reset</Button>
-                        }
-                    </Space>                   
-                </Form.Item>
-                <Form.Item name="productAttributeIdList" noStyle>
-                    <Input hidden/>
-                </Form.Item>
-            </Form>
-        </Card>
+        <div className="productCateDetail_form-wrapper">
+            <Card className="form-container">
+                <Form labelCol={{span:5}} form={productCateForm} onFinish={onSubmit} onFinishFailed={onSubmitFail}>
+                    <Form.Item label="Name: " name="name"
+                    rules={[{required:true,message:'Please enter brand name'},{min:2,max:140,message:'Length must between 2 and 140'}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Parent: " name="parentId">
+                        <Select placeholder="Please select">
+                            {selectProductCateList.map((item)=>{
+                                return <Option key={item.id} value={item.id}>{item.name}</Option>
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Unit: " name="productUnit">
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Sort: " name="sort">
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Display: " name="showStatus">
+                        <Radio.Group>
+                            <Radio value={1}>Yes</Radio>
+                            <Radio value={0}>No</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="Nav: " name="navStatus">
+                        <Radio.Group>
+                            <Radio value={1}>Yes</Radio>
+                            <Radio value={0}>No</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item label="Icon: " name="icon">
+                        <SingleUpload/>
+                    </Form.Item>
+                    {filterProductAttrList.map((filterProductAttr,index)=>{
+                        return( 
+                        <Form.Item colon={index===0?true:false} label={filterLabelFilter(index)} key={index}>
+                            <Cascader allowClear key={index} value={filterProductAttr.value} onChange={(e)=>handleFilterProductAttrChange(e,index)} 
+                            options={filterAttrs} name="value"/>
+                            <Button danger style={{marginTop:'10px'}} onClick={()=>removeFilterAttr(filterProductAttr)}>Delete</Button>
+                        </Form.Item>)
+                    })}
+                    <Form.Item style={{textAlign:'center'}}>
+                        <Button size="small" type="primary" onClick={handleAddFilterAttr}>Add</Button>
+                    </Form.Item>
+                    <Form.Item label="Keyword: " name="keywords">
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item label="Description: " name="description">
+                        <TextArea autoSize="true"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Space>
+                            <Button type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                            {!isEdit &&
+                                <Button onClick={resetForm}>Reset</Button>
+                            }
+                        </Space>                   
+                    </Form.Item>
+                    <Form.Item name="productAttributeIdList" noStyle>
+                        <Input hidden/>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     )
 }
 export default ProductCateDetail;

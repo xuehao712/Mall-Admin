@@ -102,7 +102,7 @@ function ProductRelationList(){
     }
     const handleSelectDialogConfirm=()=>{
         if(dialogData.multipleSelection < 1) {
-            message.warning("Please select a record",10);
+            message.warning("Please select a record",5);
             return;
         }
         let selectProducts = [];
@@ -235,11 +235,11 @@ function ProductRelationList(){
                     <Column width="100px" align="center" title="Operation" render={(text,record,index)=>
                         <div>
                             <Button size="small" type="text" onClick={()=>handleUpdate(index,record)}>Modify</Button>
-                            <Button size="small" type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
+                            <Button size="small" danger type="text" onClick={()=>handleDelete(index,record)}>Delete</Button>
                         </div>}/>
                 </Table>
             </div>
-            <Modal title="Select Product" visible={selectDialogVisible} width="50%" onCancel={()=>setSelectDialogVisible(false)} onOk={handleSelectDialogConfirm}>
+            <Modal title="Select Product" visible={selectDialogVisible} style={{minWidth:'600px'}} width="50%" onCancel={()=>setSelectDialogVisible(false)} onOk={handleSelectDialogConfirm}>
                 <Search value={dialogData.listQuery.keyword} name="keyword" size="small" onChange={(e)=>setDialogData({...dialogData,listQuery:{...dialogData.listQuery,keyword:e.target.value}})} onSearch={handleSelectSearch}
                 placeholder="Product Name Search" />
                 <Table rowKey="productSn" rowSelection={{...dialogRowSelection}} {...dialogTableStatus} dataSource={dialogData.list}>

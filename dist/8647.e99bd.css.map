@@ -1,0 +1,1 @@
+{"version":3,"file":"8647.e99bd.css","sources":["webpack://mall-admin/./src/views/pms/productCate/components/productCateDetail.scss"],"sourcesContent":[".productCateDetail_form-wrapper{\r\n    margin: min(30px);\r\n}"],"mappings":"AAAA;","sourceRoot":""}

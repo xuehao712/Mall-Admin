@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useLayoutEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { appActions } from 'actions/app-actions';
 import {Layout } from 'antd';
@@ -11,6 +11,7 @@ import './MainLayout.scss';
 const { Header, Footer, Sider, Content } = Layout;
 function MainLayout(props){
     const dispatch = useDispatch();
+    const [width, setWidth] = useState(null);
     const [sideBarState, setSideBarState] = useState(null);
     store.subscribe(()=>{
         setSideBarState({...store.getState().appReducer.sidebar});
@@ -18,6 +19,19 @@ function MainLayout(props){
     const toggleSideBar=()=>{
         dispatch(appActions.ToggleSidebar());
     }
+    useLayoutEffect(() => {
+        function updateSize() {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+    }, [])
+    useLayoutEffect(() => {
+        let state = store.getState().appReducer.sidebar.opened;
+        if(width && width<768 && !state ){
+            toggleSideBar();
+        }
+    }, [width])
     
     
     return(
@@ -39,7 +53,7 @@ function MainLayout(props){
                 <Content>
                     <MainRoutes/>
                 </Content>
-                <Footer style={{textAlign:'center',padding:'10px 50px'}} color="#8f959c">
+                <Footer style={{textAlign:'center',padding:'10px 50px',position: "sticky", bottom: "0"}} color="#8f959c">
                     &#169;Copyright. All right reserved.
                 </Footer>
             </Layout>
